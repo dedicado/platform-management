@@ -27,7 +27,6 @@ phases:
     commands:
       - npm i -g yarn
       - npm i -g typescript
-      - yarn
       # - command
   #pre_build:
   #commands:
@@ -35,6 +34,7 @@ phases:
   # - command
   build:
     commands:
+      - yarn
       - yarn build
       # - command
   #post_build:
