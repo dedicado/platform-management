@@ -22,10 +22,12 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 20
+      nodejs: 18
       # name: version
     commands:
-      - npm install
+      - npm i -g yarn
+      - npm i -g typescript
+      - npm i -g @angular/cli
       # - command
   #pre_build:
   #commands:
@@ -33,7 +35,8 @@ phases:
   # - command
   build:
     commands:
-      - npm run build
+      - yarn
+      - yarn build
       # - command
   #post_build:
   #commands:
@@ -52,7 +55,7 @@ artifacts:
     - "**/*"
     # - location
   #name: $(date +%Y-%m-%d)
-  discard-paths: yes
+  #discard-paths: yes
   #base-directory: location
 #cache:
 #paths:
