@@ -25,8 +25,7 @@ phases:
       nodejs: 20
       # name: version
     commands:
-      - npm i -g yarn
-      - yarn
+      - npm install
       # - command
   #pre_build:
   #commands:
@@ -34,7 +33,7 @@ phases:
   # - command
   build:
     commands:
-      - yarn build
+      - npm run build
       # - command
   #post_build:
   #commands:
