@@ -25,8 +25,8 @@ phases:
       nodejs: 20
       # name: version
     commands:
-      - yarn set version berry
-      - yarn install
+      - npm i -g yarn
+      - yarn
       # - command
   #pre_build:
   #commands:
