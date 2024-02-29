@@ -10,7 +10,7 @@ export default function TermsAndPoliciesView() {
   return (
     <div className="flex flex-col">
       <Tab.Group key={'privacy-policy'}>
-        <Tab.List className="p-2 flex space-x-2 rounded-md bg-slate-200 dark:bg-slate-800 text-sky-800">
+        <Tab.List className="p-2 flex space-x-2 rounded-md bg-slate-200 dark:bg-slate-800">
           <Tab
             key={'privacy-policy'}
             className={({ selected }) =>

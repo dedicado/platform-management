@@ -1,3 +1,5 @@
+import { env } from '@/environments'
+
 export type AddressType = {
   cep: string
   address_type: string
@@ -15,7 +17,7 @@ export type AddressType = {
 export default async function getAddress(
   zipCode: string,
 ): Promise<AddressType | any> {
-  const address = await fetch(`${process.env.ZIPCODE_API_URL!}/${zipCode}`, {
+  const address = await fetch(`${env.ZIPCODE_API_URL!}/${zipCode}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

@@ -1,5 +1,10 @@
 import PageDisplay from '@/components/PageDisplay'
+import { nextAuthOptions } from '@/libraries/next-auth'
+import { UserType } from '@/types/user'
 import { Metadata } from 'next'
+import { getServerSession } from 'next-auth'
+import { actionGetProfile } from './actions'
+import ProfileView from './views/ProfileView'
 
 export const metadata: Metadata = {
   title: {
@@ -11,7 +16,8 @@ export const metadata: Metadata = {
 }
 
 export default async function ProfilePage() {
-  const profile: any = null
+  const session = await getServerSession(nextAuthOptions)
+  const profile: UserType | any = await actionGetProfile(session!)
 
   return (
     <PageDisplay
@@ -19,7 +25,9 @@ export default async function ProfilePage() {
       subtitle={`olá ${profile?.name.split(' ')[0]}`}
     >
       <div className="flex flex-col items-center md:flex-row">
-        <div className="w-full">{profile}</div>
+        <div className="w-full">
+          <ProfileView data={profile} />
+        </div>
       </div>
     </PageDisplay>
   )

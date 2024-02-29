@@ -6,8 +6,10 @@ import { useRouter } from 'next/navigation'
 import { ChangeEvent, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import { actionRegister } from '../actions'
+import { signIn } from 'next-auth/react'
 
-export default function Register() {
+export default function RegisterForm() {
   const randomCode = Math.random().toString(32).substr(2, 16)
 
   const [accept, setAccept] = useState<boolean>(false)
@@ -25,7 +27,24 @@ export default function Register() {
     resolver: zodResolver(RegisterSchema),
   })
   const onSubmit: SubmitHandler<RegisterSchemaType> = async (inputs) => {
-    console.log(inputs)
+    const result = await actionRegister({ ...inputs, password: randomCode })
+    if (result?.response?.error) {
+      toast.error(result?.message)
+    } else {
+      toast.success(result)
+      await signIn('credentials', {
+        redirect: false,
+        phone: inputs?.phone,
+        password: randomCode,
+      }).then((res: any) => {
+        if (!res.ok) {
+          toast.error(res?.error)
+        } else {
+          toast.success(`boas vindas a dedicado ${inputs?.name}`)
+          router.refresh()
+        }
+      })
+    }
   }
 
   return (

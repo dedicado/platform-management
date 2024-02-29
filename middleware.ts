@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { env } from './environments'
 
 export const config = {
   matcher: ['/((?!api/|_next/|_static/|_vercel|[\\w-]+\\.\\w+).*)'],
@@ -9,13 +10,10 @@ export default async function middleware(request: NextRequest) {
 
   let hostname = request.headers
     .get('host')!
-    .replace('.localhost:3210', `.${process.env.BASE_URL}`)
+    .replace('.localhost:3210', `.${env.BASE_URL}`)
 
-  if (
-    hostname.includes('---') &&
-    hostname.endsWith(`.${process.env.BASE_URL}`)
-  ) {
-    hostname = `${hostname.split('---')[0]}.${process.env.BASE_URL}`
+  if (hostname.includes('---') && hostname.endsWith(`.${env.BASE_URL}`)) {
+    hostname = `${hostname.split('---')[0]}.${env.BASE_URL}`
   }
 
   const searchParams = request.nextUrl.searchParams.toString()
@@ -23,13 +21,13 @@ export default async function middleware(request: NextRequest) {
     searchParams.length > 0 ? `?${searchParams}` : ''
   }`
 
-  if (hostname == `www.${process.env.BASE_URL}`) {
+  if (hostname == `www.${env.BASE_URL}`) {
     return NextResponse.rewrite(
       new URL(`/main${path === '/' ? '' : path}`, request.url),
     )
   }
 
-  if (hostname == `${process.env.BASE_URL}`) {
+  if (hostname == `${env.BASE_URL}`) {
     return NextResponse.rewrite(
       new URL(`/main${path === '/' ? '' : path}`, request.url),
     )

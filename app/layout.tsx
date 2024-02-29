@@ -28,7 +28,7 @@ export default async function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${comfortaa.variable} font-default dark`}
+      className={`${comfortaa.variable} font-default`}
     >
       <body className="text-base text-sky-800 bg-slate-200 dark:bg-slate-800">
         <Providers>{children}</Providers>

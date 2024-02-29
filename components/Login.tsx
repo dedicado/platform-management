@@ -2,6 +2,7 @@
 
 import { LoginSchemaType, LoginSchema } from '@/schemas/login'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import toast from 'react-hot-toast'
@@ -23,7 +24,19 @@ export default function Login(props: Props) {
   })
 
   const onSubmit: SubmitHandler<LoginSchemaType> = async (inputs) => {
-    console.log(inputs)
+    return await signIn('credentials', {
+      redirect: false,
+      phone: inputs?.phone,
+      password: inputs?.password,
+    }).then((res: any) => {
+      if (!res.ok) {
+        toast.error(res?.error)
+      } else {
+        toast.success('boas vindas a dedicado')
+        onClose()
+        router.refresh()
+      }
+    })
   }
 
   return (
