@@ -19,13 +19,9 @@ function Footer() {
             todos os direitos reservados
           </small>
         </div>
-        <Link
-          href={'/termos-e-politicas'}
-          target="_blank"
-          className="text-xs text-center md:text-left font-thin hover:text-sky-600"
-        >
+        <small className="text-xs text-center md:text-left font-thin lowercase hover:text-sky-600 cursor-pointer">
           termos e políticas
-        </Link>
+        </small>
       </div>
     </div>
   )

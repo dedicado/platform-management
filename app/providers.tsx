@@ -1,17 +1,17 @@
 'use client'
 
-import { SessionProvider } from 'next-auth/react'
 import { ReactNode } from 'react'
-import { Toaster } from 'react-hot-toast'
+import '@aws-amplify/ui-react/styles.css'
+import { Authenticator } from '@aws-amplify/ui-react'
+import { Amplify } from 'aws-amplify'
+import awsExports from '@/aws-exports'
+
+Amplify.configure(awsExports, { ssr: true })
 
 export default function Providers({ children }: { children: ReactNode }) {
   return (
-    <SessionProvider>
+    <Authenticator.Provider>
       <div className="min-h-screen w-full">{children}</div>
-      <Toaster
-        position={'top-center'}
-        toastOptions={{ className: 'react-hot-toast' }}
-      />
-    </SessionProvider>
+    </Authenticator.Provider>
   )
 }

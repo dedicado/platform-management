@@ -1,23 +1,17 @@
 'use client'
 
-import { UserType } from '@/types/user'
 import Image from 'next/image'
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
-import { signOut } from 'next-auth/react'
+
 import { MdAccountBox, MdLogout } from 'react-icons/md'
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-interface Props {
-  profile: UserType | any
-}
-
-export default function UserMenu(props: Props) {
-  const { profile } = props
-  const avatar = profile?.image || '/avatar.svg'
+export default function UserMenu() {
+  const avatar = '/avatar.svg'
 
   return (
     <Fragment>
@@ -27,7 +21,7 @@ export default function UserMenu(props: Props) {
             <Image
               className="w-[32px] h-[32px] mx-auto rounded-full"
               src={avatar}
-              alt={profile?.name}
+              alt={'dedicado'}
               width={32}
               height={32}
               priority
@@ -63,7 +57,6 @@ export default function UserMenu(props: Props) {
               <Menu.Item>
                 {({ active }) => (
                   <a
-                    onClick={() => signOut()}
                     className={classNames(
                       active ? 'bg-slate-200' : 'font-normal',
                       'flex items-center px-4 py-2 gap-2 cursor-pointer',

@@ -3,6 +3,8 @@ import type { Metadata } from 'next'
 import { Comfortaa } from 'next/font/google'
 import { ReactNode } from 'react'
 import Providers from './providers'
+import Footer from '@/components/Footer'
+import Topbar from '@/components/Topbar'
 
 const comfortaa = Comfortaa({
   subsets: ['latin'],
@@ -28,10 +30,14 @@ export default async function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${comfortaa.variable} font-default`}
+      className={`${comfortaa.variable} font-default dark`}
     >
       <body className="text-base text-sky-800 bg-slate-200 dark:bg-slate-800">
-        <Providers>{children}</Providers>
+        <Providers>
+          <Topbar />
+          <main>{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   )

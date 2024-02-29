@@ -3,7 +3,6 @@
 import { useCallback, useState } from 'react'
 import { MdLogin } from 'react-icons/md'
 import Modal from './Modal'
-import Login from './Login'
 
 export default function AuthMenu() {
   const [openModal, setOpenModal] = useState<boolean>(false)
@@ -22,9 +21,9 @@ export default function AuthMenu() {
       <Modal
         open={openModal}
         onClose={handleModal}
-        subtitle="informe suas credenciais para autenticar-se na plataforma"
+        subtitle=""
       >
-        <Login onClose={handleModal} />
+        breve isso estará disponível
       </Modal>
     </div>
   )
