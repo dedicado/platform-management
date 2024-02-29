@@ -1,10 +1,12 @@
 'use client'
 
 import Image from 'next/image'
-import { Fragment } from 'react'
+import { Fragment, useCallback } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 
 import { MdAccountBox, MdLogout } from 'react-icons/md'
+import { useRouter } from 'next/navigation'
+import { signOut } from 'aws-amplify/auth'
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ')
@@ -12,6 +14,12 @@ function classNames(...classes: any[]) {
 
 export default function UserMenu() {
   const avatar = '/avatar.svg'
+
+  const route = useRouter()
+  const handleSignOut = useCallback(async () => {
+    await signOut()
+    route.refresh()
+  }, [route])
 
   return (
     <Fragment>
@@ -57,6 +65,7 @@ export default function UserMenu() {
               <Menu.Item>
                 {({ active }) => (
                   <a
+                    onClick={handleSignOut}
                     className={classNames(
                       active ? 'bg-slate-200' : 'font-normal',
                       'flex items-center px-4 py-2 gap-2 cursor-pointer',

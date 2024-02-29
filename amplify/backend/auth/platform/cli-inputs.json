@@ -13,10 +13,10 @@
       "SMS Text Message",
       "TOTP"
     ],
-    "smsAuthenticationMessage": "cÃ³digo de verificaÃ§Ã£o de sua conta na plataforma dedicado: {####}",
+    "smsAuthenticationMessage": "código de verificação de sua conta na plataforma dedicado: {####}",
     "smsVerificationMessage": "Your verification code is {####}",
-    "emailVerificationSubject": "cÃ³digo de verificaÃ§Ã£o dedicado: {####}",
-    "emailVerificationMessage": "cÃ³digo de verificaÃ§Ã£o de sua conta na plataforma dedicado: {####}",
+    "emailVerificationSubject": "código de verificação dedicado",
+    "emailVerificationMessage": "código de verificação de sua conta na plataforma dedicado: {####}",
     "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [

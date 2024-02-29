@@ -5,6 +5,7 @@ import { ReactNode } from 'react'
 import Providers from './providers'
 import Footer from '@/components/Footer'
 import Topbar from '@/components/Topbar'
+import { isAuthenticated } from '@/utils/amplify-utils'
 
 const comfortaa = Comfortaa({
   subsets: ['latin'],
@@ -34,7 +35,7 @@ export default async function RootLayout({
     >
       <body className="text-base text-sky-800 bg-slate-200 dark:bg-slate-800">
         <Providers>
-          <Topbar />
+          <Topbar isAuthenticated={await isAuthenticated()} />
           <main>{children}</main>
           <Footer />
         </Providers>
