@@ -27,12 +27,18 @@ export default function Login(props: Props) {
   const onSubmit: SubmitHandler<LoginValidationType> = async (inputs) => {
     const { phone, password } = inputs
     try {
-      const { isSignedIn } = await signIn({
+      await signIn({
         username: `+55${phone}`,
         password: password,
+        options: {
+          authFlowType: 'USER_PASSWORD_AUTH',
+        },
       })
+      toast.success('boas vindas a sua melhor plataforma de serviços')
     } catch (error: any) {
-      return toast.error(error?.message)
+      toast.error(error?.message)
+    } finally {
+      router.refresh()
     }
   }
 

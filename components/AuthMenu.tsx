@@ -3,7 +3,8 @@
 import { useCallback, useState } from 'react'
 import { MdLogin } from 'react-icons/md'
 import Modal from './Modal'
-import { Authenticator } from '@aws-amplify/ui-react'
+import Login from './Login'
+//import { Authenticator } from '@aws-amplify/ui-react'
 
 export default function AuthMenu() {
   const [openModal, setOpenModal] = useState<boolean>(false)
@@ -19,9 +20,10 @@ export default function AuthMenu() {
       >
         <MdLogin size={24} />
       </span>
-      <Modal open={openModal} onClose={handleModal} subtitle="" size="max-w-lg">
+      <Modal open={openModal} onClose={handleModal} subtitle="" >
+        <Login onClose={handleModal} />
         <div className="relative w-full flex justify-center">
-          <Authenticator className="lowercase" />
+          {/*<Authenticator className="lowercase" />*/}
         </div>
       </Modal>
     </div>

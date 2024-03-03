@@ -1,7 +1,5 @@
 'use client'
 
-import { withAuthenticator } from '@aws-amplify/ui-react'
-
 export const OrganizationView = () => {
   return (
     <div>
@@ -10,4 +8,4 @@ export const OrganizationView = () => {
   )
 }
 
-export default withAuthenticator(OrganizationView)
+export default OrganizationView

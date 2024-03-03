@@ -1,7 +1,5 @@
 'use client'
 
-import { withAuthenticator } from '@aws-amplify/ui-react'
-
 export const OrderView = () => {
   return (
     <div>
@@ -10,4 +8,4 @@ export const OrderView = () => {
   )
 }
 
-export default withAuthenticator(OrderView)
+export default OrderView

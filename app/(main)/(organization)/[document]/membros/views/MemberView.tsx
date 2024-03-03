@@ -1,7 +1,5 @@
 'use client'
 
-import { withAuthenticator } from '@aws-amplify/ui-react'
-
 export const MemberView = () => {
   return (
     <div>
@@ -10,4 +8,4 @@ export const MemberView = () => {
   )
 }
 
-export default withAuthenticator(MemberView)
+export default MemberView

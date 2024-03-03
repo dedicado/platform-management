@@ -1,6 +1,5 @@
 'use client'
 
-import { withAuthenticator } from '@aws-amplify/ui-react'
 import { MdAccountBox } from 'react-icons/md'
 import ProfileAvatar from './ProfileAvatar'
 
@@ -27,4 +26,4 @@ export const ProfileView = () => {
   )
 }
 
-export default withAuthenticator(ProfileView)
+export default ProfileView

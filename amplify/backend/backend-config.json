@@ -25,7 +25,8 @@
         ],
         "socialProviders": [],
         "usernameAttributes": [
-          "EMAIL"
+          "EMAIL",
+          "PHONE_NUMBER"
         ],
         "verificationMechanisms": [
           "EMAIL"
