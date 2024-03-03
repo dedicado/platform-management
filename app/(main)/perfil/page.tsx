@@ -2,7 +2,7 @@ import PageDisplay from '@/components/PageDisplay'
 import { Metadata } from 'next'
 import ProfileView from './views/ProfileView'
 import { memo } from 'react'
-import { isAuthenticated } from '@/utils/amplify-utils'
+import { currentUser } from '@/utils/amplify-utils'
 import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {
@@ -15,10 +15,10 @@ export const metadata: Metadata = {
 }
 
 const ProfilePage = async () => {
-  const authenticated = await isAuthenticated()
+  const user = await currentUser()
 
-  return authenticated ? (
-    <PageDisplay title="olá!" subtitle="este é o seu espaço dedicado">
+  return user ? (
+    <PageDisplay title={`olá ${user?.name || ''}`} subtitle="este é o seu espaço dedicado">
       <div className="relative w-full">
         <ProfileView />
       </div>

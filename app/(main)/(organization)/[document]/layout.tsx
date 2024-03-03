@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { ReactNode } from 'react'
-import { isAuthenticated } from '@/utils/amplify-utils'
+import { currentUser } from '@/utils/amplify-utils'
 
 export const metadata: Metadata = {
   title: {
@@ -19,8 +19,8 @@ export default async function OrganizationLayout({
   children: ReactNode
   params: { document: string }
 }>) {
-  const authenticated = await isAuthenticated()
+  const user = await currentUser()
   const { document } = params
 
-  return authenticated ? <div>{children}</div> : redirect('/')
+  return user ? <div>{children}</div> : redirect('/')
 }
