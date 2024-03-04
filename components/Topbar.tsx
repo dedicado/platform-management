@@ -1,27 +1,12 @@
 'use client'
 
 import Link from 'next/link'
-import { memo, useEffect, useState, useTransition } from 'react'
+import { memo, useState } from 'react'
 import AuthMenu from './AuthMenu'
-import { Hub } from 'aws-amplify/utils'
 import UserMenu from './UserMenu'
 
-function Topbar({ isAuthenticated }: { isAuthenticated: boolean }) {
-  const [authenticated, setAuthenticated] = useState<boolean>(isAuthenticated || false)
-  const [isPending, startTransition] = useTransition()
-
-  useEffect(() => {
-    const hubListener = Hub.listen('auth', (data) => {
-      switch (data?.payload?.event) {
-        case 'signedIn':
-          startTransition(() => setAuthenticated(true))
-          break
-        case 'signedOut':
-          startTransition(() => setAuthenticated(false))
-      }
-    })
-    return () => hubListener()
-  }, [])
+function Topbar() {
+  const [authenticated, setAuthenticated] = useState<boolean>(false)
 
   return (
     <div className="fixed z-10 h-16 w-full backdrop-blur-sm bg-slate/30 dark:bg-slate-800/30 shadow-md">

@@ -1,7 +1,6 @@
 import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { ReactNode } from 'react'
-import { currentUser } from '@/utils/amplify-utils'
 
 export const metadata: Metadata = {
   title: {
@@ -19,7 +18,7 @@ export default async function OrganizationLayout({
   children: ReactNode
   params: { document: string }
 }>) {
-  const user = await currentUser()
+  const user = true
   const { document } = params
 
   return user ? <div>{children}</div> : redirect('/')

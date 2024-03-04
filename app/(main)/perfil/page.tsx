@@ -2,7 +2,6 @@ import PageDisplay from '@/components/PageDisplay'
 import { Metadata } from 'next'
 import ProfileView from './views/ProfileView'
 import { memo } from 'react'
-import { currentUser } from '@/utils/amplify-utils'
 import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {
@@ -15,10 +14,10 @@ export const metadata: Metadata = {
 }
 
 const ProfilePage = async () => {
-  const user = await currentUser()
+  const user = true
 
   return user ? (
-    <PageDisplay title={`olá ${user?.name || ''}`} subtitle="este é o seu espaço dedicado">
+    <PageDisplay title={`olá`} subtitle="este é o seu espaço dedicado">
       <div className="relative w-full">
         <ProfileView />
       </div>

@@ -2,7 +2,6 @@ import PageDisplay from '@/components/PageDisplay'
 import { Metadata } from 'next'
 import { memo } from 'react'
 import MainView from './views/MainView'
-import { currentUser } from '@/utils/amplify-utils'
 import LandingView from './views/LandingView'
 
 export const metadata: Metadata = {
@@ -15,7 +14,7 @@ export const metadata: Metadata = {
 }
 
 const MainPage = async () => {
-  const user = await currentUser()
+  const user = true
 
   return user ? (
     <PageDisplay

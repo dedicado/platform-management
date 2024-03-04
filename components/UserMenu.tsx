@@ -6,7 +6,6 @@ import { Menu, Transition } from '@headlessui/react'
 
 import { MdAccountBox, MdLogout } from 'react-icons/md'
 import { useRouter } from 'next/navigation'
-import { signOut } from 'aws-amplify/auth'
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ')
@@ -17,7 +16,6 @@ export default function UserMenu() {
 
   const route = useRouter()
   const handleSignOut = useCallback(async () => {
-    await signOut()
     route.refresh()
   }, [route])
 
