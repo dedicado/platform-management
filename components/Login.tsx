@@ -1,6 +1,7 @@
 'use client'
 
 import { LoginValidation, LoginValidationType } from '@/validations/login'
+import { signIn } from 'next-auth/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useForm, SubmitHandler } from 'react-hook-form'
@@ -24,8 +25,22 @@ export default function Login(props: Props) {
   })
 
   const onSubmit: SubmitHandler<LoginValidationType> = async (inputs) => {
-    console.log(inputs)
-    toast.success('boas vindas a sua melhor plataforma de serviços')
+    return await signIn('credentials', {
+      redirect: false,
+      phone: inputs?.phone,
+      password: inputs?.password,
+    })
+      .then((res: any) => {
+        console.log(res)
+        if (!res.ok) {
+          toast.error(res?.error)
+        } else {
+          toast.success('boas vindas a sua melhor plataforma de serviços')
+          onClose()
+          router.refresh()
+        }
+      })
+      .finally(() => reset())
   }
 
   return (
@@ -66,6 +81,18 @@ export default function Login(props: Props) {
       >
         autenticar-se
       </button>
+
+      <div className="w-full flex justify-center">
+        <span className="text-center text-xs font-thin">ou</span>
+      </div>
+
+      <a
+        href="/registrar-se"
+        className="w-full flex justify-center py-2 my-2 text-slate-50 font-semibold bg-green-400/75 rounded-md hover:opacity-80 hover:shadow-md"
+        type="button"
+      >
+        registrar-se
+      </a>
     </form>
   )
 }

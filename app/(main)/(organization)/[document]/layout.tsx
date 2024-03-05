@@ -1,4 +1,6 @@
+import { nextAuthOptions } from '@/libraries/next-auth'
 import { Metadata } from 'next'
+import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import { ReactNode } from 'react'
 
@@ -18,8 +20,8 @@ export default async function OrganizationLayout({
   children: ReactNode
   params: { document: string }
 }>) {
-  const user = true
+  const session = await getServerSession(nextAuthOptions)
   const { document } = params
 
-  return user ? <div>{children}</div> : redirect('/')
+  return session ? <div>{children}</div> : redirect('/')
 }

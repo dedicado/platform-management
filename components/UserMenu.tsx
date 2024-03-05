@@ -6,6 +6,7 @@ import { Menu, Transition } from '@headlessui/react'
 
 import { MdAccountBox, MdLogout } from 'react-icons/md'
 import { useRouter } from 'next/navigation'
+import { signOut } from 'next-auth/react'
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ')
@@ -16,7 +17,8 @@ export default function UserMenu() {
 
   const route = useRouter()
   const handleSignOut = useCallback(async () => {
-    route.refresh()
+    await signOut()
+    route.push('/')
   }, [route])
 
   return (

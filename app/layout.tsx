@@ -5,6 +5,8 @@ import { ReactNode } from 'react'
 import Providers from './providers'
 import Footer from '@/components/Footer'
 import Topbar from '@/components/Topbar'
+import { getServerSession } from 'next-auth'
+import { nextAuthOptions } from '@/libraries/next-auth'
 
 const comfortaa = Comfortaa({
   subsets: ['latin'],
@@ -26,6 +28,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode
 }>) {
+  const session = await getServerSession(nextAuthOptions)
+
   return (
     <html
       lang="en"
@@ -34,7 +38,7 @@ export default async function RootLayout({
     >
       <body className="text-base text-sky-800 bg-slate-200 dark:bg-slate-800">
         <Providers>
-          <Topbar />
+          <Topbar session={session!} />
           <main>{children}</main>
           <Footer />
         </Providers>
