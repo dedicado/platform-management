@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { ChangeEvent, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { actionRegister } from '../actions'
+import { registerUser } from '../actions'
 import { signIn } from 'next-auth/react'
 import {
   RegisterValidation,
@@ -31,7 +31,7 @@ export default function RegisterForm() {
     resolver: zodResolver(RegisterValidation),
   })
   const onSubmit: SubmitHandler<RegisterValidationType> = async (inputs) => {
-    const result = await actionRegister({ ...inputs, password: randomCode })
+    const result = await registerUser({ ...inputs, password: randomCode })
     if (!result?.response?.error) {
       return await signIn('credentials', {
         redirect: false,

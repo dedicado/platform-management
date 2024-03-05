@@ -1,9 +1,11 @@
+'use server'
+
 import {
   RegisterValidation,
   RegisterValidationType,
 } from '@/validations/register'
 
-export const actionRegister = async (
+export const registerUser = async (
   inputs: RegisterValidationType,
 ): Promise<any> => {
   try {

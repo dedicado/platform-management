@@ -5,6 +5,8 @@ import { memo } from 'react'
 import { redirect } from 'next/navigation'
 import { getServerSession } from 'next-auth'
 import { nextAuthOptions } from '@/libraries/next-auth'
+import { getProfile } from './actions'
+import { UserType } from '@/types/user'
 
 export const metadata: Metadata = {
   title: {
@@ -17,11 +19,15 @@ export const metadata: Metadata = {
 
 const ProfilePage = async () => {
   const session = await getServerSession(nextAuthOptions)
+  const profile: UserType | any = await getProfile()
 
   return session ? (
-    <PageDisplay title={`olá`} subtitle="este é o seu espaço dedicado">
+    <PageDisplay
+      title={`olá ${profile?.name.split(' ')[0] || ''}!`}
+      subtitle="este é o seu espaço dedicado"
+    >
       <div className="relative w-full">
-        <ProfileView />
+        <ProfileView data={profile} />
       </div>
     </PageDisplay>
   ) : (
