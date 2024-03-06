@@ -7,6 +7,8 @@ import Footer from '@/components/Footer'
 import Topbar from '@/components/Topbar'
 import { getServerSession } from 'next-auth'
 import { nextAuthOptions } from '@/libraries/next-auth'
+import { getProfile } from './(main)/perfil/actions'
+import { UserType } from '@/types/user'
 
 const comfortaa = Comfortaa({
   subsets: ['latin'],
@@ -29,6 +31,7 @@ export default async function RootLayout({
   children: ReactNode
 }>) {
   const session = await getServerSession(nextAuthOptions)
+  const profile: UserType | any = await getProfile()
 
   return (
     <html
@@ -38,7 +41,7 @@ export default async function RootLayout({
     >
       <body className="text-base text-sky-800 bg-slate-200 dark:bg-slate-800">
         <Providers>
-          <Topbar session={session!} />
+          <Topbar data={profile} />
           <main>{children}</main>
           <Footer />
         </Providers>

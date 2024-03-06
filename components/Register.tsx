@@ -5,14 +5,14 @@ import { useRouter } from 'next/navigation'
 import { ChangeEvent, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { registerUser } from '../actions'
 import { signIn } from 'next-auth/react'
 import {
   RegisterValidation,
   RegisterValidationType,
 } from '@/validations/register'
+import { registerUser } from '@/app/(main)/registrar-se/actions'
 
-export default function RegisterForm() {
+export default function Register() {
   const randomCode = Math.random().toString(32).substr(2, 16)
 
   const [accept, setAccept] = useState<boolean>(false)
@@ -43,7 +43,7 @@ export default function RegisterForm() {
             toast.error(res?.error)
           } else {
             toast.success(`boas vindas a dedicado ${inputs?.name}`)
-            router.push('/')
+            router.push('/perfil')
           }
         })
         .catch((error: any) => toast.error(error?.message))
@@ -77,7 +77,7 @@ export default function RegisterForm() {
         </div>
       </div>
       <div className="flex flex-col sm:flex-row items-center gap-2">
-        <div className="relative w-full sm:w-2/3">
+        <div className="relative w-full">
           <label htmlFor="email" className="dark:text-sky-600">
             e-mail
           </label>
@@ -93,7 +93,9 @@ export default function RegisterForm() {
             </span>
           )}
         </div>
-        <div className="relative w-full sm:w-1/3">
+      </div>
+      <div className="flex flex-col sm:flex-row items-center gap-2">
+        <div className="relative w-full">
           <label htmlFor="registerPhone" className="dark:text-sky-600">
             celular
           </label>

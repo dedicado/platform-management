@@ -31,7 +31,6 @@ export default function Login(props: Props) {
       password: inputs?.password,
     })
       .then((res: any) => {
-        console.log(res)
         if (!res.ok) {
           toast.error(res?.error)
         } else {

@@ -3,7 +3,7 @@
 import { Fragment, useCallback, useState } from 'react'
 import Modal from '@/components/Modal'
 import Login from '@/components/Login'
-import RegisterForm from './RegisterForm'
+import Register from '@/components/Register'
 
 export default function RegisterView() {
   const [openModal, setOpenModal] = useState<boolean>(false)
@@ -24,7 +24,7 @@ export default function RegisterView() {
           <div className="px-4 py-8 max-w-md w-full bg-slate-200 dark:bg-slate-800 rounded-md shadow-md">
             <div className="flex flex-col justify-center items-center gap-4">
               <div className="relative w-full">
-                <RegisterForm />
+                <Register />
               </div>
             </div>
           </div>

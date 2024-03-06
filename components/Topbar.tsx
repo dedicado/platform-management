@@ -1,10 +1,24 @@
+'use client'
+
 import Link from 'next/link'
-import { memo } from 'react'
+import { memo, useEffect, useState, useTransition } from 'react'
 import AuthMenu from './AuthMenu'
 import UserMenu from './UserMenu'
-import { Session } from 'next-auth'
+import { UserType } from '@/types/user'
 
-function Topbar({ session }: { session: Session }) {
+interface Props {
+  data: UserType | any
+}
+
+function Topbar(props: Props) {
+  const { data } = props
+  const [isPending, startTransition] = useTransition()
+  const [authenticated, setAuthenticated] = useState<boolean>(false)
+
+  useEffect(() => {
+    data && startTransition(() => setAuthenticated(true))
+  }, [authenticated, data])
+
   return (
     <div className="fixed z-10 h-16 w-full backdrop-blur-sm bg-slate/30 dark:bg-slate-800/30 shadow-md">
       <div className="h-full flex flex-col justify-center">
@@ -19,7 +33,7 @@ function Topbar({ session }: { session: Session }) {
               </Link>
             </div>
             <div className="flex flex-1 items-center justify-end space-x-2">
-              {session ? <UserMenu /> : <AuthMenu />}
+              {authenticated ? <UserMenu image={data?.image} /> : <AuthMenu />}
             </div>
           </div>
         </div>

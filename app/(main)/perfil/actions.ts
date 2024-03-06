@@ -9,7 +9,6 @@ import {
   ProfileUpdateValidationType,
 } from '@/validations/profile'
 import { getServerSession } from 'next-auth'
-import { hashSync } from 'bcryptjs'
 import { revalidatePath } from 'next/cache'
 
 export const getProfile = async (): Promise<UserType | any> => {
@@ -66,12 +65,11 @@ export const updateProfilePassword = async (
     if (!session) return null
     if (await ProfilePasswordUpdateValidation.parseAsync(inputs)) {
       const { newPassword } = inputs
-      const password = hashSync(newPassword, 10)
       const data = await fetch(
         `${process.env.USER_API_URL}/users/${session?.user?.id}`,
         {
           method: 'PATCH',
-          body: JSON.stringify({ password }),
+          body: JSON.stringify({ password: newPassword }),
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${session?.user?.authorization}`,

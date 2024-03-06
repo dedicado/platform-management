@@ -3,7 +3,7 @@
 const MainView = () => {
   return (
     <div>
-      <h1>página principal</h1>
+      <h1>...</h1>
     </div>
   )
 }

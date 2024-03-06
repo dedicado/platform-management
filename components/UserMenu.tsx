@@ -3,7 +3,6 @@
 import Image from 'next/image'
 import { Fragment, useCallback } from 'react'
 import { Menu, Transition } from '@headlessui/react'
-
 import { MdAccountBox, MdLogout } from 'react-icons/md'
 import { useRouter } from 'next/navigation'
 import { signOut } from 'next-auth/react'
@@ -12,8 +11,8 @@ function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function UserMenu() {
-  const avatar = '/avatar.svg'
+export default function UserMenu({ image }: { image: string }) {
+  const avatar = image || '/avatar.svg'
 
   const route = useRouter()
   const handleSignOut = useCallback(async () => {

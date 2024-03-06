@@ -1,15 +1,10 @@
 import * as z from 'zod'
 
 export const ProfileUpdateValidation = z.object({
-  name: z.string().optional(),
-  document: z.string().min(11).max(14).optional(),
-  email: z.string().email().optional(),
-  phone: z.string().min(10).max(12).optional(),
-  zipCode: z.string().length(8).optional(),
-  street: z.string().optional(),
-  complement: z.string().optional(),
-  latitude: z.coerce.number().optional(),
-  longitude: z.coerce.number().optional(),
+  name: z.string(),
+  document: z.string().min(11).max(14),
+  email: z.string().email(),
+  phone: z.string().min(10).max(12),
 })
 export type ProfileUpdateValidationType = z.infer<
   typeof ProfileUpdateValidation
@@ -17,9 +12,8 @@ export type ProfileUpdateValidationType = z.infer<
 
 export const ProfilePasswordUpdateValidation = z
   .object({
-    oldPassword: z.string().min(8),
     newPassword: z.string().min(8).max(25),
-    confirmNewPassword: z.string(),
+    confirmNewPassword: z.string().min(8).max(25),
   })
   .refine((data) => data.newPassword === data.confirmNewPassword, {
     message: 'é diferente da nova senha',

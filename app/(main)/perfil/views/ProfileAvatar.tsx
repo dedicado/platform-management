@@ -5,8 +5,8 @@ import { Suspense, useCallback, useState } from 'react'
 import ProfileAvatarPreview from './ProfileAvatarPreview'
 import Modal from '@/components/Modal'
 
-export default function ProfileAvatar() {
-  const avatar = '/avatar.svg'
+export default function ProfileAvatar({ image }: { image: string }) {
+  const avatar = image || '/avatar.svg'
 
   const [openModal, setOpenModal] = useState<boolean>(false)
   const handleModal = useCallback(() => {

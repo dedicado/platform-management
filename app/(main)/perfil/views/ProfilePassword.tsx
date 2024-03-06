@@ -29,15 +29,19 @@ export default function ProfilePassword() {
   const onSubmit: SubmitHandler<ProfilePasswordUpdateValidationType> = async (
     inputs,
   ) => {
-    const result = await updateProfilePassword(inputs)
-    if (result?.response?.error) {
-      toast.error(result?.message)
-    } else {
-      toast.success(result)
+    try {
+      const result = await updateProfilePassword(inputs)
+      if (result?.error) {
+        toast.error(result?.message)
+      } else {
+        setOpenModal(!openModal)
+        toast.success('autentique-se novamente com a nova senha')
+        signOut()
+      }
+    } catch (error: any) {
+      toast.error(error?.message || 'ocorreu um erro inesperado')
+    } finally {
       reset()
-      setOpenModal(!openModal)
-      toast.success('autentique-se novamente com a nova senha')
-      await signOut()
     }
   }
 
@@ -60,22 +64,6 @@ export default function ProfilePassword() {
           noValidate
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className="flex flex-col sm:flex-row items-center gap-2">
-            <div className="relative w-full">
-              <label htmlFor="oldPassword">senha atual</label>
-              <input
-                id="oldPassword"
-                className="w-full rounded-md"
-                {...register('oldPassword')}
-                type="password"
-              />
-              {errors && (
-                <span className="text-xs text-red-400 italic lowercase">
-                  {errors?.oldPassword?.message}
-                </span>
-              )}
-            </div>
-          </div>
           <div className="flex flex-col sm:flex-row items-center gap-2">
             <div className="relative w-full">
               <label htmlFor="newPassword">nova senha</label>

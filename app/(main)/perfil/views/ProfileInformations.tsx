@@ -29,19 +29,20 @@ export default function ProfileInformations(props: Props) {
       document: data?.document,
       phone: data?.phone,
       email: data?.email,
-      zipCode: data?.zipCode,
-      street: data?.street,
-      complement: data?.complement,
     },
   })
   const onSubmit: SubmitHandler<ProfileUpdateValidationType> = async (
     inputs,
   ) => {
-    const result = await updateProfile(inputs)
-    if (result?.response?.error) {
-      toast.error(result?.message)
-    } else {
-      toast.success(result)
+    try {
+      const result = await updateProfile(inputs)
+      if (result?.response?.error) {
+        toast.error(result?.message)
+      } else {
+        toast.success(result)
+      }
+    } catch (error: any) {
+      toast.success(error?.message || 'ocorreu um erro inesperado')
     }
   }
 
@@ -111,51 +112,7 @@ export default function ProfileInformations(props: Props) {
           )}
         </div>
       </div>
-      <div className="flex flex-col sm:flex-row items-center gap-2">
-        <div className="relative w-full sm:w-1/4">
-          <label htmlFor="zipCode">cep</label>
-          <input
-            className="w-full rounded-md"
-            {...register('zipCode')}
-            type="number"
-          />
-          {errors && (
-            <span className="text-xs text-red-400 italic lowercase">
-              {errors?.zipCode?.message}
-            </span>
-          )}
-        </div>
-        <div className="relative w-full sm:w-3/4">
-          <label htmlFor="street">logradouro</label>
-          <input
-            id="street"
-            className="w-full rounded-md"
-            {...register('street')}
-            type="text"
-          />
-          {errors && (
-            <span className="text-xs text-red-400 italic lowercase">
-              {errors?.street?.message}
-            </span>
-          )}
-        </div>
-      </div>
-      <div className="flex flex-col sm:flex-row items-center gap-2">
-        <div className="relative w-full">
-          <label htmlFor="complement">complemento</label>
-          <input
-            id="complement"
-            className="w-full rounded-md"
-            {...register('complement')}
-            type="text"
-          />
-          {errors && (
-            <span className="text-xs text-red-400 italic lowercase">
-              {errors?.complement?.message}
-            </span>
-          )}
-        </div>
-      </div>
+
       <button
         className="w-full py-2 my-2 text-slate-50 font-semibold bg-sky-400/75 rounded-md hover:opacity-80 hover:shadow-md"
         type="submit"
