@@ -19,7 +19,11 @@ export default function AuthMenu() {
       >
         <MdLogin size={24} />
       </span>
-      <Modal open={openModal} onClose={handleModal} subtitle="" >
+      <Modal
+        open={openModal}
+        onClose={handleModal}
+        subtitle="informe suas credenciais para autenticar-se na plataforma"
+      >
         <Login onClose={handleModal} />
       </Modal>
     </div>

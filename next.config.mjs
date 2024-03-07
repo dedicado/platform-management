@@ -1,5 +1,11 @@
+import createMDX from '@next/mdx'
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  pageExtensions: ['md', 'mdx', 'ts', 'tsx'],
+  experimental: {
+    mdxRs: true,
+  },
   env: {
     SECRET: process.env.SECRET ?? '',
     NEXTAUTH_URL: process.env.NEXTAUTH_URL ?? '',
@@ -26,4 +32,12 @@ const nextConfig = {
   },
 }
 
-export default nextConfig
+const withMDX = createMDX({
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [],
+    rehypePlugins: [],
+  },
+})
+
+export default withMDX(nextConfig)

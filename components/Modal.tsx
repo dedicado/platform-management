@@ -6,7 +6,7 @@ interface Props {
   children: ReactNode
   open: boolean
   onClose: () => void
-  size?: 'max-w-sm' | 'max-w-md' | 'max-w-lg' | 'max-w-xl'
+  size?: 'w-sm' | 'w-md' | 'w-lg' | 'w-xl' | 'w-full'
   subtitle?: string
   title?: string
 }
@@ -41,8 +41,8 @@ export default function Modal(props: Props) {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
-                className={`w-full ${
-                  size || 'max-w-sm'
+                className={`${
+                  size || 'max-w-full'
                 } transform overflow-hidden rounded-md bg-slate-200 dark:bg-slate-800 p-6 text-left align-middle shadow-xl transition-all`}
               >
                 <Dialog.Title

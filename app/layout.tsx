@@ -7,7 +7,7 @@ import Footer from '@/components/Footer'
 import Topbar from '@/components/Topbar'
 import { getServerSession } from 'next-auth'
 import { nextAuthOptions } from '@/libraries/next-auth'
-import { getProfile } from './(main)/perfil/actions'
+import { getProfile } from './main/perfil/actions'
 import { UserType } from '@/types/user'
 
 const comfortaa = Comfortaa({
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     template: `%s | dedicado`,
   },
   description:
-    'Soluções personalizadas de sistemas de alta performance que aumentam a produtividade de pessoas e organizações',
+    'soluções personalizadas de sistemas de alta performance que aumentam a produtividade de pessoas e organizações',
 }
 
 export default async function RootLayout({

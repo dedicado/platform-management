@@ -19,9 +19,13 @@ function Footer() {
             todos os direitos reservados
           </small>
         </div>
-        <small className="text-xs text-center md:text-left font-thin lowercase hover:text-sky-600 cursor-pointer">
+        <Link
+          href={`${process.env.NEXTAUTH_URL}/termos-e-politicas`}
+          target="_blank"
+          className="text-xs text-center md:text-left font-thin lowercase hover:text-sky-600 cursor-pointer"
+        >
           termos e políticas
-        </small>
+        </Link>
       </div>
     </div>
   )
