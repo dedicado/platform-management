@@ -14,5 +14,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.5,
     },
+    {
+      url: `${process.env.NEXTAUTH_URL}/termos-e-politicas`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.5,
+    },
   ]
 }
