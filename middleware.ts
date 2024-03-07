@@ -23,13 +23,13 @@ export default async function middleware(request: NextRequest) {
     searchParams.length > 0 ? `?${searchParams}` : ''
   }`
 
-  if (hostname == `${process.env.BASE_URL}`) {
+  if (hostname == `www.${process.env.BASE_URL}`) {
     return NextResponse.rewrite(
       new URL(`/main${path === '/' ? '' : path}`, request.url),
     )
   }
 
-  if (hostname == `www.${process.env.BASE_URL}`) {
+  if (hostname == `${process.env.BASE_URL}`) {
     return NextResponse.rewrite(
       new URL(`/main${path === '/' ? '' : path}`, request.url),
     )
