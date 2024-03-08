@@ -4,7 +4,6 @@ import { DefaultSession } from 'next-auth'
 declare module 'next-auth/jwt' {
   interface JWT {
     id: string
-    id: string
     authorizationKey: string
     active: boolean
     profile: string
