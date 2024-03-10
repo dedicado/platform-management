@@ -10,13 +10,10 @@ import {
   ProfileUpdateValidationType,
 } from '@/validations/profile'
 import { updateProfile } from '../actions'
+import { usePlatform } from '@/app/context'
 
-interface Props {
-  data: UserType | any
-}
-
-export default function ProfileInformations(props: Props) {
-  const { data } = props
+export default function ProfileInformations() {
+  const { userProfile }: any = usePlatform()
 
   const {
     formState: { errors },
@@ -25,10 +22,10 @@ export default function ProfileInformations(props: Props) {
   } = useForm<ProfileUpdateValidationType>({
     resolver: zodResolver(ProfileUpdateValidation),
     defaultValues: {
-      name: data?.name,
-      document: data?.document,
-      phone: data?.phone,
-      email: data?.email,
+      name: userProfile?.name,
+      document: userProfile?.document,
+      phone: userProfile?.phone,
+      email: userProfile?.email,
     },
   })
   const onSubmit: SubmitHandler<ProfileUpdateValidationType> = async (

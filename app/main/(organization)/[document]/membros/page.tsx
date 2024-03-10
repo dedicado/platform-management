@@ -1,26 +1,23 @@
+'use client'
+
 import PageDisplay from '@/components/PageDisplay'
 import { memo } from 'react'
-import { Metadata } from 'next'
 import MemberView from './views/MemberView'
+import { useOrganization } from '../context'
+import NotFoundPage from '@/app/not-found'
 
-export const metadata: Metadata = {
-  title: {
-    default: 'membros da minha organização',
-    template: `%s | dedicado`,
-  },
-  description:
-    'soluções personalizadas de sistemas de alta performance que aumentam a produtividade de pessoas e organizações',
-}
+const MemberPage = async () => {
+  const { organization }: any = useOrganization()
 
-const MemberPage = async ({ params }: { params: { document: string } }) => {
-  const { document } = params
-  return (
+  return !organization.status ? (
     <PageDisplay
-      title={document || 'membros da organização'}
-      subtitle={document || 'a melhor plataforma de serviços'}
+      title={`membros da organização ${organization?.name || ''}`}
+      subtitle={'a melhor plataforma de serviços'}
     >
       <MemberView />
     </PageDisplay>
+  ) : (
+    <NotFoundPage />
   )
 }
 export default memo(MemberPage)

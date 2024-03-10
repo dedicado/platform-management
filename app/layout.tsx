@@ -5,10 +5,9 @@ import { ReactNode } from 'react'
 import Providers from './providers'
 import Footer from '@/components/Footer'
 import Topbar from '@/components/Topbar'
-import { getServerSession } from 'next-auth'
-import { nextAuthOptions } from '@/libraries/next-auth'
 import { getProfile } from './main/perfil/actions'
 import { UserType } from '@/types/user'
+import { PlatformProvider } from './context'
 
 const comfortaa = Comfortaa({
   subsets: ['latin'],
@@ -30,7 +29,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode
 }>) {
-  const session = await getServerSession(nextAuthOptions)
   const profile: UserType | any = await getProfile()
 
   return (
@@ -41,9 +39,11 @@ export default async function RootLayout({
     >
       <body className="text-base text-sky-800 bg-slate-200 dark:bg-slate-800">
         <Providers>
-          <Topbar data={profile} />
-          <main>{children}</main>
-          <Footer />
+          <PlatformProvider userProfile={profile}>
+            <Topbar />
+            <main>{children}</main>
+            <Footer />
+          </PlatformProvider>
         </Providers>
       </body>
     </html>

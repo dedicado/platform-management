@@ -1,38 +1,23 @@
+'use client'
+
 import PageDisplay from '@/components/PageDisplay'
-import { Metadata } from 'next'
 import { memo } from 'react'
 import OrganizationView from './views/OrganizationView'
+import { useOrganization } from './context'
+import NotFoundPage from '@/app/not-found'
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { document: string }
-}): Promise<Metadata | null> {
-  const { document } = params
+const OrganizationPage = async () => {
+  const { organization }: any = useOrganization()
 
-  return {
-    title: {
-      default: `a melhor plataforma de serviços da ${document}`,
-      template: `%s | dedicado`,
-    },
-    description:
-      'soluções personalizadas de sistemas de alta performance que aumentam a produtividade de pessoas e organizações',
-  }
-}
-
-const OrganizationPage = async ({
-  params,
-}: {
-  params: { document: string }
-}) => {
-  const { document } = params
-  return (
+  return !organization.status ? (
     <PageDisplay
-      title={document || 'seu espaço dedicado'}
-      subtitle={document || 'a melhor plataforma de serviços'}
+      title={`espaço dedicado da organização ${organization?.name}`}
+      subtitle={`a melhor plataforma de serviços`}
     >
       <OrganizationView />
     </PageDisplay>
+  ) : (
+    <NotFoundPage />
   )
 }
 export default memo(OrganizationPage)

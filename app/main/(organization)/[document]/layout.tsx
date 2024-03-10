@@ -3,14 +3,32 @@ import { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import { ReactNode } from 'react'
+import { OrganizationProvider } from './context'
+import { getOrganizationByDocument } from './actions'
+import { OrganizationType } from '@/types/organization'
+import { OrderType } from '@/types/order'
+import { getOrdersByDocument } from './pedidos/actions'
 
-export const metadata: Metadata = {
-  title: {
-    default: 'sua melhor plataforma de serviços',
-    template: `%s | dedicado`,
-  },
-  description:
-    'soluções personalizadas de sistemas de alta performance que aumentam a produtividade de pessoas e organizações',
+export async function generateMetadata({
+  params,
+}: {
+  params: { document: string }
+}): Promise<Metadata | null> {
+  const { document } = params
+  const organization: OrganizationType | any = await getOrganizationByDocument(
+    document,
+  )
+
+  return {
+    title: {
+      default: `a melhor plataforma de serviços da ${
+        organization?.name || 'sua organização'
+      }`,
+      template: `%s | dedicado`,
+    },
+    description:
+      'soluções personalizadas de sistemas de alta performance que aumentam a produtividade de pessoas e organizações',
+  }
 }
 
 export default async function OrganizationLayout({
@@ -22,6 +40,16 @@ export default async function OrganizationLayout({
 }>) {
   const session = await getServerSession(nextAuthOptions)
   const { document } = params
+  const organization: OrganizationType | any = await getOrganizationByDocument(
+    document,
+  )
+  const orders: OrderType[] | any = await getOrdersByDocument(document)
 
-  return session ? <div>{children}</div> : redirect('/')
+  return session ? (
+    <OrganizationProvider organization={organization} orders={orders}>
+      {children}
+    </OrganizationProvider>
+  ) : (
+    redirect('/')
+  )
 }

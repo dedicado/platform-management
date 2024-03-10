@@ -4,20 +4,16 @@ import Link from 'next/link'
 import { memo, useEffect, useState, useTransition } from 'react'
 import AuthMenu from './AuthMenu'
 import UserMenu from './UserMenu'
-import { UserType } from '@/types/user'
+import { usePlatform } from '@/app/context'
 
-interface Props {
-  data: UserType | any
-}
-
-function Topbar(props: Props) {
-  const { data } = props
+function Topbar() {
+  const { userProfile }: any = usePlatform()
   const [isPending, startTransition] = useTransition()
   const [authenticated, setAuthenticated] = useState<boolean>(false)
 
   useEffect(() => {
-    data && startTransition(() => setAuthenticated(true))
-  }, [authenticated, data])
+    userProfile && startTransition(() => setAuthenticated(true))
+  }, [authenticated, userProfile])
 
   return (
     <div className="fixed z-10 h-16 w-full backdrop-blur-sm bg-slate/30 dark:bg-slate-800/30 shadow-md">
@@ -33,7 +29,11 @@ function Topbar(props: Props) {
               </Link>
             </div>
             <div className="flex flex-1 items-center justify-end space-x-2">
-              {authenticated ? <UserMenu image={data?.image} /> : <AuthMenu />}
+              {authenticated ? (
+                <UserMenu image={userProfile?.image} />
+              ) : (
+                <AuthMenu />
+              )}
             </div>
           </div>
         </div>
