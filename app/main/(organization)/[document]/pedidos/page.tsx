@@ -3,10 +3,13 @@
 import PageDisplay from '@/components/PageDisplay'
 import { memo } from 'react'
 import OrderView from './views/OrderView'
-import { Metadata } from 'next'
 import { useOrganization } from '../context'
 import NotFoundPage from '@/app/not-found'
-import OrdersMapView from './views/OrdersMapView'
+import dynamic from 'next/dynamic'
+
+const OrdersMapView = dynamic(() => import('./views/OrdersMapView'), {
+  ssr: false,
+})
 
 const OrderPage = async () => {
   const { organization }: any = useOrganization()
@@ -17,7 +20,9 @@ const OrderPage = async () => {
       subtitle={`a melhor plataforma de serviços`}
     >
       <OrderView />
-      <OrdersMapView />
+      <div className="relative w-full">
+        <OrdersMapView />
+      </div>
     </PageDisplay>
   ) : (
     <NotFoundPage />

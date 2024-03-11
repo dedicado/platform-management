@@ -22,7 +22,7 @@ function PageDisplay(props: Props) {
         </div>
       </div>
       <div className="min-h-[65vh] bg-slate-100 dark:bg-slate-600 dark:text-slate-800 shadow-md">
-        <div className="max-w-7xl mx-auto w-full px-4 sm:px-8 py-4 space-y-2">
+        <div className="block max-w-7xl mx-auto w-full px-4 sm:px-8 py-4 space-y-2">
           {children}
         </div>
       </div>
