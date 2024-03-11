@@ -1,5 +1,7 @@
 'use client'
 
+import { OrderType } from '@/types/order'
+import { MemberType, OrganizationType } from '@/types/organization'
 import { UserType } from '@/types/user'
 import {
   ReactNode,
@@ -17,6 +19,9 @@ export type UserLocationType = {
 interface Props {
   userLocation: UserLocationType
   userProfile: UserType
+  member: MemberType[]
+  organizations: OrganizationType[]
+  orders: OrderType[]
 }
 
 const PlatformContext = createContext<Props | any>({})
@@ -24,9 +29,13 @@ const PlatformContext = createContext<Props | any>({})
 export const PlatformProvider = ({
   children,
   userProfile,
+  member,
+  orders,
 }: {
   children: ReactNode
   userProfile: UserType | any
+  member: MemberType[] | any
+  orders: OrderType[] | any
 }) => {
   const [isPending, startTransition] = useTransition()
   const [userLocation, setUserLocation] = useState<UserLocationType>()
@@ -53,8 +62,14 @@ export const PlatformProvider = ({
     await getUserLocation()
   }, 120000)
 
+  const organizations: OrganizationType[] | any = member.map(
+    (member: MemberType) => member.organization,
+  )
+
   return (
-    <PlatformContext.Provider value={{ userLocation, userProfile }}>
+    <PlatformContext.Provider
+      value={{ userLocation, userProfile, member, organizations, orders }}
+    >
       {children}
     </PlatformContext.Provider>
   )

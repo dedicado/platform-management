@@ -1,16 +1,17 @@
 'use server'
 
 import { nextAuthOptions } from '@/libraries/next-auth'
-import { OrganizationType } from '@/types/organization'
+import { MemberType } from '@/types/organization'
 import { getServerSession } from 'next-auth'
 
-export const getOrganizationByDocument = async (
-  document: string,
-): Promise<OrganizationType | any> => {
+export const getMemberByUserPhone = async (): Promise<
+  MemberType[] | any
+> => {
   const session = await getServerSession(nextAuthOptions)
   try {
     const data = await fetch(
-      `${process.env.ORGANIZATION_API_URL}/organizations/document/${document}`,
+      `${process.env.ORGANIZATION_API_URL}/members/phone/${session?.user
+        ?.phone!}`,
       {
         method: 'GET',
         headers: {

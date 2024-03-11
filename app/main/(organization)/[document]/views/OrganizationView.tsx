@@ -3,7 +3,7 @@
 export const OrganizationView = () => {
   return (
     <div>
-      <h1>página da organização</h1>
+      <h1>...</h1>
     </div>
   )
 }

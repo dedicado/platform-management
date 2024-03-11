@@ -14,6 +14,8 @@ const nextConfig = {
     ORGANIZATION_API_URL: process.env.ORGANIZATION_API_URL ?? '',
     ORDER_API_URL: process.env.ORDER_API_URL ?? '',
     ZIPCODE_API_URL: process.env.ZIPCODE_API_URL ?? '',
+    MAPBOX_API_KEY: process.env.MAPBOX_API_KEY ?? '',
+    MAPBOX_STYLES: process.env.MAPBOX_STYLES ?? '',
   },
   images: {
     remotePatterns: [
