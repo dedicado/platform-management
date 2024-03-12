@@ -1,6 +1,5 @@
 'use client'
 
-import { UserType } from '@/types/user'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'

@@ -6,6 +6,7 @@ export type UserType = {
   softDeleted: boolean
   active: boolean
   subscriber: boolean
+  avaiable: boolean
   authorizationKey: boolean
   profile: 'guest' | 'consumer' | 'member' | 'master'
   name: string
@@ -18,6 +19,16 @@ export type UserType = {
   zipCode: string
   street: string
   complement: string
+  latitude: number
+  longitude: number
+  lastLocations: LastLocationType[] | any
+}
+
+export type LastLocationType = {
+  id: string
+  createdAt: Date
+  userId: string
+  user: UserType | any
   latitude: number
   longitude: number
 }

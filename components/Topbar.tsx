@@ -1,10 +1,11 @@
 'use client'
 
 import Link from 'next/link'
-import { memo, useEffect, useState, useTransition } from 'react'
+import { Fragment, memo, useEffect, useState, useTransition } from 'react'
 import AuthMenu from './AuthMenu'
 import UserMenu from './UserMenu'
 import { usePlatform } from '@/app/context'
+import CreateOrganizationView from '@/app/main/(organization)/[document]/views/CreateOrganizationView'
 
 function Topbar() {
   const { userProfile }: any = usePlatform()
@@ -30,7 +31,10 @@ function Topbar() {
             </div>
             <div className="flex flex-1 items-center justify-end space-x-2">
               {authenticated ? (
-                <UserMenu image={userProfile?.image} />
+                <Fragment>
+                  <CreateOrganizationView />
+                  <UserMenu image={userProfile?.image} />
+                </Fragment>
               ) : (
                 <AuthMenu />
               )}

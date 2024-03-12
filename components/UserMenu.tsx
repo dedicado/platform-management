@@ -3,15 +3,18 @@
 import Image from 'next/image'
 import { Fragment, useCallback } from 'react'
 import { Menu, Transition } from '@headlessui/react'
-import { MdAccountBox, MdLogout } from 'react-icons/md'
+import { MdAccountBox, MdDomain, MdLogout } from 'react-icons/md'
 import { useRouter } from 'next/navigation'
 import { signOut } from 'next-auth/react'
+import { OrganizationType } from '@/types/organization'
+import { usePlatform } from '@/app/context'
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function UserMenu({ image }: { image: string }) {
+  const { organizations }: OrganizationType[] | any = usePlatform()
   const avatar = image || '/avatar.svg'
 
   const route = useRouter()
@@ -45,19 +48,42 @@ export default function UserMenu({ image }: { image: string }) {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-            <div className="py-2">
+          <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-slate-200 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <div className="flex flex-col py-2">
+              <small className="m-2 text-xs text-center text-slate-200 bg-sky-800 p-2 rounded-md">
+                minhas organizações
+              </small>
+              {organizations &&
+                organizations?.map((organization: OrganizationType) => {
+                  return (
+                    <Menu.Item key={organization?.id}>
+                      {({ active }) => (
+                        <a
+                          href={organization?.document}
+                          className={classNames(
+                            active ? 'bg-slate-400/50' : 'font-normal',
+                            'flex items-center px-4 py-2 gap-2 cursor-pointer',
+                          )}
+                        >
+                          <MdDomain size={18} />
+                          {organization?.name}
+                        </a>
+                      )}
+                    </Menu.Item>
+                  )
+                })}
+              <hr className="m-2 border-1 border-slate-400" />
               <Menu.Item>
                 {({ active }) => (
                   <a
                     href="/perfil"
                     className={classNames(
-                      active ? 'bg-slate-200' : 'font-normal',
+                      active ? 'bg-slate-400/50' : 'font-normal',
                       'flex items-center px-4 py-2 gap-2',
                     )}
                   >
                     <MdAccountBox size={18} />
-                    perfil
+                    meu perfil
                   </a>
                 )}
               </Menu.Item>
@@ -66,7 +92,7 @@ export default function UserMenu({ image }: { image: string }) {
                   <a
                     onClick={handleSignOut}
                     className={classNames(
-                      active ? 'bg-slate-200' : 'font-normal',
+                      active ? 'bg-slate-400/50' : 'font-normal',
                       'flex items-center px-4 py-2 gap-2 cursor-pointer',
                     )}
                   >

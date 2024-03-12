@@ -2,18 +2,21 @@
 
 import { OrderType } from '@/types/order'
 import { MemberType, OrganizationType } from '@/types/organization'
-import { UserType } from '@/types/user'
+import { LastLocationType, UserType } from '@/types/user'
 import {
   ReactNode,
   createContext,
   useContext,
+  useEffect,
   useState,
   useTransition,
 } from 'react'
+import { registerLocation } from './actions'
+import { CreateLastLocationValidationType } from '@/validations/last-location'
 
 export type UserLocationType = {
-  latitude: number | null
-  longitude: number | null
+  latitude: number
+  longitude: number
 }
 
 interface Props {
@@ -37,30 +40,54 @@ export const PlatformProvider = ({
   member: MemberType[] | any
   orders: OrderType[] | any
 }) => {
-  const [isPending, startTransition] = useTransition()
-  const [userLocation, setUserLocation] = useState<UserLocationType>()
-
-  const getUserLocation = async () => {
-    try {
-      userProfile &&
-        navigator?.geolocation.watchPosition((position) => {
-          if (!position) return null
-          position &&
-            startTransition(() =>
-              setUserLocation({
-                latitude: position?.coords?.latitude,
-                longitude: position?.coords?.longitude,
-              }),
-            )
-        })
-    } catch (error: any) {
-      //console.error(error)
-      return null
-    }
+  const lastUserPosition: LastLocationType | any =
+    userProfile?.lastLocations?.at(-1)
+  const firstPosition: UserLocationType = {
+    latitude: -27.59667,
+    longitude: -48.54917,
   }
-  setTimeout(async () => {
-    await getUserLocation()
-  }, 120000)
+  const lastPosition: UserLocationType | any = {
+    latitude: lastUserPosition?.latitude,
+    longitude: lastUserPosition?.longitude,
+  }
+  const [isPending, startTransition] = useTransition()
+  const [userLocation, setUserLocation] = useState<UserLocationType>(
+    lastPosition || firstPosition,
+  )
+
+  useEffect(() => {
+    const getUserLocation = async () => {
+      try {
+        userProfile &&
+          navigator?.geolocation.watchPosition((position) => {
+            if (!position) return null
+            const coordinates: UserLocationType = {
+              latitude: position?.coords?.latitude,
+              longitude: position?.coords?.longitude,
+            }
+            const registerUserLocation: CreateLastLocationValidationType = {
+              userPhone: userProfile?.phone,
+              latitude: coordinates?.latitude,
+              longitude: coordinates?.longitude,
+            }
+            startTransition(() => setUserLocation(coordinates))
+            const samePosition = userLocation === lastPosition
+            const avaiable = userProfile?.avaiable
+
+            avaiable &&
+              startTransition(
+                async () =>
+                  !samePosition &&
+                  (await registerLocation(registerUserLocation)),
+              )
+          })
+      } catch (error: any) {
+        //console.error(error)
+        return null
+      }
+    }
+    getUserLocation()
+  }, [lastPosition, userLocation, userProfile])
 
   const organizations: OrganizationType[] | any = member.map(
     (member: MemberType) => member.organization,

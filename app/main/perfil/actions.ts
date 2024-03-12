@@ -3,6 +3,7 @@
 import { nextAuthOptions } from '@/libraries/next-auth'
 import { UserType } from '@/types/user'
 import {
+  ProfileAvaiableValidation,
   ProfilePasswordUpdateValidation,
   ProfilePasswordUpdateValidationType,
   ProfileUpdateValidation,
@@ -78,6 +79,29 @@ export const updateProfilePassword = async (
       )
       return data && (await data.json())
     }
+  } catch (error: any) {
+    return error?.message || 'ocorreu um erro inesperado'
+  }
+}
+
+export const updateProfileAvaiable = async (
+  avaiable: boolean,
+): Promise<any> => {
+  const session = await getServerSession(nextAuthOptions)
+  try {
+    if (!session) return null
+    const data = await fetch(
+      `${process.env.USER_API_URL}/users/${session?.user?.id}`,
+      {
+        method: 'PATCH',
+        body: JSON.stringify({ avaiable: avaiable }),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${session?.user?.authorization}`,
+        },
+      },
+    )
+    return data && (await data.json())
   } catch (error: any) {
     return error?.message || 'ocorreu um erro inesperado'
   }
