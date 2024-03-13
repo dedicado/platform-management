@@ -3,7 +3,6 @@
 import { nextAuthOptions } from '@/libraries/next-auth'
 import { UserType } from '@/types/user'
 import {
-  ProfileAvaiableValidation,
   ProfilePasswordUpdateValidation,
   ProfilePasswordUpdateValidationType,
   ProfileUpdateValidation,
@@ -101,6 +100,9 @@ export const updateProfileAvailable = async (
         },
       },
     )
+    //console.log(available)
+    //console.log('updateProfileAvailable: ',await data.json())
+    revalidatePath('/')
     return data && (await data.json())
   } catch (error: any) {
     return error?.message || 'ocorreu um erro inesperado'

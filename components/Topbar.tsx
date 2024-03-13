@@ -5,8 +5,8 @@ import { Fragment, memo, useEffect, useState, useTransition } from 'react'
 import AuthMenu from './AuthMenu'
 import UserMenu from './UserMenu'
 import { usePlatform } from '@/app/context'
-import CreateOrganizationView from '@/app/main/(organization)/[document]/views/CreateOrganizationView'
 import { UserType } from '@/types/user'
+import UserAvailable from './UserAvailable'
 
 function Topbar() {
   const { userProfile }: UserType | any = usePlatform()
@@ -33,7 +33,7 @@ function Topbar() {
             <div className="flex flex-1 items-center justify-end space-x-2">
               {authenticated ? (
                 <Fragment>
-                  <CreateOrganizationView />
+                  <UserAvailable />
                   <UserMenu image={userProfile?.image} />
                 </Fragment>
               ) : (

@@ -12,19 +12,20 @@ export default function CreateOrganizationView() {
   }, [openModal])
 
   return (
-    <div>
+    <div className='relative'>
       <span
-        className="flex rounded-full p-1 cursor-pointer hover:opacity-50 hover:shadow-md dark:text-sky-600"
+        className="w-full flex item-center gap-2 text-xs text-center text-slate-200 bg-sky-800 p-2 rounded-md cursor-pointer hover:text-opacity-50"
         onClick={handleModal}
       >
-        <MdOutlineDomainAdd size={24} />
+        <MdOutlineDomainAdd size={18} />
+        criar nova organização
       </span>
       <Modal
         open={openModal}
         onClose={handleModal}
         subtitle={`criar nova organização na plataforma`}
       >
-        <div className='w-full max-w-lg'>
+        <div className="w-full max-w-lg">
           <CreateOrganizationForm onClose={handleModal} />
         </div>
       </Modal>

@@ -3,12 +3,18 @@
 import Image from 'next/image'
 import { Fragment, useCallback } from 'react'
 import { Menu, Transition } from '@headlessui/react'
-import { MdAccountBox, MdDomain, MdLogout } from 'react-icons/md'
+import {
+  MdAccountBox,
+  MdDomain,
+  MdLogout,
+  MdOutlineMapsHomeWork,
+} from 'react-icons/md'
 import { useRouter } from 'next/navigation'
 import { signOut } from 'next-auth/react'
 import { OrganizationType } from '@/types/organization'
 import { usePlatform } from '@/app/context'
 import { updateProfileAvailable } from '@/app/main/perfil/actions'
+import CreateOrganizationView from '@/app/main/(organization)/[document]/views/CreateOrganizationView'
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ')
@@ -51,10 +57,16 @@ export default function UserMenu({ image }: { image: string }) {
           leaveTo="transform opacity-0 scale-95"
         >
           <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-slate-200 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-            <div className="flex flex-col py-2">
-              <small className="m-2 text-xs text-center text-slate-200 bg-sky-800 p-2 rounded-md">
-                minhas organizações
-              </small>
+            <div className="flex flex-col gap-1 mt-2">
+              <div className="px-2">
+                <CreateOrganizationView />
+              </div>
+              <div className="px-2">
+                <span className="w-full flex item-center gap-2 text-xs text-center text-slate-200 bg-sky-800/70 p-2 rounded-md">
+                  <MdOutlineMapsHomeWork size={18} />
+                  minhas organizações
+                </span>
+              </div>
               {organizations &&
                 organizations?.map((organization: OrganizationType) => {
                   return (
@@ -74,6 +86,7 @@ export default function UserMenu({ image }: { image: string }) {
                     </Menu.Item>
                   )
                 })}
+
               <hr className="m-2 border-1 border-slate-400" />
               <Menu.Item>
                 {({ active }) => (
