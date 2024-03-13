@@ -44,6 +44,7 @@ export const PlatformProvider = ({
   const lastPosition: UserLocationType | any = useMemo(() => {
     const lastUserPosition: LastLocationType | any =
       userProfile?.lastLocations?.at(-1)
+
     return {
       latitude: lastUserPosition?.latitude,
       longitude: lastUserPosition?.longitude,
@@ -57,6 +58,7 @@ export const PlatformProvider = ({
 
   //console.log('lastPosition: ', lastPosition)
   //console.log('userLocation: ', userLocation)
+  //console.log('userProfile:', userProfile )
 
   useEffect(() => {
     const getUserLocation = async () => {
