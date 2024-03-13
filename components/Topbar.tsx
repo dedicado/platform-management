@@ -6,9 +6,10 @@ import AuthMenu from './AuthMenu'
 import UserMenu from './UserMenu'
 import { usePlatform } from '@/app/context'
 import CreateOrganizationView from '@/app/main/(organization)/[document]/views/CreateOrganizationView'
+import { UserType } from '@/types/user'
 
 function Topbar() {
-  const { userProfile }: any = usePlatform()
+  const { userProfile }: UserType | any = usePlatform()
   const [isPending, startTransition] = useTransition()
   const [authenticated, setAuthenticated] = useState<boolean>(false)
 
