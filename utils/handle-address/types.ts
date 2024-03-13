@@ -19,3 +19,19 @@ export type UpdateAddressType = {
   id: string
   entity: 'users' | 'organizations'
 }
+
+export type GeolocationType = {
+  latitude: number
+  longitude: number
+}
+
+export type AddressTypeByGeolocation = {
+  place: string
+  street: string
+  number: string
+  district: string
+  zipCode: string
+  city: string
+  state: string
+  country: string
+}

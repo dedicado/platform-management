@@ -1,7 +1,7 @@
 'use client'
 
-import { Fragment, ReactNode } from 'react'
-import ReactMapGL from 'react-map-gl'
+import { ReactNode } from 'react'
+import Map from 'react-map-gl'
 
 interface Props {
   children?: ReactNode
@@ -14,28 +14,22 @@ export default function MapBox(props: Props) {
   const { children, latitude, longitude, zoom } = props
 
   return (
-    <Fragment>
-      <ReactMapGL
-        initialViewState={{
-          latitude: latitude,
-          longitude: longitude,
-          zoom: zoom || 10,
-          pitch: 25,
-          bearing: -14,
-        }}
-        style={{
-          display: 'block',
-          position: 'absolute',
-          zIndex: 'auto',
-          minHeight: 420,
-          fontSize: 11,
-          textTransform: 'lowercase',
-        }}
-        mapStyle={process.env.MAPBOX_STYLES}
-        mapboxAccessToken={process.env.MAPBOX_API_KEY}
-      >
-        {children}
-      </ReactMapGL>
-    </Fragment>
+    <div className="text-xs">
+      <div className="rounded-md overflow-hidden">
+        <Map
+          mapLib={import('mapbox-gl')}
+          mapboxAccessToken={process.env.MAPBOX_ACCESS_TOKEN}
+          initialViewState={{
+            longitude: longitude,
+            latitude: latitude,
+            zoom: zoom || 8,
+          }}
+          style={{ width: '100%', height: 600, borderRadius: 10 }}
+          mapStyle={process.env.MAPBOX_STYLES}
+        >
+          <div>{children}</div>
+        </Map>
+      </div>
+    </div>
   )
 }
