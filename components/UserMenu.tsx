@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 import { signOut } from 'next-auth/react'
 import { OrganizationType } from '@/types/organization'
 import { usePlatform } from '@/app/context'
+import { updateProfileAvailable } from '@/app/main/perfil/actions'
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ')
@@ -19,6 +20,7 @@ export default function UserMenu({ image }: { image: string }) {
 
   const route = useRouter()
   const handleSignOut = useCallback(async () => {
+    await updateProfileAvailable(false)
     await signOut()
     route.push('/')
   }, [route])

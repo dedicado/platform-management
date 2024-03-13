@@ -84,8 +84,8 @@ export const updateProfilePassword = async (
   }
 }
 
-export const updateProfileAvaiable = async (
-  avaiable: boolean,
+export const updateProfileAvailable = async (
+  available: boolean,
 ): Promise<any> => {
   const session = await getServerSession(nextAuthOptions)
   try {
@@ -94,7 +94,7 @@ export const updateProfileAvaiable = async (
       `${process.env.USER_API_URL}/users/${session?.user?.id}`,
       {
         method: 'PATCH',
-        body: JSON.stringify({ avaiable: avaiable }),
+        body: JSON.stringify({ available: available }),
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${session?.user?.authorization}`,

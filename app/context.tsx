@@ -75,13 +75,13 @@ export const PlatformProvider = ({
             }
             startTransition(() => setUserLocation(coordinates))
             let unlike: boolean = coordinates !== lastPosition
-            let avaiable: boolean = userProfile?.avaiable
+            let available: boolean = userProfile?.available
 
             //console.log('unlike: ', unlike)
-            //console.log('avaiable: ', avaiable)
+            //console.log('available: ', available)
 
             unlike &&
-              avaiable &&
+              available &&
               startTransition(
                 async () => await registerLocation(registerUserLocation),
               )

@@ -26,7 +26,6 @@ export type MemberType = {
   deletedAt: Date
   softDeleted: boolean
   active: boolean
-  available: boolean
   role: 'client' | 'assistant' | 'technician' | 'administrator' | 'owner'
   phone: string
   organizationId: string

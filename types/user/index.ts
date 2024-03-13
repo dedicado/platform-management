@@ -6,7 +6,7 @@ export type UserType = {
   softDeleted: boolean
   active: boolean
   subscriber: boolean
-  avaiable: boolean
+  available: boolean
   authorizationKey: boolean
   profile: 'guest' | 'consumer' | 'member' | 'master'
   name: string
