@@ -8,6 +8,7 @@ import {
   createContext,
   useContext,
   useEffect,
+  useMemo,
   useState,
   useTransition,
 } from 'react'
@@ -40,20 +41,22 @@ export const PlatformProvider = ({
   member: MemberType[] | any
   orders: OrderType[] | any
 }) => {
-  const lastUserPosition: LastLocationType | any =
-    userProfile?.lastLocations?.at(-1)
-  const firstPosition: UserLocationType = {
-    latitude: -27.59667,
-    longitude: -48.54917,
-  }
-  const lastPosition: UserLocationType | any = {
-    latitude: lastUserPosition?.latitude,
-    longitude: lastUserPosition?.longitude,
-  }
+  const lastPosition: UserLocationType | any = useMemo(() => {
+    const lastUserPosition: LastLocationType | any =
+      userProfile?.lastLocations?.at(-1)
+    return {
+      latitude: lastUserPosition?.latitude,
+      longitude: lastUserPosition?.longitude,
+    }
+  }, [userProfile?.lastLocations])
+
   const [isPending, startTransition] = useTransition()
-  const [userLocation, setUserLocation] = useState<UserLocationType>(
-    lastPosition || firstPosition,
-  )
+
+  const [userLocation, setUserLocation] =
+    useState<UserLocationType>(lastPosition)
+
+  //console.log('lastPosition: ', lastPosition)
+  //console.log('userLocation: ', userLocation)
 
   useEffect(() => {
     const getUserLocation = async () => {
@@ -61,33 +64,35 @@ export const PlatformProvider = ({
         userProfile &&
           navigator?.geolocation.watchPosition((position) => {
             if (!position) return null
-            const coordinates: UserLocationType = {
+            let coordinates: UserLocationType = {
               latitude: position?.coords?.latitude,
               longitude: position?.coords?.longitude,
             }
-            const registerUserLocation: CreateLastLocationValidationType = {
+            let registerUserLocation: CreateLastLocationValidationType = {
               userPhone: userProfile?.phone,
               latitude: coordinates?.latitude,
               longitude: coordinates?.longitude,
             }
             startTransition(() => setUserLocation(coordinates))
-            const samePosition = userLocation === lastPosition
-            const avaiable = userProfile?.avaiable
+            let unlike: boolean = coordinates !== lastPosition
+            let avaiable: boolean = userProfile?.avaiable
 
-            avaiable &&
+            //console.log('unlike: ', unlike)
+            //console.log('avaiable: ', avaiable)
+
+            unlike &&
+              avaiable &&
               startTransition(
-                async () =>
-                  !samePosition &&
-                  (await registerLocation(registerUserLocation)),
+                async () => await registerLocation(registerUserLocation),
               )
           })
       } catch (error: any) {
-        //console.error(error)
+        //console.error('getUserLocation: ', error)
         return null
       }
     }
     getUserLocation()
-  }, [lastPosition, userLocation, userProfile])
+  }, [lastPosition, userProfile])
 
   const organizations: OrganizationType[] | any = member.map(
     (member: MemberType) => member.organization,

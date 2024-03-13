@@ -13,7 +13,6 @@ export const registerLocation = async (
 ): Promise<any> => {
   const session = await getServerSession(nextAuthOptions)
   try {
-    console.log(inputs)
     if (await CreateLastLocationValidation.parseAsync(inputs)) {
       const data = await fetch(`${process.env.USER_API_URL}/last-locations`, {
         method: 'POST',
@@ -23,11 +22,12 @@ export const registerLocation = async (
           Authorization: `Bearer ${session?.user?.authorization}`,
         },
       })
-      //console.log(await data.json())
+      //console.log('registerLocation: ', await data.json())
       revalidatePath('/')
       return data && (await data.json())
     }
   } catch (error: any) {
+    //console.log('registerLocation: ', error)
     return error?.message || 'ocorreu um erro inesperado'
   }
 }
