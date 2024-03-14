@@ -64,7 +64,7 @@ export const PlatformProvider = ({
     const getUserLocation = async () => {
       try {
         userProfile &&
-          navigator?.geolocation.watchPosition((position) => {
+          navigator?.geolocation.getCurrentPosition((position) => {
             if (!position) return null
             let coordinates: UserLocationType = {
               latitude: position?.coords?.latitude,
