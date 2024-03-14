@@ -12,9 +12,6 @@ export default function UserAvailable() {
   const [available, setAvailable] = useState<boolean>(userProfile?.available)
   const [isPending, startTransition] = useTransition()
 
-  //console.log('UserAvailable: ', available)
-  //console.log('userProfile: ', userProfile?.available)
-
   const handleAvailable = useCallback(() => {
     setAvailable(!available)
     userProfile &&

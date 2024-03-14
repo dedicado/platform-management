@@ -2,7 +2,6 @@ import createMDX from '@next/mdx'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  productionBrowserSourceMaps: true,
   pageExtensions: ['md', 'mdx', 'ts', 'tsx'],
   experimental: {
     mdxRs: true,

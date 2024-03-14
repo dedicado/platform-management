@@ -1,10 +1,10 @@
 import PageDisplay from '@/components/PageDisplay'
 import { Metadata } from 'next'
 import { memo } from 'react'
-import MainView from './views/MainView'
 import LandingView from './views/LandingView'
 import { getServerSession } from 'next-auth'
 import { nextAuthOptions } from '@/libraries/next-auth'
+import MainView from './views/MainView'
 
 export const metadata: Metadata = {
   title: {

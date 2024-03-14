@@ -70,23 +70,23 @@ export const PlatformProvider = ({
               latitude: position?.coords?.latitude,
               longitude: position?.coords?.longitude,
             }
+            startTransition(() => setUserLocation(coordinates))
+
             let registerUserLocation: CreateLastLocationValidationType = {
               userPhone: userProfile?.phone,
               latitude: coordinates?.latitude,
               longitude: coordinates?.longitude,
             }
-            startTransition(() => setUserLocation(coordinates))
-            let unlike: boolean = coordinates !== lastPosition
-            let available: boolean = userProfile?.available
+            const available = userProfile?.available
+            const unlike: boolean = coordinates !== lastPosition
 
             //console.log('unlike: ', unlike)
             //console.log('available: ', available)
 
-            unlike &&
-              available &&
-              startTransition(
-                async () => await registerLocation(registerUserLocation),
-              )
+            available &&
+              setTimeout(async () => {
+                unlike && (await registerLocation(registerUserLocation))
+              }, 60000)
           })
       } catch (error: any) {
         //console.error('getUserLocation: ', error)

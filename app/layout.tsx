@@ -1,4 +1,5 @@
 import './globals.css'
+import 'mapbox-gl/dist/mapbox-gl.css'
 import type { Metadata } from 'next'
 import { Comfortaa } from 'next/font/google'
 import { ReactNode } from 'react'
@@ -43,10 +44,6 @@ export default async function RootLayout({
       suppressHydrationWarning
       className={`${comfortaa.variable} font-default dark`}
     >
-      <link
-        href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css"
-        rel="stylesheet"
-      />
       <body className="text-base text-sky-800 bg-slate-200 dark:bg-slate-800">
         <Providers>
           <PlatformProvider
