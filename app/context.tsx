@@ -64,37 +64,38 @@ export const PlatformProvider = ({
     const getUserLocation = async () => {
       try {
         userProfile &&
-          navigator?.geolocation.getCurrentPosition((position) => {
+          navigator?.geolocation.watchPosition((position) => {
             if (!position) return null
-            let coordinates: UserLocationType = {
+            const coordinates: UserLocationType = {
               latitude: position?.coords?.latitude,
               longitude: position?.coords?.longitude,
             }
             startTransition(() => setUserLocation(coordinates))
-
-            let registerUserLocation: CreateLastLocationValidationType = {
-              userPhone: userProfile?.phone,
-              latitude: coordinates?.latitude,
-              longitude: coordinates?.longitude,
-            }
-            const available = userProfile?.available
-            const unlike: boolean = coordinates !== lastPosition
-
-            //console.log('unlike: ', unlike)
-            //console.log('available: ', available)
-
-            available &&
-              setTimeout(async () => {
-                unlike && (await registerLocation(registerUserLocation))
-              }, 60000)
           })
+
+        const available = userProfile?.available
+        const unlike: boolean = userLocation !== lastPosition
+
+        //console.log('unlike: ', unlike)
+        //console.log('available: ', available)
+
+        available &&
+          setTimeout(async () => {
+            const registerUserLocation: CreateLastLocationValidationType = {
+              ...userLocation,
+              userPhone: userProfile?.phone,
+            }
+            //console.log('registerUserLocation: ', registerUserLocation)
+            //console.log(new Date())
+            unlike && (await registerLocation(registerUserLocation))
+          }, 60000)
       } catch (error: any) {
         //console.error('getUserLocation: ', error)
         return null
       }
     }
     getUserLocation()
-  }, [lastPosition, userProfile])
+  }, [lastPosition, userLocation, userProfile])
 
   const organizations: OrganizationType[] | any = member.map(
     (member: MemberType) => member.organization,
