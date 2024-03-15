@@ -74,3 +74,11 @@ export type AttachmentType = {
   note: string
   file: string
 }
+
+export type OrderLocationType = {
+  id: string
+  createdAt: Date
+  order: string
+  latitude: number
+  longitude: number
+}
