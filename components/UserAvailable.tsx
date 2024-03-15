@@ -25,13 +25,13 @@ export default function UserAvailable() {
         ? toast.success(
             `${
               userProfile?.name.split(' ')[0]
-            }, agora você está dispinível para outros usuários da plataforma`,
+            }, agora você está visível e dispinível na plataforma`,
             { duration: 10000 },
           )
         : toast.success(
             `${
               userProfile?.name.split(' ')[0]
-            }, você ficou indispinível para outros usuários da plataforma`,
+            }, você ficou invisível e indispinível na plataforma`,
             { duration: 10000 },
           )
     })

@@ -1,27 +1,30 @@
 'use server'
 
-import {
-  CreateLastLocationValidation,
-  CreateLastLocationValidationType,
-} from '@/validations/last-location'
 import { getServerSession } from 'next-auth/next'
 import { nextAuthOptions } from '@/libraries/next-auth'
 import { revalidatePath } from 'next/cache'
+import {
+  ProfileLocationUpdateValidation,
+  ProfileLocationUpdateValidationType,
+} from '@/validations/profile'
 
 export const registerLocation = async (
-  inputs: CreateLastLocationValidationType,
+  inputs: ProfileLocationUpdateValidationType,
 ): Promise<any> => {
   const session = await getServerSession(nextAuthOptions)
   try {
-    if (await CreateLastLocationValidation.parseAsync(inputs)) {
-      const data = await fetch(`${process.env.USER_API_URL}/last-locations`, {
-        method: 'POST',
-        body: JSON.stringify(inputs),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${session?.user?.authorization}`,
+    if (await ProfileLocationUpdateValidation.parseAsync(inputs)) {
+      const data = await fetch(
+        `${process.env.USER_API_URL}/users/${session?.user?.id}`,
+        {
+          method: 'PATCH',
+          body: JSON.stringify(inputs),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${session?.user?.authorization}`,
+          },
         },
-      })
+      )
       //console.log('registerLocation: ', await data.json())
       revalidatePath('/')
       return data && (await data.json())

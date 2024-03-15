@@ -2,7 +2,7 @@
 
 import { OrderType } from '@/types/order'
 import { MemberType, OrganizationType } from '@/types/organization'
-import { LastLocationType, UserType } from '@/types/user'
+import { UserType } from '@/types/user'
 import {
   ReactNode,
   createContext,
@@ -13,7 +13,7 @@ import {
   useTransition,
 } from 'react'
 import { registerLocation } from './actions'
-import { CreateLastLocationValidationType } from '@/validations/last-location'
+import { ProfileLocationUpdateValidationType } from '@/validations/profile'
 
 export type UserLocationType = {
   latitude: number
@@ -42,14 +42,13 @@ export const PlatformProvider = ({
   orders: OrderType[] | any
 }) => {
   const lastPosition: UserLocationType | any = useMemo(() => {
-    const lastUserPosition: LastLocationType | any =
-      userProfile?.lastLocations?.at(-1)
+    const { latitude, longitude }: UserType | any = userProfile
 
     return {
-      latitude: lastUserPosition?.latitude,
-      longitude: lastUserPosition?.longitude,
+      latitude: latitude,
+      longitude: longitude,
     }
-  }, [userProfile?.lastLocations])
+  }, [userProfile])
 
   const [isPending, startTransition] = useTransition()
 
@@ -81,12 +80,13 @@ export const PlatformProvider = ({
 
         available &&
           setTimeout(async () => {
-            const registerUserLocation: CreateLastLocationValidationType = {
+            const registerUserLocation: ProfileLocationUpdateValidationType = {
               ...userLocation,
-              userPhone: userProfile?.phone,
             }
+
             //console.log('registerUserLocation: ', registerUserLocation)
             //console.log(new Date())
+
             unlike && (await registerLocation(registerUserLocation))
           }, 60000)
       } catch (error: any) {

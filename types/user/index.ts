@@ -21,14 +21,4 @@ export type UserType = {
   complement: string
   latitude: number
   longitude: number
-  lastLocations: LastLocationType[] | any
-}
-
-export type LastLocationType = {
-  id: string
-  createdAt: Date
-  userId: string
-  user: UserType | any
-  latitude: number
-  longitude: number
 }

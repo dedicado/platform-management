@@ -18,6 +18,14 @@ export type ProfileAvaiableValidationType = z.infer<
   typeof ProfileAvaiableValidation
 >
 
+export const ProfileLocationUpdateValidation = z.object({
+  latitude: z.coerce.number(),
+  longitude: z.coerce.number(),
+})
+export type ProfileLocationUpdateValidationType = z.infer<
+  typeof ProfileLocationUpdateValidation
+>
+
 export const ProfilePasswordUpdateValidation = z
   .object({
     newPassword: z.string().min(8).max(25),
