@@ -22,10 +22,10 @@ export type UserLocationType = {
 
 interface Props {
   userLocation: UserLocationType
-  userProfile: UserType
-  member: MemberType[]
-  organizations: OrganizationType[]
-  orders: OrderType[]
+  userProfile: UserType | any
+  member: MemberType[] | any
+  organizations: OrganizationType[] | any
+  orders: OrderType[] | any
 }
 
 const PlatformContext = createContext<Props | any>({})
@@ -37,12 +37,13 @@ export const PlatformProvider = ({
   orders,
 }: {
   children: ReactNode
-  userProfile: UserType | any
-  member: MemberType[] | any
-  orders: OrderType[] | any
+  userProfile: UserType
+  member: MemberType[]
+  orders: OrderType[]
 }) => {
   const lastPosition: UserLocationType | any = useMemo(() => {
-    const { latitude, longitude }: UserType | any = userProfile
+    let latitude: number | null = userProfile?.latitude
+    let longitude: number | null = userProfile?.longitude
 
     return {
       latitude: latitude,
