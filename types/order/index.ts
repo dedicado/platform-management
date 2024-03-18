@@ -20,6 +20,8 @@ export type OrderType = {
   destinationComplement: string
   destinationLatitude: number
   destinationLongitude: number
+  latitude: number
+  longitude: number
   deadline: Date
   started: boolean
   startDate: Date

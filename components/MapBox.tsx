@@ -1,5 +1,6 @@
 'use client'
 
+import LoadingPage from '@/app/loading'
 import { ReactNode, Suspense } from 'react'
 import Map from 'react-map-gl'
 
@@ -17,7 +18,7 @@ export default function MapBox(props: Props) {
   return (
     <div className="text-xs">
       <div className="rounded-md overflow-hidden">
-        <Suspense fallback={'...'}>
+        <Suspense fallback={<LoadingPage />}>
           <Map
             key={key}
             mapLib={import('mapbox-gl')}

@@ -1,11 +1,12 @@
 'use client'
 
 import Image from 'next/image'
-import { useCallback, useState } from 'react'
+import { ReactNode, useCallback, useState } from 'react'
 import { MdLocationPin } from 'react-icons/md'
 import { Marker, Popup } from 'react-map-gl'
 
 interface Props {
+  children?: ReactNode
   color?: 'blue' | 'green' | 'red'
   image?: string | any
   latitude: number
@@ -15,7 +16,7 @@ interface Props {
 }
 
 export default function MapMarker(props: Props) {
-  const { color, image, latitude, longitude, title, key } = props
+  const { children, color, image, latitude, longitude, title, key } = props
 
   const [openPopup, setOpenPopup] = useState<boolean>(false)
   const handlePopup = useCallback(() => {
@@ -30,6 +31,7 @@ export default function MapMarker(props: Props) {
         longitude={longitude}
         latitude={latitude}
         onClick={handlePopup}
+        style={{ borderRadius: 10 }}
       >
         {image ? (
           <div className="w-['32px'] w-h-['32px'] animate-pulse">
@@ -60,9 +62,10 @@ export default function MapMarker(props: Props) {
           closeOnClick={false}
           offset={28}
         >
-          <div className="flex flex-col max-w-md">
+          <div className="flex flex-col max-w-md text-sky-800">
             <div className="p-2 w-full">
-              <h4 className="text-md text-center">{title}</h4>
+              <h4 className="text-lg text-center font-bold uppercase">{title}</h4>
+              <div className="flex flex-1 flex-col gap-2">{children}</div>
             </div>
           </div>
         </Popup>

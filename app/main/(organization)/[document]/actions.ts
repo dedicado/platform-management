@@ -30,6 +30,25 @@ export const getOrganizationByDocument = async (
   }
 }
 
+export const getOrganizations = async (): Promise<OrganizationType | any> => {
+  const session = await getServerSession(nextAuthOptions)
+  try {
+    const data = await fetch(
+      `${process.env.ORGANIZATION_API_URL}/organizations`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          authorizationKey: session?.user?.authorizationKey!,
+        },
+      },
+    )
+    return data && (await data.json())
+  } catch (error: any) {
+    return error?.message || 'ocorreu um erro inesperado'
+  }
+}
+
 export const createOrganizationForUser = async (
   inputs: CreateOrganizationValidationType,
 ): Promise<OrganizationType | any> => {
