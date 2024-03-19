@@ -126,17 +126,14 @@ export const registerOrderLocation = async (
   const session = await getServerSession(nextAuthOptions)
   try {
     if (await OrderLocationValidation.parseAsync(inputs)) {
-      const data = await fetch(
-        `${process.env.LOCATION_API_URL}/order-locations`,
-        {
-          method: 'POST',
-          body: JSON.stringify(inputs),
-          headers: {
-            'Content-Type': 'application/json',
-            authorizationKey: session?.user?.authorizationKey!,
-          },
+      const data = await fetch(`${process.env.LOG_API_URL}/order-locations`, {
+        method: 'POST',
+        body: JSON.stringify(inputs),
+        headers: {
+          'Content-Type': 'application/json',
+          authorizationKey: session?.user?.authorizationKey!,
         },
-      )
+      })
       return data && (await data.json())
     }
   } catch (error: any) {

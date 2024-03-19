@@ -13,7 +13,7 @@ const nextConfig = {
     USER_API_URL: process.env.USER_API_URL ?? '',
     ORGANIZATION_API_URL: process.env.ORGANIZATION_API_URL ?? '',
     ORDER_API_URL: process.env.ORDER_API_URL ?? '',
-    LOCATION_API_URL: process.env.LOCATION_API_URL ?? '',
+    LOG_API_URL: process.env.LOG_API_URL ?? '',
     ZIPCODE_API_URL: process.env.ZIPCODE_API_URL ?? '',
     MAPBOX_ACCESS_TOKEN: process.env.MAPBOX_ACCESS_TOKEN ?? '',
     MAPBOX_STYLES: process.env.MAPBOX_STYLES ?? '',
