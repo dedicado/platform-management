@@ -81,7 +81,7 @@ export default function UserMenu({ image }: { image: string }) {
                     <Menu.Item key={organization?.id}>
                       {({ active }) => (
                         <a
-                          href={organization?.document}
+                          href={`/${organization?.document}`}
                           className={classNames(
                             active ? 'bg-slate-400/50' : 'font-normal',
                             'flex items-center px-4 py-2 gap-2 cursor-pointer',

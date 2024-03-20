@@ -21,6 +21,10 @@ export default function OrderDetailMarker(props: Props) {
   const [customer, setCustomer] = useState<UserType | any>({})
   const [address, setAddress] = useState<AddressTypeByGeolocation | any>()
 
+  //console.log('member: ', member)
+  //console.log('customer: ', customer)
+  //console.log('address: ', address)
+
   useEffect(() => {
     const data = async () => {
       if (order) {
