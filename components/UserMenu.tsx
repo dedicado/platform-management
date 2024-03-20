@@ -7,6 +7,7 @@ import {
   MdAccountBox,
   MdDomain,
   MdLogout,
+  MdOutlineDomainAdd,
   MdOutlineMapsHomeWork,
 } from 'react-icons/md'
 import { useRouter } from 'next/navigation'
@@ -14,7 +15,7 @@ import { signOut } from 'next-auth/react'
 import { OrganizationType } from '@/types/organization'
 import { usePlatform } from '@/app/context'
 import { updateProfileAvailable } from '@/app/main/perfil/actions'
-import CreateOrganizationView from '@/app/main/(organization)/[document]/views/CreateOrganizationView'
+import Link from 'next/link'
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ')
@@ -27,8 +28,9 @@ export default function UserMenu({ image }: { image: string }) {
   const route = useRouter()
   const handleSignOut = useCallback(async () => {
     await updateProfileAvailable(false)
-    await signOut()
     route.push('/')
+    signOut()
+    route.refresh()
   }, [route])
 
   return (
@@ -59,11 +61,17 @@ export default function UserMenu({ image }: { image: string }) {
           <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-slate-200 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="flex flex-col gap-1 mt-2">
               <div className="px-2">
-                <CreateOrganizationView />
+                <Link
+                  href={'/nova-organizacao'}
+                  className="w-full flex item-center gap-2 text-xs text-center text-slate-200 bg-sky-800 p-2 rounded-md cursor-pointer hover:text-opacity-50"
+                >
+                  <MdOutlineDomainAdd size={18} />
+                  criar nova organização
+                </Link>
               </div>
               <div className="px-2">
                 <span className="w-full flex item-center gap-2 text-xs text-center text-slate-200 bg-sky-800/70 p-2 rounded-md">
-                  <MdOutlineMapsHomeWork size={18} />
+                  <MdDomain size={18} />
                   minhas organizações
                 </span>
               </div>
@@ -79,7 +87,7 @@ export default function UserMenu({ image }: { image: string }) {
                             'flex items-center px-4 py-2 gap-2 cursor-pointer',
                           )}
                         >
-                          <MdDomain size={18} />
+                          <MdOutlineMapsHomeWork size={18} />
                           {organization?.name}
                         </a>
                       )}

@@ -2,9 +2,10 @@
 
 import PageDisplay from '@/components/PageDisplay'
 import { memo } from 'react'
-import OrderView from './views/OrderView'
 import { useOrganization } from '../context'
 import NotFoundPage from '@/app/not-found'
+import OrganizationMenu from '../views/OrganizationMenu'
+import OrderTabsView from './views/OrderTabsView'
 
 const OrderPage = async () => {
   const { organization }: any = useOrganization()
@@ -14,7 +15,8 @@ const OrderPage = async () => {
       title={`pedidos da organização ${organization?.name || ''}`}
       subtitle={`a melhor plataforma de serviços`}
     >
-      <OrderView />
+      <OrganizationMenu />
+      <OrderTabsView />
     </PageDisplay>
   ) : (
     <NotFoundPage />

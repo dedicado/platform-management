@@ -5,6 +5,7 @@ import { memo } from 'react'
 import MemberView from './views/MemberView'
 import { useOrganization } from '../context'
 import NotFoundPage from '@/app/not-found'
+import OrganizationMenu from '../views/OrganizationMenu'
 
 const MemberPage = async () => {
   const { organization }: any = useOrganization()
@@ -14,6 +15,7 @@ const MemberPage = async () => {
       title={`membros da organização ${organization?.name || ''}`}
       subtitle={'a melhor plataforma de serviços'}
     >
+      <OrganizationMenu />
       <MemberView />
     </PageDisplay>
   ) : (

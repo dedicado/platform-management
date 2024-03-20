@@ -5,6 +5,7 @@ import { memo } from 'react'
 import OrganizationView from './views/OrganizationView'
 import { useOrganization } from './context'
 import NotFoundPage from '@/app/not-found'
+import OrganizationMenu from './views/OrganizationMenu'
 
 const OrganizationPage = async () => {
   const { organization }: any = useOrganization()
@@ -14,6 +15,7 @@ const OrganizationPage = async () => {
       title={`espaço dedicado da organização ${organization?.name}`}
       subtitle={`a melhor plataforma de serviços`}
     >
+      <OrganizationMenu />
       <OrganizationView />
     </PageDisplay>
   ) : (

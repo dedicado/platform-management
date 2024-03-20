@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { createOrganizationForUser } from '../actions'
 import {
   CreateOrganizationValidation,
   CreateOrganizationValidationType,
@@ -11,18 +10,17 @@ import {
 import { useState, useTransition } from 'react'
 import { AddressTypeByZipCode } from '@/utils/handle-address/types'
 import { getAddressByZipCode } from '@/utils/handle-address'
+import { createOrganizationForUser } from '../actions'
+import { useRouter } from 'next/navigation'
 
-interface Props {
-  onClose: () => void
-}
-
-export default function CreateOrganizationForm(props: Props) {
-  const { onClose } = props
+export default function CreateOrganizationForm() {
   const [isPending, startTransition] = useTransition()
   const [location, setLocation] = useState<{
     latitude: number
     longitude: number
   }>()
+
+  const router = useRouter()
 
   const handleZipCode = (event: { target: { value: any } }) => {
     const data = event.target.value?.replace(/[^0-9]/g, '')
@@ -63,9 +61,9 @@ export default function CreateOrganizationForm(props: Props) {
     if (result?.response?.error) {
       toast.error(result?.message)
     } else {
-      toast.success(result)
       reset()
-      onClose()
+      router.push(`/${inputs?.document}`)
+      toast.success(result)
     }
   }
 
@@ -77,12 +75,15 @@ export default function CreateOrganizationForm(props: Props) {
     >
       <div className="flex flex-col sm:flex-row items-center gap-2">
         <div className="relative w-full">
-          <label htmlFor="name">nome</label>
+          <label htmlFor="name" className="dark:text-sky-600">
+            nome
+          </label>
           <input
             id="name"
             className="w-full rounded-md"
             {...register('name')}
             type="text"
+            placeholder='nome da organização'
           />
           {errors && (
             <span className="text-xs text-red-400 italic lowercase">
@@ -93,12 +94,15 @@ export default function CreateOrganizationForm(props: Props) {
       </div>
       <div className="flex flex-col sm:flex-row items-center gap-2">
         <div className="relative w-full">
-          <label htmlFor="document">cnpj</label>
+          <label htmlFor="document" className="dark:text-sky-600">
+            cnpj
+          </label>
           <input
             id="document"
             className="w-full rounded-md"
             {...register('document')}
             type="number"
+            placeholder='00.000.000/0000-00'
           />
           {errors && (
             <span className="text-xs text-red-400 italic lowercase">
@@ -107,12 +111,15 @@ export default function CreateOrganizationForm(props: Props) {
           )}
         </div>
         <div className="relative w-full">
-          <label htmlFor="email">e-mail</label>
+          <label htmlFor="email" className="dark:text-sky-600">
+            e-mail
+          </label>
           <input
             id="email"
             className="w-full rounded-md"
             {...register('email')}
             type="text"
+            placeholder='email@suaorganizacao.com.br'
           />
           {errors && (
             <span className="text-xs text-red-400 italic lowercase">
@@ -121,12 +128,15 @@ export default function CreateOrganizationForm(props: Props) {
           )}
         </div>
         <div className="relative w-full">
-          <label htmlFor="phone">telefone</label>
+          <label htmlFor="phone" className="dark:text-sky-600">
+            telefone
+          </label>
           <input
             id="phone"
             className="w-full rounded-md"
             {...register('phone')}
             type="number"
+            placeholder='48 98765 4321'
           />
           {errors && (
             <span className="text-xs text-red-400 italic lowercase">
@@ -137,12 +147,15 @@ export default function CreateOrganizationForm(props: Props) {
       </div>
       <div className="flex flex-col sm:flex-row items-center gap-2">
         <div className="relative w-full sm:w-1/3">
-          <label htmlFor="zipCode">cep</label>
+          <label htmlFor="zipCode" className="dark:text-sky-600">
+            cep
+          </label>
           <input
             className="w-full rounded-md"
             {...register('zipCode')}
             type="number"
             onBlur={handleZipCode}
+            placeholder='00.000-000'
           />
           {errors && (
             <span className="text-xs text-red-400 italic lowercase">
@@ -151,7 +164,9 @@ export default function CreateOrganizationForm(props: Props) {
           )}
         </div>
         <div className="relative w-full sm:w-2/3">
-          <label htmlFor="street">logradouro</label>
+          <label htmlFor="street" className="dark:text-sky-600">
+            logradouro
+          </label>
           <input
             id="street"
             className="w-full rounded-md bg-slate-200/50 border-0"
@@ -168,12 +183,15 @@ export default function CreateOrganizationForm(props: Props) {
       </div>
       <div className="flex flex-col sm:flex-row items-center gap-2">
         <div className="relative w-full">
-          <label htmlFor="complement">complemento</label>
+          <label htmlFor="complement" className="dark:text-sky-600">
+            complemento
+          </label>
           <input
             id="complement"
             className="w-full rounded-md"
             {...register('complement')}
             type="text"
+            placeholder='número e ponto de referência'
           />
           {errors && (
             <span className="text-xs text-red-400 italic lowercase">
