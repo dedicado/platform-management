@@ -64,7 +64,7 @@ export default function MapMarker(props: Props) {
         >
           <div className="flex flex-col max-w-md text-sky-800">
             <div className="p-2 w-full">
-              <h4 className="text-lg text-center font-bold uppercase">{title}</h4>
+              <h4 className="text-center font-bold uppercase">{title}</h4>
               <div className="flex flex-1 flex-col gap-2">{children}</div>
             </div>
           </div>

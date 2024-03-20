@@ -62,29 +62,33 @@ export default function UserMapBox() {
                             {order?.destinationComplement}
                           </small>
                         </div>
-                        {order?.started ? (
-                          <div className="p-2 w-full flex-col flex gap-2 bg-sky-200/60 rounded-md">
-                            <div className="lowercase space-x-2">
-                              <label className="opacity-80">código:</label>
-                              <h6 className="font-semibold uppercase">
-                                {order?.code}
-                              </h6>
-                            </div>
-                            <div className="lowercase space-x-2">
-                              <label className="opacity-80">observações:</label>
-                              <p className="font-semibold italic">
-                                {order?.observation}
-                              </p>
-                            </div>
-                            <div className="lowercase space-x-2">
-                              <label className="opacity-80">prazo final:</label>
-                              <span className="font-semibold">
-                                {moment(order?.deadline)
-                                  .tz('America/Sao_Paulo')
-                                  .utc()
-                                  .format('lll')}
-                              </span>
-                            </div>
+                        <div
+                          className={`p-2 w-full flex flex-col gap-2 ${
+                            order?.started ? 'bg-sky-200/60' : 'bg-green-200/60'
+                          } rounded-md shadow-md`}
+                        >
+                          <div className="lowercase space-x-2">
+                            <label className="opacity-80">código:</label>
+                            <h6 className="font-semibold uppercase">
+                              {order?.code}
+                            </h6>
+                          </div>
+                          <div className="lowercase space-x-2">
+                            <label className="opacity-80">observações:</label>
+                            <p className="font-semibold italic">
+                              {order?.observation}
+                            </p>
+                          </div>
+                          <div className="lowercase space-x-2">
+                            <label className="opacity-80">prazo final:</label>
+                            <span className="font-semibold">
+                              {moment(order?.deadline)
+                                .tz('America/Sao_Paulo')
+                                .utc()
+                                .format('lll')}
+                            </span>
+                          </div>
+                          {order?.started ? (
                             <div className="flex flex-col justify-center items-center gap-2 my-2">
                               <button
                                 type="button"
@@ -105,30 +109,7 @@ export default function UserMapBox() {
                                 cancelar pedido
                               </button>
                             </div>
-                          </div>
-                        ) : (
-                          <div className="p-2 w-full flex flex-col gap-2 bg-green-200/60 rounded-md shadow-md">
-                            <div className="lowercase space-x-2">
-                              <label className="opacity-80">código:</label>
-                              <h6 className="font-semibold uppercase">
-                                {order?.code}
-                              </h6>
-                            </div>
-                            <div className="lowercase space-x-2">
-                              <label className="opacity-80">observações:</label>
-                              <p className="font-semibold italic">
-                                {order?.observation}
-                              </p>
-                            </div>
-                            <div className="lowercase space-x-2">
-                              <label className="opacity-80">prazo final:</label>
-                              <span className="font-semibold">
-                                {moment(order?.deadline)
-                                  .tz('America/Sao_Paulo')
-                                  .utc()
-                                  .format('lll')}
-                              </span>
-                            </div>
+                          ) : (
                             <div className="flex flex-col justify-center items-center my-2">
                               <button
                                 type="button"
@@ -137,8 +118,8 @@ export default function UserMapBox() {
                                 atender pedido
                               </button>
                             </div>
-                          </div>
-                        )}
+                          )}
+                        </div>
                       </MapMarker>
                     </div>
                   )

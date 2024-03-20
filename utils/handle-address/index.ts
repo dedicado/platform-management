@@ -87,7 +87,7 @@ export const getAddressByGeolocation = async (
       state: result?.features[0]?.context[4]?.text,
       country: result?.features[0]?.context[5]?.text,
     }
-    console.log(address)
+    //console.log(address)
 
     return address
   } catch (error: any) {
