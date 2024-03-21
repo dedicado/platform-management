@@ -1,10 +1,19 @@
+'use server'
+
+import { getUserByDocument } from '@/app/main/users/actions'
 import { nextAuthOptions } from '@/libraries/next-auth'
 import { OrderType } from '@/types/order'
+import { UserType } from '@/types/user'
+import { getAddressByZipCode } from '@/utils/handle-address'
+import { AddressTypeByZipCode } from '@/utils/handle-address/types'
 import {
+  OrderCreateValidation,
+  OrderCreateValidationType,
   OrderLocationValidation,
   OrderLocationValidationType,
 } from '@/validations/order'
 import { getServerSession } from 'next-auth'
+import { revalidatePath } from 'next/cache'
 
 export const getOrderByCode = async (
   code: string,
@@ -134,6 +143,40 @@ export const registerOrderLocation = async (
           authorizationKey: session?.user?.authorizationKey!,
         },
       })
+      return data && (await data.json())
+    }
+  } catch (error: any) {
+    return error?.message || 'ocorreu um erro inesperado'
+  }
+}
+
+export const createOrder = async (
+  inputs: OrderCreateValidationType,
+): Promise<any> => {
+  const session = await getServerSession(nextAuthOptions)
+  try {
+    if (await OrderCreateValidation.parseAsync(inputs)) {
+      const customer: UserType | any = await getUserByDocument(inputs?.customer)
+      if (customer?.response?.error) return customer
+
+      const address: AddressTypeByZipCode | any = await getAddressByZipCode(
+        customer?.zipCode,
+      )
+
+      const data = await fetch(`${process.env.ORDER_API_URL}/orders`, {
+        method: 'POST',
+        body: JSON.stringify({
+          ...inputs,
+          destinationZipCode: customer?.zipCode || address.cep,
+          destinationLatitude: customer?.latitude || address?.lat,
+          destinationLongitude: customer?.longitude || address?.lng,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          authorizationKey: session?.user?.authorizationKey!,
+        },
+      })
+      revalidatePath(`/${inputs.organization}/pedidos`)
       return data && (await data.json())
     }
   } catch (error: any) {

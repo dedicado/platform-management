@@ -29,7 +29,7 @@ export default function OrderDetailMarker(props: Props) {
     const data = async () => {
       if (order) {
         const member = await getUserByPhone(order?.member)
-        setMember(member)
+        member?.available && setMember(member)
         const customer = await getUserByDocument(order?.customer)
         setCustomer(customer)
         const address = await getAddressByGeolocation({
@@ -44,16 +44,16 @@ export default function OrderDetailMarker(props: Props) {
 
   return order && member && customer && address ? (
     <MapMarker
-      color={order?.started ? 'green' : 'red'}
+      color={order?.started && member?.available ? 'green' : 'red'}
       image={order?.started && member?.image}
       //key={order?.id}
       latitude={
-        order?.started
+        order?.started && member?.available
           ? member?.latitude || customer.latitude
           : order?.latitude || order?.destinationLatitude
       }
       longitude={
-        order?.started
+        order?.started && member?.available
           ? member?.longitude || customer?.longitude
           : order?.longitude || order?.destinationLongitude
       }
@@ -69,7 +69,9 @@ export default function OrderDetailMarker(props: Props) {
         </span>
         <div className="lowercase flex space-x-2">
           <label className="opacity-80">responsável:</label>
-          <h6 className="font-semibold uppercase">{member?.name}</h6>
+          <h6 className="font-semibold uppercase">
+            {member?.name || 'indisponível'}
+          </h6>
         </div>
 
         <div className="bg-sky-600/50 w-full rounded-md py-1">

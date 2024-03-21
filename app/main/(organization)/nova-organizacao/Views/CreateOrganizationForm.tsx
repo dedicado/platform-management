@@ -73,7 +73,7 @@ export default function CreateOrganizationForm() {
       noValidate
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className="flex flex-col sm:flex-row items-center gap-2">
+      <div className="flex flex-col sm:flex-row gap-2">
         <div className="relative w-full">
           <label htmlFor="name" className="dark:text-sky-600">
             nome
@@ -92,7 +92,7 @@ export default function CreateOrganizationForm() {
           )}
         </div>
       </div>
-      <div className="flex flex-col sm:flex-row items-center gap-2">
+      <div className="flex flex-col sm:flex-row gap-2">
         <div className="relative w-full">
           <label htmlFor="document" className="dark:text-sky-600">
             cnpj
@@ -145,7 +145,7 @@ export default function CreateOrganizationForm() {
           )}
         </div>
       </div>
-      <div className="flex flex-col sm:flex-row items-center gap-2">
+      <div className="flex flex-col sm:flex-row gap-2">
         <div className="relative w-full sm:w-1/3">
           <label htmlFor="zipCode" className="dark:text-sky-600">
             cep
@@ -181,7 +181,7 @@ export default function CreateOrganizationForm() {
           )}
         </div>
       </div>
-      <div className="flex flex-col sm:flex-row items-center gap-2">
+      <div className="flex flex-col sm:flex-row gap-2">
         <div className="relative w-full">
           <label htmlFor="complement" className="dark:text-sky-600">
             complemento
