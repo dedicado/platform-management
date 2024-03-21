@@ -35,12 +35,12 @@ export const PlatformProvider = ({
   userProfile,
   member,
   orders,
-}: {
+}: Readonly<{
   children: ReactNode
   userProfile: UserType
   member: MemberType[]
   orders: OrderType[]
-}) => {
+}>) => {
   const lastPosition: UserLocationType | any = useMemo(() => {
     let latitude: number | null = userProfile?.latitude
     let longitude: number | null = userProfile?.longitude

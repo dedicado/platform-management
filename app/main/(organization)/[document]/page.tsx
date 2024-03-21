@@ -1,25 +1,26 @@
 'use client'
 
 import PageDisplay from '@/components/PageDisplay'
-import { memo } from 'react'
+import { memo, Suspense } from 'react'
 import OrganizationView from './views/OrganizationView'
 import { useOrganization } from './context'
-import NotFoundPage from '@/app/not-found'
 import OrganizationMenu from './views/OrganizationMenu'
 
 const OrganizationPage = async () => {
   const { organization }: any = useOrganization()
 
-  return !organization.status ? (
+  return (
     <PageDisplay
-      title={`espaço dedicado da organização ${organization?.name}`}
+      title={`espaço dedicado da organização ${organization?.name ?? ''}`}
       subtitle={`a melhor plataforma de serviços`}
     >
-      <OrganizationMenu />
-      <OrganizationView />
+      {organization ? (
+        <Suspense>
+          <OrganizationMenu />
+          <OrganizationView />
+        </Suspense>
+      ) : null}
     </PageDisplay>
-  ) : (
-    <NotFoundPage />
   )
 }
 export default memo(OrganizationPage)

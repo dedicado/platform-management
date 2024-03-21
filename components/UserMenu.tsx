@@ -16,14 +16,16 @@ import { OrganizationType } from '@/types/organization'
 import { usePlatform } from '@/app/context'
 import { updateProfileAvailable } from '@/app/main/perfil/actions'
 import Link from 'next/link'
+import { UserType } from '@/types/user'
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function UserMenu({ image }: { image: string }) {
+export default function UserMenu() {
+  const { userProfile }: UserType | any = usePlatform()
   const { organizations }: OrganizationType[] | any = usePlatform()
-  const avatar = image || '/avatar.svg'
+  const avatar = userProfile?.image || '/avatar.svg'
 
   const route = useRouter()
   const handleSignOut = useCallback(async () => {

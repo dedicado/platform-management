@@ -4,18 +4,16 @@ import Link from 'next/link'
 import { Fragment, memo, useEffect, useState, useTransition } from 'react'
 import AuthMenu from './AuthMenu'
 import UserMenu from './UserMenu'
-import { usePlatform } from '@/app/context'
-import { UserType } from '@/types/user'
 import UserAvailable from './UserAvailable'
+import { Session } from 'next-auth'
 
-function Topbar() {
-  const { userProfile }: UserType | any = usePlatform()
+function Topbar({ session }: { session: Session }) {
   const [isPending, startTransition] = useTransition()
   const [authenticated, setAuthenticated] = useState<boolean>(false)
 
   useEffect(() => {
-    userProfile && startTransition(() => setAuthenticated(true))
-  }, [authenticated, userProfile])
+    session && startTransition(() => setAuthenticated(true))
+  }, [authenticated, session])
 
   return (
     <div className="fixed z-10 h-16 w-full backdrop-blur-sm bg-slate/30 dark:bg-slate-800/30 shadow-md">
@@ -34,7 +32,7 @@ function Topbar() {
               {authenticated ? (
                 <Fragment>
                   <UserAvailable />
-                  <UserMenu image={userProfile?.image} />
+                  <UserMenu />
                 </Fragment>
               ) : (
                 <AuthMenu />

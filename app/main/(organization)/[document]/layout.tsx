@@ -6,8 +6,6 @@ import { ReactNode } from 'react'
 import { OrganizationProvider } from './context'
 import { getOrganizationByDocument } from './actions'
 import { OrganizationType } from '@/types/organization'
-import { OrderType } from '@/types/order'
-import { getOrdersByDocument } from './pedidos/actions'
 
 export async function generateMetadata({
   params,
@@ -40,13 +38,9 @@ export default async function OrganizationLayout({
 }>) {
   const session = await getServerSession(nextAuthOptions)
   const { document } = params
-  const organization: OrganizationType | any = await getOrganizationByDocument(
-    document,
-  )
-  const orders: OrderType[] | any = await getOrdersByDocument(document)
 
   return session ? (
-    <OrganizationProvider organization={organization} orders={orders}>
+    <OrganizationProvider document={document} session={session!}>
       {children}
     </OrganizationProvider>
   ) : (

@@ -2,7 +2,7 @@
 
 import PageDisplay from '@/components/PageDisplay'
 import ProfileView from './views/ProfileView'
-import { memo } from 'react'
+import { memo, Suspense } from 'react'
 import { usePlatform } from '@/app/context'
 
 const ProfilePage = async () => {
@@ -10,11 +10,15 @@ const ProfilePage = async () => {
 
   return (
     <PageDisplay
-      title={`olá ${userProfile?.name.split(' ')[0] || ''}!`}
+      title={`olá ${userProfile?.name.split(' ')[0] ?? ''}!`}
       subtitle="este é o seu espaço dedicado"
     >
       <div className="relative w-full">
-        <ProfileView />
+        {userProfile ? (
+          <Suspense>
+            <ProfileView />
+          </Suspense>
+        ) : null}
       </div>
     </PageDisplay>
   )

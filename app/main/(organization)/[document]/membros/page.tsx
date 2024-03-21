@@ -1,25 +1,26 @@
 'use client'
 
 import PageDisplay from '@/components/PageDisplay'
-import { memo } from 'react'
+import { memo, Suspense } from 'react'
 import MemberView from './views/MemberView'
 import { useOrganization } from '../context'
-import NotFoundPage from '@/app/not-found'
 import OrganizationMenu from '../views/OrganizationMenu'
 
 const MemberPage = async () => {
-  const { organization }: any = useOrganization()
+  const { organization, members }: any = useOrganization()
 
-  return !organization.status ? (
+  return (
     <PageDisplay
-      title={`membros da organização ${organization?.name || ''}`}
+      title={`membros da organização ${organization?.name ?? ''}`}
       subtitle={'a melhor plataforma de serviços'}
     >
-      <OrganizationMenu />
-      <MemberView />
+      {members ? (
+        <Suspense>
+          <OrganizationMenu />
+          <MemberView />
+        </Suspense>
+      ) : null}
     </PageDisplay>
-  ) : (
-    <NotFoundPage />
   )
 }
 export default memo(MemberPage)

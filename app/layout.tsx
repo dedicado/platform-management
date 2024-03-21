@@ -13,6 +13,8 @@ import { MemberType } from '@/types/organization'
 import { OrderType } from '@/types/order'
 import { getOrdersByMember } from './main/(organization)/[document]/pedidos/actions'
 import { getMemberByUserPhone } from './main/(organization)/[document]/membros/actions'
+import { getServerSession } from 'next-auth'
+import { nextAuthOptions } from '@/libraries/next-auth'
 
 const comfortaa = Comfortaa({
   subsets: ['latin'],
@@ -34,6 +36,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode
 }>) {
+  const session = await getServerSession(nextAuthOptions)
   const profile: UserType | any = await getProfile()
   const member: MemberType[] | any = await getMemberByUserPhone()
   const orders: OrderType[] | any = await getOrdersByMember()
@@ -51,7 +54,7 @@ export default async function RootLayout({
             member={member}
             orders={orders}
           >
-            <Topbar />
+            <Topbar session={session!} />
             <main>{children}</main>
             <Footer />
           </PlatformProvider>

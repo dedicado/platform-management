@@ -1,7 +1,9 @@
 'use client'
 
+import useFetch from '@/hooks/use-fetch'
 import { OrderType } from '@/types/order'
 import { MemberType, OrganizationType } from '@/types/organization'
+import { Session } from 'next-auth'
 import { ReactNode, createContext, useContext } from 'react'
 
 interface Props {
@@ -12,15 +14,23 @@ interface Props {
 
 const OrganizationContext = createContext<Props | any>({})
 
-export const OrganizationProvider = async ({
+export const OrganizationProvider = ({
   children,
-  organization,
-  orders,
-}: {
+  document,
+  session,
+}: Readonly<{
   children: ReactNode
-  organization: OrganizationType
-  orders: OrderType[]
-}) => {
+  document: string
+  session: Session
+}>) => {
+  const { data: organization } = useFetch<OrganizationType | any>(
+    `${process.env.ORGANIZATION_API_URL}/organizations/document/${document}`,
+    session?.user?.authorizationKey!,
+  )
+  const { data: orders } = useFetch<OrderType[] | any>(
+    `${process.env.ORDER_API_URL}/orders/organization/${document}`,
+    session?.user?.authorizationKey!,
+  )
   const members: MemberType[] | any = organization?.members
 
   return (

@@ -15,9 +15,9 @@ export const metadata: Metadata = {
 
 export default async function ProfileLayout({
   children,
-}: {
+}: Readonly<{
   children: ReactNode
-}) {
+}>) {
   const session = await getServerSession(nextAuthOptions)
   return session ? <div>{children}</div> : redirect('/')
 }
