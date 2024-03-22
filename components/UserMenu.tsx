@@ -17,12 +17,13 @@ import { usePlatform } from '@/app/context'
 import { updateProfileAvailable } from '@/app/main/perfil/actions'
 import Link from 'next/link'
 import { UserType } from '@/types/user'
+import { Session } from 'next-auth'
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function UserMenu() {
+export default function UserMenu({ session }: { session: Session }) {
   const { userProfile }: UserType | any = usePlatform()
   const { organizations }: OrganizationType[] | any = usePlatform()
   const avatar = userProfile?.image || '/avatar.svg'

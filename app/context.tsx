@@ -12,7 +12,6 @@ import {
   useState,
   useTransition,
 } from 'react'
-import { registerLocation } from './actions'
 import { ProfileLocationUpdateValidationType } from '@/validations/profile'
 import { Session } from 'next-auth'
 import useFetch from '@/hooks/use-fetch'
@@ -44,7 +43,7 @@ export const PlatformProvider = ({
   const authorization: string = session?.user?.authorization ?? ''
   const authorizationKey: string = session?.user?.authorizationKey ?? ''
 
-  const { data: userProfile }: any = useFetch<UserType>({
+  const { data: userProfile, mutate }: any = useFetch<UserType>({
     url: `${process.env.USER_API_URL}/users/${userId}`,
     authorization: authorization,
   })
@@ -75,7 +74,7 @@ export const PlatformProvider = ({
 
   //console.log('lastPosition: ', lastPosition)
   //console.log('userLocation: ', userLocation)
-  //console.log('userProfile:', userProfile
+  //console.log('userProfile:', userProfile)
   //console.log('member: ', member)
   //console.log('orders: ', orders)
 
@@ -107,7 +106,32 @@ export const PlatformProvider = ({
             //console.log('registerUserLocation: ', registerUserLocation)
             //console.log(new Date())
 
-            unlike && (await registerLocation(registerUserLocation))
+            unlike &&
+              (await fetch(
+                `${process.env.USER_API_URL}/users/${session?.user?.id}`,
+                {
+                  method: 'PATCH',
+                  body: JSON.stringify(registerUserLocation),
+                  headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${session?.user?.authorization}`,
+                  },
+                },
+              )
+                .then(async (res: any) => {
+                  //console.log('registerUserLocation: ', await res.json())
+                  if (res.ok) {
+                    await mutate({
+                      ...userProfile,
+                      registerUserLocation,
+                      revalidate: true,
+                      rollbackOnError: true,
+                    })
+                  }
+                })
+                .catch((error: any) => {
+                  console.error(error)
+                }))
           }, 60000)
       } catch (error: any) {
         //console.error('getUserLocation: ', error)
@@ -115,7 +139,7 @@ export const PlatformProvider = ({
       }
     }
     getUserLocation()
-  }, [lastPosition, userLocation, userProfile])
+  }, [lastPosition, mutate, session, userLocation, userProfile])
 
   const organizations: OrganizationType[] | any = member?.map(
     (member: MemberType) => member.organization,

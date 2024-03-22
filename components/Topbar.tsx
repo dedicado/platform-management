@@ -31,8 +31,8 @@ function Topbar({ session }: { session: Session }) {
             <div className="flex flex-1 items-center justify-end space-x-2">
               {authenticated ? (
                 <Fragment>
-                  <UserAvailable />
-                  <UserMenu />
+                  <UserAvailable session={session} />
+                  <UserMenu session={session} />
                 </Fragment>
               ) : (
                 <AuthMenu />
