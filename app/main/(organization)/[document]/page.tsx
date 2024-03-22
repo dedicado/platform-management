@@ -1,12 +1,12 @@
 'use client'
 
 import PageDisplay from '@/components/PageDisplay'
-import { memo, Suspense } from 'react'
+import { Suspense } from 'react'
 import OrganizationView from './views/OrganizationView'
 import { useOrganization } from './context'
 import OrganizationMenu from './views/OrganizationMenu'
 
-const OrganizationPage = async () => {
+const OrganizationPage = () => {
   const { organization }: any = useOrganization()
 
   return (
@@ -23,4 +23,4 @@ const OrganizationPage = async () => {
     </PageDisplay>
   )
 }
-export default memo(OrganizationPage)
+export default OrganizationPage

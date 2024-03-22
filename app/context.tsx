@@ -14,6 +14,8 @@ import {
 } from 'react'
 import { registerLocation } from './actions'
 import { ProfileLocationUpdateValidationType } from '@/validations/profile'
+import { Session } from 'next-auth'
+import useFetch from '@/hooks/use-fetch'
 
 export type UserLocationType = {
   latitude: number
@@ -23,24 +25,39 @@ export type UserLocationType = {
 interface Props {
   userLocation: UserLocationType
   userProfile: UserType | any
-  member: MemberType[] | any
-  organizations: OrganizationType[] | any
-  orders: OrderType[] | any
+  member: MemberType[]
+  organizations: OrganizationType[]
+  orders: OrderType[]
 }
 
 const PlatformContext = createContext<Props | any>({})
 
 export const PlatformProvider = ({
   children,
-  userProfile,
-  member,
-  orders,
+  session,
 }: Readonly<{
   children: ReactNode
-  userProfile: UserType
-  member: MemberType[]
-  orders: OrderType[]
+  session: Session
 }>) => {
+  const userId: string = session?.user?.id
+  const userPhone: string = session?.user?.phone
+  const authorization: string = session?.user?.authorization ?? ''
+  const authorizationKey: string = session?.user?.authorizationKey ?? ''
+
+  const { data: userProfile }: any = useFetch<UserType>({
+    url: `${process.env.USER_API_URL}/users/${userId}`,
+    authorization: authorization,
+  })
+
+  const { data: member }: any = useFetch<MemberType[]>({
+    url: `${process.env.ORGANIZATION_API_URL}/members/phone/${userPhone}`,
+    authorizationKey: authorizationKey,
+  })
+  const { data: orders }: any = useFetch<OrderType[]>({
+    url: `${process.env.ORDER_API_URL}/orders/member/${userPhone}`,
+    authorizationKey: authorizationKey,
+  })
+
   const lastPosition: UserLocationType | any = useMemo(() => {
     let latitude: number | null = userProfile?.latitude
     let longitude: number | null = userProfile?.longitude
@@ -58,7 +75,9 @@ export const PlatformProvider = ({
 
   //console.log('lastPosition: ', lastPosition)
   //console.log('userLocation: ', userLocation)
-  //console.log('userProfile:', userProfile )
+  //console.log('userProfile:', userProfile
+  //console.log('member: ', member)
+  //console.log('orders: ', orders)
 
   useEffect(() => {
     const getUserLocation = async () => {
@@ -98,9 +117,11 @@ export const PlatformProvider = ({
     getUserLocation()
   }, [lastPosition, userLocation, userProfile])
 
-  const organizations: OrganizationType[] | any = member.map(
+  const organizations: OrganizationType[] | any = member?.map(
     (member: MemberType) => member.organization,
   )
+
+  //console.log('organizations: ', organizations)
 
   return (
     <PlatformContext.Provider

@@ -2,19 +2,13 @@ import './globals.css'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import type { Metadata } from 'next'
 import { Comfortaa } from 'next/font/google'
-import { ReactNode } from 'react'
+import { Fragment, ReactNode } from 'react'
 import Providers from './providers'
 import Footer from '@/components/Footer'
 import Topbar from '@/components/Topbar'
-import { getProfile } from './main/perfil/actions'
-import { UserType } from '@/types/user'
-import { PlatformProvider } from './context'
-import { MemberType } from '@/types/organization'
-import { OrderType } from '@/types/order'
-import { getOrdersByMember } from './main/(organization)/[document]/pedidos/actions'
-import { getMemberByUserPhone } from './main/(organization)/[document]/membros/actions'
 import { getServerSession } from 'next-auth'
 import { nextAuthOptions } from '@/libraries/next-auth'
+import { PlatformProvider } from './context'
 
 const comfortaa = Comfortaa({
   subsets: ['latin'],
@@ -37,9 +31,6 @@ export default async function RootLayout({
   children: ReactNode
 }>) {
   const session = await getServerSession(nextAuthOptions)
-  const profile: UserType | any = await getProfile()
-  const member: MemberType[] | any = await getMemberByUserPhone()
-  const orders: OrderType[] | any = await getOrdersByMember()
 
   return (
     <html
@@ -49,15 +40,19 @@ export default async function RootLayout({
     >
       <body className="text-base text-sky-800 bg-slate-200 dark:bg-slate-800">
         <Providers>
-          <PlatformProvider
-            userProfile={profile}
-            member={member}
-            orders={orders}
-          >
-            <Topbar session={session!} />
-            <main>{children}</main>
-            <Footer />
-          </PlatformProvider>
+          {session ? (
+            <PlatformProvider session={session!}>
+              <Topbar session={session!} />
+              <main>{children}</main>
+              <Footer />
+            </PlatformProvider>
+          ) : (
+            <Fragment>
+              <Topbar session={session!} />
+              <main>{children}</main>
+              <Footer />
+            </Fragment>
+          )}
         </Providers>
       </body>
     </html>
