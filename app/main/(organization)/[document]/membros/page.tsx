@@ -2,9 +2,9 @@
 
 import PageDisplay from '@/components/PageDisplay'
 import { Suspense } from 'react'
-import MemberView from './views/MemberView'
 import { useOrganization } from '../context'
 import OrganizationMenu from '../views/OrganizationMenu'
+import MemberListView from './views/MemberListView'
 
 const MemberPage = () => {
   const { organization, members }: any = useOrganization()
@@ -17,7 +17,7 @@ const MemberPage = () => {
       {members ? (
         <Suspense>
           <OrganizationMenu />
-          <MemberView />
+          <MemberListView />
         </Suspense>
       ) : null}
     </PageDisplay>
