@@ -24,7 +24,7 @@ export default function OrderMapView() {
             longitude={organization?.longitude}
             zoom={12}
           >
-            <Suspense fallback={'...'}>
+            <Suspense>
               <MapMarker
                 image={logotipo}
                 //key={userProfile?.id!}

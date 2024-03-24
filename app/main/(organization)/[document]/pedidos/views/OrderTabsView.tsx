@@ -1,7 +1,7 @@
 'use client'
 
 import { Tab } from '@headlessui/react'
-import { Fragment } from 'react'
+import { Fragment, Suspense } from 'react'
 import OrderMapView from './OrderMapView'
 import OrderListView from './OrderListView'
 
@@ -42,12 +42,16 @@ export default function OrderTabsView() {
         <Tab.Panels className="py-2">
           <Tab.Panel key={'order-map'}>
             <div className="w-full">
-              <OrderMapView />
+              <Suspense>
+                <OrderMapView />
+              </Suspense>
             </div>
           </Tab.Panel>
           <Tab.Panel key={'order-list'}>
             <div className="w-full">
-              <OrderListView />
+              <Suspense>
+                <OrderListView />
+              </Suspense>
             </div>
           </Tab.Panel>
         </Tab.Panels>
