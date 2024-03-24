@@ -6,11 +6,11 @@ import { useState, useCallback } from 'react'
 import { MdEditSquare } from 'react-icons/md'
 
 interface Props {
-  data: OrderType | any
+  order: OrderType | any
 }
 
 export default function UpdateOrderView(props: Props) {
-  const { data } = props
+  const { order } = props
 
   const [openModal, setOpenModal] = useState<boolean>(false)
   const handleModal = useCallback(() => {
@@ -28,7 +28,7 @@ export default function UpdateOrderView(props: Props) {
       <Modal
         open={openModal}
         onClose={handleModal}
-        subtitle={`atualizar pedido ${data?.code}`}
+        subtitle={`atualizar pedido ${order?.code}`}
       >
         atualizar pedido
       </Modal>

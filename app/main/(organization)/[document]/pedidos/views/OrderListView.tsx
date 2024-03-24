@@ -55,7 +55,7 @@ export default function OrderListView() {
                             </span>
                           </div>
                         )}
-                        <UpdateOrderView data={order} />
+                        <UpdateOrderView order={order} />
                       </div>
                     </div>
                   </li>
