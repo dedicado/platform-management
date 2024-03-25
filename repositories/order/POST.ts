@@ -1,0 +1,33 @@
+'use server'
+
+import { nextAuthOptions } from '@/libraries/next-auth'
+import {
+  OrderCreateValidation,
+  OrderCreateValidationType,
+} from '@/validations/order'
+import { getServerSession } from 'next-auth'
+import { ORDER_REPOSITORY } from '..'
+
+export const orderRepositoryCreate = async (
+  inputs: OrderCreateValidationType,
+): Promise<any> => {
+  const session = await getServerSession(nextAuthOptions)
+  const authorization = session?.user?.authorization ?? ''
+  const authorizationKey = session?.user?.authorizationKey ?? ''
+
+  try {
+    if (await OrderCreateValidation.parseAsync(inputs)) {
+      const data = await fetch(`${ORDER_REPOSITORY}`, {
+        method: 'POST',
+        body: JSON.stringify(inputs),
+        headers: {
+          'Content-Type': 'application/json',
+          authorizationKey: authorizationKey,
+        },
+      })
+      return data && (await data.json())
+    }
+  } catch (error: any) {
+    return error?.message || error
+  }
+}

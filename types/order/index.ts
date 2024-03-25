@@ -80,7 +80,7 @@ export type AttachmentType = {
 export type OrderLocationType = {
   id: string
   createdAt: Date
-  order: string
+  code: string
   latitude: number
   longitude: number
 }

@@ -1,52 +1,20 @@
 'use client'
 
-import useFetch from '@/hooks/use-fetch'
+import { usePlatform } from '@/app/context'
+import { updateProfileAvailable } from '@/app/main/perfil/actions'
 import { UserType } from '@/types/user'
-import { Session } from 'next-auth'
 import { useCallback, useState, useTransition } from 'react'
 import toast from 'react-hot-toast'
 import { MdJoinLeft, MdJoinRight } from 'react-icons/md'
 
-export default function UserAvailable({ session }: { session: Session }) {
-  const userId: string = session?.user?.id ?? ''
-  const authorization: string = session?.user?.authorization ?? ''
-
-  const { data: user, mutate } = useFetch<UserType | any>({
-    url: `${process.env.USER_API_URL}/users/${userId}`,
-    authorization: authorization,
-  })
+export default function UserAvailable() {
+  const { user }: UserType | any = usePlatform()
 
   const [available, setAvailable] = useState<boolean>(user?.available)
   const [isPending, startTransition] = useTransition()
 
   const handleAvailable = useCallback(() => {
-    const updateProfileAvailable = async (available: boolean) => {
-      return await fetch(
-        `${process.env.USER_API_URL}/users/${session?.user?.id}`,
-        {
-          method: 'PATCH',
-          body: JSON.stringify({ available: available }),
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${session?.user?.authorization}`,
-          },
-        },
-      )
-        .then(async (res: any) => {
-          if (res.ok) {
-            await mutate({
-              ...user,
-              available: available,
-              revalidate: true,
-              rollbackOnError: true,
-            })
-            setAvailable(available)
-          }
-        })
-        .catch((error: any) => {
-          console.error(error)
-        })
-    }
+    setAvailable(!available)
 
     user &&
       startTransition(async () =>
@@ -69,7 +37,7 @@ export default function UserAvailable({ session }: { session: Session }) {
             { duration: 10000 },
           )
     })
-  }, [available, mutate, session, user])
+  }, [available, user])
 
   return (
     <div className="relative">

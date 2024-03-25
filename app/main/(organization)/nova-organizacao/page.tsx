@@ -1,6 +1,6 @@
 import PageDisplay from '@/components/PageDisplay'
 import { memo } from 'react'
-import CreateOrganizationForm from './Views/CreateOrganizationForm'
+import CreateOrganizationForm from './views/CreateOrganizationForm'
 import { nextAuthOptions } from '@/libraries/next-auth'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'

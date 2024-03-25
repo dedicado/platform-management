@@ -7,12 +7,12 @@ import MapBox from '@/components/MapBox'
 import { Suspense } from 'react'
 import MapMarker from '@/components/MapMarker'
 import OrderDetailMarker from './OrderDetailMarker'
-import { usePlatform, UserLocationType } from '@/app/context'
+import { usePlatform, LocationType } from '@/app/context'
 
 export default function OrderMapView() {
   const { orders }: OrderType[] | any = useOrganization()
   const { organization }: OrganizationType | any = useOrganization()
-  const { userLocation }: UserLocationType | any = usePlatform()
+  const { location }: LocationType | any = usePlatform()
 
   const logotipo = organization?.image || '/logotipo.svg'
 
@@ -22,8 +22,8 @@ export default function OrderMapView() {
         <div className="flex flex-col w-full space-2">
           <MapBox
             //key={organization?.id!}
-            latitude={organization?.latitude || userLocation?.latitude}
-            longitude={organization?.longitude || userLocation?.longitude}
+            latitude={organization?.latitude || location?.latitude}
+            longitude={organization?.longitude || location?.longitude}
             zoom={12}
           >
             <Suspense>

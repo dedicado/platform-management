@@ -1,5 +1,6 @@
 'use server'
 
+import { userRepositoryCreate } from '@/repositories/user/POST'
 import {
   RegisterValidation,
   RegisterValidationType,
@@ -10,14 +11,7 @@ export const registerUser = async (
 ): Promise<any> => {
   try {
     if (await RegisterValidation.parseAsync(inputs)) {
-      const data = await fetch(`${process.env.USER_API_URL}/users`, {
-        method: 'POST',
-        body: JSON.stringify(inputs),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      return data && (await data.json())
+      return await userRepositoryCreate({ ...inputs, profile: 'guest' })
     }
   } catch (error: any) {
     return error?.message || 'ocorreu um erro inesperado'

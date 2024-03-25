@@ -1,10 +1,17 @@
 'use client'
 
-import useFetch from '@/hooks/use-fetch'
 import { OrderType } from '@/types/order'
 import { MemberType, OrganizationType } from '@/types/organization'
 import { Session } from 'next-auth'
-import { ReactNode, createContext, useContext } from 'react'
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
+import { getOrganizationByDocument } from './actions'
+import { getOrdersByOrganization } from './pedidos/actions'
 
 interface Props {
   organization: OrganizationType
@@ -23,23 +30,32 @@ export const OrganizationProvider = ({
   document: string
   session: Session
 }>) => {
-  const authorizationKey: string = session?.user?.authorizationKey
-  const { data: organization } = useFetch<OrganizationType | any>({
-    url: `${process.env.ORGANIZATION_API_URL}/organizations/document/${document}`,
-    authorizationKey: authorizationKey,
-  })
-  const { data: orders } = useFetch<OrderType[] | any>({
-    url: `${process.env.ORDER_API_URL}/orders/organization/${document}`,
-    authorizationKey: authorizationKey,
-  })
-  const members: MemberType[] | any = organization?.members
+  const [members, setMembers] = useState<MemberType[] | any>()
+  const [orders, setOrders] = useState<OrderType[] | any>()
+  const [organization, setOrganization] = useState<OrganizationType | any>()
 
-  //console.log('organization: ', organization)
-  //console.log('orders: ', orders)
-  //console.log('members: ', members)
+  useEffect(() => {
+    const data = async () => {
+      try {
+        if (session) {
+          const organization = await getOrganizationByDocument(document)
+          setOrganization(organization)
+
+          organization && setMembers(organization?.members)
+
+          const orders = await getOrdersByOrganization(document)
+          setOrders(orders)
+        }
+      } catch (error: any) {
+        console.error(error)
+        return null
+      }
+    }
+    data()
+  }, [document, session])
 
   return (
-    <OrganizationContext.Provider value={{ organization, members, orders }}>
+    <OrganizationContext.Provider value={{ members, orders, organization }}>
       {children}
     </OrganizationContext.Provider>
   )

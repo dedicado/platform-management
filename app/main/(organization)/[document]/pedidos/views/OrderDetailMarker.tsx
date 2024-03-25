@@ -27,17 +27,24 @@ export default function OrderDetailMarker(props: Props) {
 
   useEffect(() => {
     const data = async () => {
-      if (order) {
-        const member = await getUserByPhone(order?.member)
-        member?.available && setMember(member)
-        const customer = await getUserByDocument(order?.customer)
-        setCustomer(customer)
-        const address = await getAddressByGeolocation({
-          latitude: order?.destinationLatitude,
-          longitude: order?.destinationLongitude,
-        })
-        setAddress(address)
-      } else return null
+      try {
+        if (order) {
+          const member = await getUserByPhone(order?.member)
+          member?.available && setMember(member)
+
+          const customer = await getUserByDocument(order?.customer)
+          customer && setCustomer(customer)
+
+          const address = await getAddressByGeolocation({
+            latitude: order?.destinationLatitude,
+            longitude: order?.destinationLongitude,
+          })
+          address && setAddress(address)
+        }
+      } catch (error: any) {
+        console.error(error)
+        return null
+      }
     }
     data()
   }, [order])

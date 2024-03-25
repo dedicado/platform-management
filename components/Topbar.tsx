@@ -7,7 +7,7 @@ import UserMenu from './UserMenu'
 import UserAvailable from './UserAvailable'
 import { Session } from 'next-auth'
 
-function Topbar({ session }: { session: Session }) {
+export default function Topbar({ session }: { session: Session }) {
   const [isPending, startTransition] = useTransition()
   const [authenticated, setAuthenticated] = useState<boolean>(false)
 
@@ -31,8 +31,8 @@ function Topbar({ session }: { session: Session }) {
             <div className="flex flex-1 items-center justify-end space-x-2">
               {authenticated ? (
                 <Fragment>
-                  <UserAvailable session={session} />
-                  <UserMenu session={session} />
+                  <UserAvailable />
+                  <UserMenu />
                 </Fragment>
               ) : (
                 <AuthMenu />
@@ -44,5 +44,3 @@ function Topbar({ session }: { session: Session }) {
     </div>
   )
 }
-
-export default memo(Topbar)

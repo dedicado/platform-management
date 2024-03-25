@@ -1,7 +1,7 @@
 import * as z from 'zod'
 
 export const ProfileUpdateValidation = z.object({
-  avaiable: z.boolean().optional(),
+  available: z.boolean().optional(),
   name: z.string(),
   document: z.string().min(11).max(14),
   email: z.string().email(),
@@ -12,7 +12,7 @@ export type ProfileUpdateValidationType = z.infer<
 >
 
 export const ProfileAvaiableValidation = z.object({
-  avaiable: z.boolean(),
+  available: z.boolean(),
 })
 export type ProfileAvaiableValidationType = z.infer<
   typeof ProfileAvaiableValidation

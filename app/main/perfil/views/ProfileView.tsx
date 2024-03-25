@@ -9,24 +9,24 @@ import { AddressType } from '@/types/address'
 import { usePlatform } from '@/app/context'
 
 export const ProfileView = () => {
-  const { userProfile }: any = usePlatform()
+  const { user }: any = usePlatform()
   const address: AddressType = {
-    zipCode: userProfile?.zipCode,
-    street: userProfile?.street,
-    complement: userProfile?.complement,
-    latitude: userProfile?.latitude,
-    longitude: userProfile?.longitude,
+    zipCode: user?.zipCode,
+    street: user?.street,
+    complement: user?.complement,
+    latitude: user?.latitude,
+    longitude: user?.longitude,
   }
 
   return (
     <div className="flex flex-col sm:flex-row gap-2">
       <div className="flex flex-wrap justify-center items-center w-full sm:max-w-xs p-2">
         <div className="flex flex-col justify-center items-center gap-4">
-          <ProfileAvatar image={userProfile?.image} />
+          <ProfileAvatar image={user?.image} />
           <div className="p-2 flex items-center space-x-1 w-full mx-auto bg-sky-600 rounded-md shadow-md">
             <MdAccountBox size={24} />
             <p className="text-base font-semibold text-slate-200">
-              {userProfile?.profile}
+              {user?.profile}
             </p>
           </div>
         </div>
@@ -35,11 +35,7 @@ export const ProfileView = () => {
         <div className="relative w-full space-y-4">
           <ProfileInformations />
           <hr className="m-8 border-1 border-slate-400 dark:border-slate-600" />
-          <AddressForm
-            address={address}
-            entity={'users'}
-            id={userProfile?.id}
-          />
+          <AddressForm address={address} entity={'users'} id={user?.id} />
           <hr className="m-8 border-1 border-slate-400 dark:border-slate-600" />
           <ProfilePassword />
         </div>

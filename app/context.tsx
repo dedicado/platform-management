@@ -14,16 +14,19 @@ import {
 } from 'react'
 import { ProfileLocationUpdateValidationType } from '@/validations/profile'
 import { Session } from 'next-auth'
-import useFetch from '@/hooks/use-fetch'
+import { updateProfileLocation } from './main/perfil/actions'
+import { getUserById } from './main/users/actions'
+import { getOrdersByMember } from './main/(organization)/[document]/pedidos/actions'
+import { getMemberByUserPhone } from './main/(organization)/[document]/membros/actions'
 
-export type UserLocationType = {
+export type LocationType = {
   latitude: number
   longitude: number
 }
 
 interface Props {
-  userLocation: UserLocationType
-  userProfile: UserType | any
+  location: LocationType
+  user: UserType | any
   member: MemberType[]
   organizations: OrganizationType[]
   orders: OrderType[]
@@ -38,118 +41,86 @@ export const PlatformProvider = ({
   children: ReactNode
   session: Session
 }>) => {
-  const userId: string = session?.user?.id
-  const userPhone: string = session?.user?.phone
-  const authorization: string = session?.user?.authorization ?? ''
-  const authorizationKey: string = session?.user?.authorizationKey ?? ''
+  const userId: string = session?.user?.id ?? ''
+  const userPhone: string = session?.user?.phone ?? ''
 
-  const { data: userProfile, mutate }: any = useFetch<UserType>({
-    url: `${process.env.USER_API_URL}/users/${userId}`,
-    authorization: authorization,
-  })
-
-  const { data: member }: any = useFetch<MemberType[]>({
-    url: `${process.env.ORGANIZATION_API_URL}/members/phone/${userPhone}`,
-    authorizationKey: authorizationKey,
-  })
-  const { data: orders }: any = useFetch<OrderType[]>({
-    url: `${process.env.ORDER_API_URL}/orders/member/${userPhone}`,
-    authorizationKey: authorizationKey,
-  })
-
-  const lastPosition: UserLocationType | any = useMemo(() => {
-    let latitude: number | null = userProfile?.latitude
-    let longitude: number | null = userProfile?.longitude
-
-    return {
-      latitude: latitude,
-      longitude: longitude,
-    }
-  }, [userProfile])
-
-  const [isPending, startTransition] = useTransition()
-
-  const [userLocation, setUserLocation] =
-    useState<UserLocationType>(lastPosition)
-
-  //console.log('lastPosition: ', lastPosition)
-  //console.log('userLocation: ', userLocation)
-  //console.log('userProfile:', userProfile)
-  //console.log('member: ', member)
-  //console.log('orders: ', orders)
+  const [user, setUser] = useState<UserType | any>()
+  const [member, setMember] = useState<MemberType[] | any>()
+  const [orders, setOrders] = useState<OrderType[] | any>()
 
   useEffect(() => {
-    const getUserLocation = async () => {
+    const data = async () => {
       try {
-        userProfile &&
-          navigator?.geolocation.watchPosition((position) => {
-            if (!position) return null
-            const coordinates: UserLocationType = {
-              latitude: position?.coords?.latitude,
-              longitude: position?.coords?.longitude,
-            }
-            startTransition(() => setUserLocation(coordinates))
-          })
+        if (session) {
+          const user = await getUserById(userId)
+          user && setUser(user)
 
-        const available = userProfile?.available
-        const unlike: boolean = userLocation !== lastPosition
+          const orders = await getOrdersByMember(userPhone)
+          orders && setOrders(orders)
 
-        //console.log('unlike: ', unlike)
-        //console.log('available: ', available)
-
-        available &&
-          setTimeout(async () => {
-            const registerUserLocation: ProfileLocationUpdateValidationType = {
-              ...userLocation,
-            }
-
-            //console.log('registerUserLocation: ', registerUserLocation)
-            //console.log(new Date())
-
-            unlike &&
-              (await fetch(
-                `${process.env.USER_API_URL}/users/${session?.user?.id}`,
-                {
-                  method: 'PATCH',
-                  body: JSON.stringify(registerUserLocation),
-                  headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${session?.user?.authorization}`,
-                  },
-                },
-              )
-                .then(async (res: any) => {
-                  //console.log('registerUserLocation: ', await res.json())
-                  if (res.ok) {
-                    await mutate({
-                      ...userProfile,
-                      registerUserLocation,
-                      revalidate: true,
-                      rollbackOnError: true,
-                    })
-                  }
-                })
-                .catch((error: any) => {
-                  console.error(error)
-                }))
-          }, 60000)
+          const member = await getMemberByUserPhone(userPhone)
+          member && setMember(member)
+        }
       } catch (error: any) {
-        //console.error('getUserLocation: ', error)
+        console.error(error)
         return null
       }
     }
-    getUserLocation()
-  }, [lastPosition, mutate, session, userLocation, userProfile])
+    data()
+  }, [session, userId, userPhone])
 
   const organizations: OrganizationType[] | any = member?.map(
     (member: MemberType) => member.organization,
   )
 
-  //console.log('organizations: ', organizations)
+  const lastPosition: LocationType | any = useMemo(() => {
+    let latitude: number | null = user?.latitude
+    let longitude: number | null = user?.longitude
+
+    return {
+      latitude: latitude,
+      longitude: longitude,
+    }
+  }, [user])
+
+  const [location, setLocation] = useState<LocationType>(lastPosition)
+
+  const [isPending, startTransition] = useTransition()
+
+  useEffect(() => {
+    const getUserLocation = async () => {
+      try {
+        user &&
+          navigator?.geolocation.watchPosition((position) => {
+            if (!position) return null
+            const coordinates: LocationType = {
+              latitude: position?.coords?.latitude,
+              longitude: position?.coords?.longitude,
+            }
+            startTransition(() => setLocation(coordinates))
+          })
+
+        const available = user?.available
+        const unlike: boolean = location !== lastPosition
+
+        available &&
+          setTimeout(async () => {
+            const registerLocation: ProfileLocationUpdateValidationType = {
+              ...location,
+            }
+
+            unlike && (await updateProfileLocation(registerLocation))
+          }, 60000)
+      } catch (error: any) {
+        return null
+      }
+    }
+    getUserLocation()
+  }, [lastPosition, session, location, user])
 
   return (
     <PlatformContext.Provider
-      value={{ userLocation, userProfile, member, organizations, orders }}
+      value={{ location, user, member, organizations, orders }}
     >
       {children}
     </PlatformContext.Provider>

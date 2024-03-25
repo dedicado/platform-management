@@ -19,9 +19,14 @@ export default function MemberDetailInListView(props: Props) {
 
   useEffect(() => {
     const userData = async () => {
-      if (member) {
-        const user = await getUserByPhone(member?.phone)
-        setUser(user)
+      try {
+        if (member) {
+          const user = await getUserByPhone(member?.phone)
+          user && setUser(user)
+        }
+      } catch (error: any) {
+        console.error(error)
+        return null
       }
     }
     userData()

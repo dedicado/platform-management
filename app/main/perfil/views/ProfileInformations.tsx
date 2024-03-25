@@ -12,7 +12,7 @@ import { updateProfile } from '../actions'
 import { usePlatform } from '@/app/context'
 
 export default function ProfileInformations() {
-  const { userProfile }: any = usePlatform()
+  const { user }: any = usePlatform()
 
   const {
     formState: { errors },
@@ -21,10 +21,10 @@ export default function ProfileInformations() {
   } = useForm<ProfileUpdateValidationType>({
     resolver: zodResolver(ProfileUpdateValidation),
     defaultValues: {
-      name: userProfile?.name,
-      document: userProfile?.document,
-      phone: userProfile?.phone,
-      email: userProfile?.email,
+      name: user?.name,
+      document: user?.document,
+      phone: user?.phone,
+      email: user?.email,
     },
   })
   const onSubmit: SubmitHandler<ProfileUpdateValidationType> = async (

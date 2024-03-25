@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { Fragment, useCallback } from 'react'
+import { Fragment, Suspense, useCallback } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import {
   MdAccountBox,
@@ -17,22 +17,20 @@ import { usePlatform } from '@/app/context'
 import { updateProfileAvailable } from '@/app/main/perfil/actions'
 import Link from 'next/link'
 import { UserType } from '@/types/user'
-import { Session } from 'next-auth'
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function UserMenu({ session }: { session: Session }) {
-  const { userProfile }: UserType | any = usePlatform()
+export default function UserMenu() {
+  const { user }: UserType | any = usePlatform()
   const { organizations }: OrganizationType[] | any = usePlatform()
-  const avatar = userProfile?.image || '/avatar.svg'
+  const avatar = user?.image || '/avatar.svg'
 
   const route = useRouter()
   const handleSignOut = useCallback(async () => {
     await updateProfileAvailable(false)
-    route.push('/')
-    signOut()
+    signOut({ redirect: true })
     route.refresh()
   }, [route])
 
@@ -78,25 +76,27 @@ export default function UserMenu({ session }: { session: Session }) {
                   minhas organizações
                 </span>
               </div>
-              {organizations &&
-                organizations?.map((organization: OrganizationType) => {
-                  return (
-                    <Menu.Item key={organization?.id}>
-                      {({ active }) => (
-                        <a
-                          href={`/${organization?.document}`}
-                          className={classNames(
-                            active ? 'bg-slate-400/50' : 'font-normal',
-                            'flex items-center px-4 py-2 gap-2 cursor-pointer',
-                          )}
-                        >
-                          <MdOutlineMapsHomeWork size={18} />
-                          {organization?.name}
-                        </a>
-                      )}
-                    </Menu.Item>
-                  )
-                })}
+              <Suspense>
+                {organizations &&
+                  organizations?.map((organization: OrganizationType) => {
+                    return (
+                      <Menu.Item key={organization?.id}>
+                        {({ active }) => (
+                          <a
+                            href={`/${organization?.document}`}
+                            className={classNames(
+                              active ? 'bg-slate-400/50' : 'font-normal',
+                              'flex items-center px-4 py-2 gap-2 cursor-pointer',
+                            )}
+                          >
+                            <MdOutlineMapsHomeWork size={18} />
+                            {organization?.name}
+                          </a>
+                        )}
+                      </Menu.Item>
+                    )
+                  })}
+              </Suspense>
 
               <hr className="m-2 border-1 border-slate-400" />
               <Menu.Item>

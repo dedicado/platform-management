@@ -1,6 +1,6 @@
 'use client'
 
-import { UserLocationType, usePlatform } from '@/app/context'
+import { LocationType, usePlatform } from '@/app/context'
 import MapBox from '@/components/MapBox'
 import MapMarker from '@/components/MapMarker'
 import { OrderType } from '@/types/order'
@@ -11,21 +11,21 @@ import 'moment/locale/pt-br'
 import { Fragment } from 'react'
 
 export default function UserMapBox() {
-  const { userLocation }: UserLocationType | any = usePlatform()
-  const { userProfile }: UserType | any = usePlatform()
+  const { location }: LocationType | any = usePlatform()
+  const { user }: UserType | any = usePlatform()
   const { orders }: OrderType[] | any = usePlatform()
 
   //console.log('orders: ', orders?.length)
 
   //const Map = dynamic(() => import('@/components/MapBox'), { ssr: false })
 
-  return userLocation?.latitude ? (
+  return location?.latitude ? (
     <div className="flex flex-col md:flex-row gap-4">
       <div className="flex flex-col w-full space-2">
         <MapBox
-          //key={userProfile?.id!}
-          latitude={userLocation?.latitude}
-          longitude={userLocation?.longitude}
+          //key={user?.id!}
+          latitude={location?.latitude}
+          longitude={location?.longitude}
           zoom={12}
         >
           <Fragment>
@@ -37,16 +37,16 @@ export default function UserMapBox() {
                     <div key={order?.id}>
                       <MapMarker
                         color={order?.started ? 'green' : 'red'}
-                        image={order?.started && userProfile?.image}
+                        image={order?.started && user?.image}
                         //key={order?.id}
                         latitude={
                           order?.started
-                            ? userLocation?.latitude
+                            ? location?.latitude
                             : order?.latitude || order?.destinationLatitude
                         }
                         longitude={
                           order?.started
-                            ? userLocation?.longitude
+                            ? location?.longitude
                             : order?.longitude || order?.destinationLongitude
                         }
                         title={order?.subject || order?.code}
@@ -127,11 +127,11 @@ export default function UserMapBox() {
               })
             ) : (
               <MapMarker
-                image={userProfile?.image}
-                //key={userProfile?.id!}
-                latitude={userLocation?.latitude}
-                longitude={userLocation?.longitude}
-                title={userProfile?.name}
+                image={user?.image}
+                //key={user?.id!}
+                latitude={location?.latitude}
+                longitude={location?.longitude}
+                title={user?.name}
               />
             )}
           </Fragment>

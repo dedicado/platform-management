@@ -6,15 +6,15 @@ import { memo, Suspense } from 'react'
 import { usePlatform } from '@/app/context'
 
 const ProfilePage = async () => {
-  const { userProfile }: any = usePlatform()
+  const { user }: any = usePlatform()
 
   return (
     <PageDisplay
-      title={`olá ${userProfile?.name.split(' ')[0] ?? ''}!`}
+      title={`olá ${user?.name.split(' ')[0] ?? ''}!`}
       subtitle="este é o seu espaço dedicado"
     >
       <div className="relative w-full">
-        {userProfile ? (
+        {user ? (
           <Suspense>
             <ProfileView />
           </Suspense>
