@@ -8,7 +8,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useParams } from 'next/navigation'
 import { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-//import toast from 'react-hot-toast'
+import toast from 'react-hot-toast'
+import { createMember } from '../actions'
 
 interface Props {
   onClose: () => void
@@ -41,15 +42,14 @@ export default function CreateMemberForm(props: Props) {
   const onSubmit: SubmitHandler<MemberCreateValidationType> = async (
     inputs,
   ) => {
-    console.log(inputs)
-    //const result = await create(inputs)
-    //if (result?.response?.error) {
-    //  toast.error(result?.message)
-    //} else {
-    //  toast.success(result)
-    //  reset()
-    //  onClose()
-    //}
+    const result = await createMember(inputs)
+    if (result?.response?.error) {
+      toast.error(result?.message)
+    } else {
+      toast.success(result)
+      reset()
+      onClose()
+    }
   }
 
   return (

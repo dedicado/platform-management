@@ -41,6 +41,7 @@ export const attachmentRepositoryFindById = async (
         authorizationKey: authorizationKey,
       },
     })
+    return data && (await data.json())
   } catch (error: any) {
     return error?.message || error
   }

@@ -30,11 +30,9 @@ export default function MemberListView() {
           ) : (
             members?.map((member: MemberType) => {
               return (
-                member?.active && (
-                  <div key={member?.id}>
-                    <MemberDetailInListView member={member} />
-                  </div>
-                )
+                <div key={member?.id}>
+                  <MemberDetailInListView member={member} />
+                </div>
               )
             })
           )}

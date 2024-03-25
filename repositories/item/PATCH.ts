@@ -2,14 +2,31 @@
 
 import { nextAuthOptions } from '@/libraries/next-auth'
 import { getServerSession } from 'next-auth'
+import { ITEM_REPOSITORY } from '..'
+import {
+  UpdateItemValidation,
+  UpdateItemValidationType,
+} from '@/validations/item'
 
-export const itemRepositoryUpdate = async (inputs: any): Promise<any> => {
+export const itemRepositoryUpdate = async (
+  id: string,
+  inputs: UpdateItemValidationType,
+): Promise<any> => {
   const session = await getServerSession(nextAuthOptions)
-  const authorization = session?.user?.authorization
-  const authorizationKey = session?.user?.authorizationKey
+  const authorization = session?.user?.authorization ?? ''
+  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
-    if (inputs) {
+    if (await UpdateItemValidation.parseAsync(inputs)) {
+      const data = await fetch(`${ITEM_REPOSITORY}/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(inputs),
+        headers: {
+          'Content-Type': 'application/json',
+          authorizationKey: authorizationKey,
+        },
+      })
+      return data && (await data.json())
     }
   } catch (error: any) {
     return error?.message || error

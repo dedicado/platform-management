@@ -35,7 +35,11 @@ export default function MemberDetailInListView(props: Props) {
   const image = user?.image || '/avatar.svg'
 
   return (
-    <li className="my-2 p-4 bg-slate-200 dark:bg-slate-800 dark:text-sky-600 rounded-md hover:shadow-md cursor-pointer">
+    <li
+      className={`my-2 p-4 bg-slate-200 dark:bg-slate-800 dark:text-sky-600 rounded-md hover:shadow-md cursor-pointer ${
+        !member?.active && 'opacity-25'
+      }`}
+    >
       <div className="flex items-center justify-between space-x-2">
         <a className="flex flex-1 flex-col">
           <div className="flex items-center space-x-2">

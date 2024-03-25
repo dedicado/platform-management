@@ -1,6 +1,5 @@
 'use server'
 
-import { nextAuthOptions } from '@/libraries/next-auth'
 import { orderLocationRepositoryCreate } from '@/repositories/order-location/POST'
 import {
   orderRepositoryFindByCode,
@@ -19,11 +18,39 @@ import { AddressTypeByZipCode } from '@/utils/handle-address/types'
 import {
   OrderCreateValidation,
   OrderCreateValidationType,
-  OrderLocationValidation,
   OrderLocationValidationType,
 } from '@/validations/order'
-import { getServerSession } from 'next-auth'
 import { revalidatePath } from 'next/cache'
+
+export const createOrder = async (
+  inputs: OrderCreateValidationType,
+): Promise<any> => {
+  try {
+    if (await OrderCreateValidation.parseAsync(inputs)) {
+      const customer: UserType | any = await userRepositoryFindByDocument(
+        inputs?.customer,
+      )
+      if (customer?.response?.error) return customer
+
+      const address: AddressTypeByZipCode | any = await getAddressByZipCode(
+        customer?.zipCode,
+      )
+
+      revalidatePath(`/${inputs.organization}/pedidos`)
+      return await orderRepositoryCreate({
+        ...inputs,
+        destinationZipCode: customer?.zipCode || address.cep,
+        destinationLatitude: customer?.latitude || address?.lat,
+        destinationLongitude: customer?.longitude || address?.lng,
+      }).then((data: any) => {
+        revalidatePath(`/${inputs?.organization}/pedidos`)
+        return data
+      })
+    }
+  } catch (error: any) {
+    return error?.message || 'ocorreu um erro inesperado'
+  }
+}
 
 export const getOrderByCode = async (
   code: string,
@@ -60,38 +87,7 @@ export const getOrdersByMember = async (
 export const registerOrderLocation = async (
   inputs: OrderLocationValidationType,
 ): Promise<any> => {
-  try {
-    if (await OrderLocationValidation.parseAsync(inputs)) {
-      return await orderLocationRepositoryCreate(inputs)
-    }
-  } catch (error: any) {
-    return error?.message || 'ocorreu um erro inesperado'
-  }
-}
-
-export const createOrder = async (
-  inputs: OrderCreateValidationType,
-): Promise<any> => {
-  try {
-    if (await OrderCreateValidation.parseAsync(inputs)) {
-      const customer: UserType | any = await userRepositoryFindByDocument(
-        inputs?.customer,
-      )
-      if (customer?.response?.error) return customer
-
-      const address: AddressTypeByZipCode | any = await getAddressByZipCode(
-        customer?.zipCode,
-      )
-
-      revalidatePath(`/${inputs.organization}/pedidos`)
-      return await orderRepositoryCreate({
-        ...inputs,
-        destinationZipCode: customer?.zipCode || address.cep,
-        destinationLatitude: customer?.latitude || address?.lat,
-        destinationLongitude: customer?.longitude || address?.lng,
-      })
-    }
-  } catch (error: any) {
-    return error?.message || 'ocorreu um erro inesperado'
-  }
+  return await orderLocationRepositoryCreate(inputs).then((data: any) => {
+    return data
+  })
 }

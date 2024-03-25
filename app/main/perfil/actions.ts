@@ -5,11 +5,8 @@ import { userRepositoryFindById } from '@/repositories/user/GET'
 import { userRepositoryUpdate } from '@/repositories/user/PATCH'
 import { UserType } from '@/types/user'
 import {
-  ProfileLocationUpdateValidation,
   ProfileLocationUpdateValidationType,
-  ProfilePasswordUpdateValidation,
   ProfilePasswordUpdateValidationType,
-  ProfileUpdateValidation,
   ProfileUpdateValidationType,
 } from '@/validations/profile'
 import { getServerSession } from 'next-auth'
@@ -29,15 +26,11 @@ export const updateProfile = async (
   const session = await getServerSession(nextAuthOptions)
   const userId = session?.user?.id ?? ''
 
-  try {
-    if (!session) return null
-    if (await ProfileUpdateValidation.parseAsync(inputs)) {
-      revalidatePath('/')
-      return await userRepositoryUpdate(userId, inputs)
-    }
-  } catch (error: any) {
-    return error?.message || 'ocorreu um erro inesperado'
-  }
+  if (!session) return null
+
+  return await userRepositoryUpdate(userId, inputs).then(() =>
+    revalidatePath('/perfil'),
+  )
 }
 
 export const updateProfilePassword = async (
@@ -46,15 +39,10 @@ export const updateProfilePassword = async (
   const session = await getServerSession(nextAuthOptions)
   const userId = session?.user?.id ?? ''
 
-  try {
-    if (!session) return null
-    if (await ProfilePasswordUpdateValidation.parseAsync(inputs)) {
-      const { newPassword } = inputs
-      return await userRepositoryUpdate(userId, { password: newPassword })
-    }
-  } catch (error: any) {
-    return error?.message || 'ocorreu um erro inesperado'
-  }
+  if (!session) return null
+
+  const { newPassword } = inputs
+  return await userRepositoryUpdate(userId, { password: newPassword })
 }
 
 export const updateProfileAvailable = async (
@@ -64,8 +52,10 @@ export const updateProfileAvailable = async (
   const userId = session?.user?.id ?? ''
 
   if (!session) return null
-  revalidatePath('/')
-  return await userRepositoryUpdate(userId, { available: available })
+
+  return await userRepositoryUpdate(userId, { available: available }).then(() =>
+    revalidatePath('/', 'layout'),
+  )
 }
 
 export const updateProfileLocation = async (
@@ -74,13 +64,9 @@ export const updateProfileLocation = async (
   const session = await getServerSession(nextAuthOptions)
   const userId = session?.user?.id ?? ''
 
-  try {
-    if (!session) return null
-    if (await ProfileLocationUpdateValidation.parseAsync(inputs)) {
-      revalidatePath('/')
-      return await userRepositoryUpdate(userId, inputs)
-    }
-  } catch (error: any) {
-    return error?.message || 'ocorreu um erro inesperado'
-  }
+  if (!session) return null
+
+  return await userRepositoryUpdate(userId, inputs).then(() =>
+    revalidatePath('/', 'layout'),
+  )
 }

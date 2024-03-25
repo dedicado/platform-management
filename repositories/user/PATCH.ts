@@ -6,7 +6,6 @@ import {
   UserUpdateValidationType,
 } from '@/validations/user'
 import { getServerSession } from 'next-auth'
-import { revalidatePath } from 'next/cache'
 import { USER_REPOSITORY } from '..'
 
 export const userRepositoryUpdate = async (
@@ -27,7 +26,6 @@ export const userRepositoryUpdate = async (
           Authorization: `Bearer ${authorization}`,
         },
       })
-      revalidatePath('/')
       return data && (await data.json())
     }
   } catch (error: any) {

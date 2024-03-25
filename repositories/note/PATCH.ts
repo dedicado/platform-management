@@ -2,14 +2,31 @@
 
 import { nextAuthOptions } from '@/libraries/next-auth'
 import { getServerSession } from 'next-auth'
+import { NOTE_REPOSITORY } from '..'
+import {
+  UpdateNoteValidation,
+  UpdateNoteValidationType,
+} from '@/validations/note'
 
-export const noteRepositoryUpdate = async (inputs: any): Promise<any> => {
+export const noteRepositoryUpdate = async (
+  id: string,
+  inputs: UpdateNoteValidationType,
+): Promise<any> => {
   const session = await getServerSession(nextAuthOptions)
-  const authorization = session?.user?.authorization
-  const authorizationKey = session?.user?.authorizationKey
+  const authorization = session?.user?.authorization ?? ''
+  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
-    if (inputs) {
+    if (await UpdateNoteValidation.parseAsync(inputs)) {
+      const data = await fetch(`${NOTE_REPOSITORY}/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(inputs),
+        headers: {
+          'Content-Type': 'application/json',
+          authorizationKey: authorizationKey,
+        },
+      })
+      return data && (await data.json())
     }
   } catch (error: any) {
     return error?.message || error

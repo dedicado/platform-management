@@ -7,7 +7,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useParams } from 'next/navigation'
 import { useState, ChangeEvent } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-//import toast from 'react-hot-toast'
+import toast from 'react-hot-toast'
+import { updateMember } from '../actions'
 
 interface Props {
   member: MemberType | any
@@ -44,14 +45,17 @@ export default function UpdateMemberForm(props: Props) {
   const onSubmit: SubmitHandler<MemberUpdateValidationType> = async (
     inputs,
   ) => {
-    console.log(inputs)
-    //const result = await update(data?.id, inputs, document)
-    //if (result?.response?.error) {
-    //  toast.error(result?.message)
-    //} else {
-    //  toast.success(result)
-    //  onClose()
-    //}
+    const result = await updateMember(member?.id, {
+      ...inputs,
+      organizationDocument: document,
+    })
+    if (result?.response?.error) {
+      toast.error(result?.message)
+    } else {
+      console.log(result)
+      toast.success(result)
+      onClose()
+    }
   }
 
   return (

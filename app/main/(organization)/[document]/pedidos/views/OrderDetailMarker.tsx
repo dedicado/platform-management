@@ -52,7 +52,7 @@ export default function OrderDetailMarker(props: Props) {
   return order && member && customer && address ? (
     <MapMarker
       color={order?.started && member?.available ? 'green' : 'red'}
-      image={order?.started && member?.image}
+      image={order?.started && member?.available ? member?.image: null}
       //key={order?.id}
       latitude={
         order?.started && member?.available
