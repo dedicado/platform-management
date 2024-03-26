@@ -44,7 +44,7 @@ export const orderRepositoryFindByCode = async (
       },
       next: {
         tags: ['order', 'orderCode'],
-        revalidate: 3600,
+        revalidate: 120,
       },
     })
     return data && (await data.json())
@@ -69,7 +69,7 @@ export const orderRepositoryFindByCustomer = async (
       },
       next: {
         tags: ['order', 'orderCustomer'],
-        revalidate: 3600,
+        revalidate: 120,
       },
     })
     return data && (await data.json())
@@ -94,7 +94,7 @@ export const orderRepositoryFindByMember = async (
       },
       next: {
         tags: ['order', 'orderMember'],
-        revalidate: 3600,
+        revalidate: 120,
       },
     })
     return data && (await data.json())
@@ -121,7 +121,7 @@ export const orderRepositoryFindByOrganization = async (
         },
         next: {
           tags: ['order', 'orderOrganization'],
-          revalidate: 3600,
+          revalidate: 120,
         },
       },
     )
@@ -147,7 +147,7 @@ export const orderRepositoryFindById = async (
       },
       next: {
         tags: ['order', 'orderId'],
-        revalidate: 3600,
+        revalidate: 120,
       },
     })
     return data && (await data.json())

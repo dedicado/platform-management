@@ -36,7 +36,6 @@ export const createOrder = async (
         customer?.zipCode,
       )
 
-      revalidatePath(`/${inputs.organization}/pedidos`)
       return await orderRepositoryCreate({
         ...inputs,
         destinationZipCode: customer?.zipCode || address.cep,

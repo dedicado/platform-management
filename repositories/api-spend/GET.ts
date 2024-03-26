@@ -46,7 +46,7 @@ export const apiSpendRepositoryFindByKey = async (
       },
       next: {
         tags: ['apiSpend', 'apiSpendKey'],
-        revalidate: 3600,
+        revalidate: 120,
       },
     })
     return data && (await data.json())
@@ -71,7 +71,7 @@ export const apiSpendRepositoryFindById = async (
       },
       next: {
         tags: ['apiSpend', 'apiSpendId'],
-        revalidate: 3600,
+        revalidate: 120,
       },
     })
     return data && (await data.json())

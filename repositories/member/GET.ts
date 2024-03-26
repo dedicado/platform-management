@@ -46,7 +46,7 @@ export const memberRepositoryFindByPhone = async (
       },
       next: {
         tags: ['member', 'memberPhone'],
-        revalidate: 3600,
+        revalidate: 120,
       },
     })
     return data && (await data.json())
@@ -71,7 +71,7 @@ export const memberRepositoryFindById = async (
       },
       next: {
         tags: ['member', 'memberId'],
-        revalidate: 3600,
+        revalidate: 120,
       },
     })
     return data && (await data.json())

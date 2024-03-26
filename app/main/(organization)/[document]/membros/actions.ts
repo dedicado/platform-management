@@ -1,5 +1,6 @@
 'use server'
 
+import { getUserByPhone } from '@/app/main/users/actions'
 import {
   memberRepositoryFindById,
   memberRepositoryFindByPhone,
@@ -7,6 +8,7 @@ import {
 } from '@/repositories/member/GET'
 import { memberRepositoryUpdate } from '@/repositories/member/PATCH'
 import { memberRepositoryCreate } from '@/repositories/member/POST'
+import { userRepositoryCreate } from '@/repositories/user/POST'
 import { MemberType } from '@/types/organization'
 import {
   MemberCreateValidationType,
@@ -17,9 +19,18 @@ import { revalidatePath, revalidateTag } from 'next/cache'
 export const createMember = async (
   inputs: MemberCreateValidationType,
 ): Promise<any> => {
+  const user = await getUserByPhone(inputs?.phone)
+  if (user?.response?.error)
+    await userRepositoryCreate({
+      profile: 'member',
+      name: inputs?.phone,
+      phone: inputs?.phone,
+      email: inputs?.phone + '@dedicado.digital',
+    }).then(() => revalidateTag('users'))
+
   return await memberRepositoryCreate(inputs).then((data: any) => {
     revalidateTag('members')
-    revalidatePath(`/${inputs?.organizationDocument}/membros`, 'layout')
+    revalidatePath(`/${inputs?.organizationDocument}/membros`)
     return data
   })
 }
@@ -44,7 +55,7 @@ export const updateMember = async (
 ): Promise<any> => {
   return await memberRepositoryUpdate(id, inputs).then((data: any) => {
     revalidateTag('member')
-    revalidatePath(`/${inputs?.organizationDocument}/membros`, 'layout')
+    revalidatePath(`/${inputs?.organizationDocument}/membros`)
     return data
   })
 }

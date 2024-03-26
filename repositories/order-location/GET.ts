@@ -46,7 +46,7 @@ export const orderLocationRepositoryFindByCode = async (
       },
       next: {
         tags: ['orderLocation', 'orderLocationCode'],
-        revalidate: 3600,
+        revalidate: 120,
       },
     })
     return data && (await data.json())
@@ -71,7 +71,7 @@ export const orderLocationRepositoryFindById = async (
       },
       next: {
         tags: ['orderLocation', 'orderLocationId'],
-        revalidate: 3600,
+        revalidate: 120,
       },
     })
     return data && (await data.json())

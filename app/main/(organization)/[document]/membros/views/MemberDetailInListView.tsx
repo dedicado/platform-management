@@ -45,7 +45,7 @@ export default function MemberDetailInListView(props: Props) {
           <div className="flex items-center space-x-2">
             <div
               className={`p-1 rounded-md ${
-                user?.available ? 'bg-green-400/50' : 'bg-sky-400/50'
+                user?.available ? 'bg-green-400/50 animate-pulse' : 'bg-sky-400/50'
               } shadow-md`}
             >
               <div className="w-['32px'] w-h-['32px']">

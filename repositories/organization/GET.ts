@@ -45,7 +45,7 @@ export const organizationRepositoryFindByDocument = async (
         },
         next: {
           tags: ['organization', 'organizationDocument'],
-          revalidate: 3600,
+          revalidate: 120,
         },
       },
     )
@@ -71,7 +71,7 @@ export const organizationRepositoryFindById = async (
       },
       next: {
         tags: ['organization', 'organizationId'],
-        revalidate: 3600,
+        revalidate: 120,
       },
     })
     return data && (await data.json())
@@ -96,7 +96,7 @@ export const organizationRepositoryVerifyByDocument = async (
       },
       next: {
         tags: ['organization', 'organizationVerify'],
-        revalidate: 3600,
+        revalidate: 120,
       },
     })
     return data && (await data.json())
