@@ -5,7 +5,7 @@ import { organizationRepositoryCreateForUser } from '@/repositories/organization
 import { OrganizationType } from '@/types/organization'
 import { CreateOrganizationValidationType } from '@/validations/organization'
 import { getServerSession } from 'next-auth'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 
 export const createOrganizationForUser = async (
   inputs: CreateOrganizationValidationType,
@@ -13,7 +13,10 @@ export const createOrganizationForUser = async (
   const session = await getServerSession(nextAuthOptions)
   const userPhone = session?.user?.phone ?? ''
 
-  return await organizationRepositoryCreateForUser(userPhone, inputs).then(() =>
-    revalidatePath('/'),
+  return await organizationRepositoryCreateForUser(userPhone, inputs).then(
+    () => {
+      revalidateTag('organizations')
+      revalidatePath('/', 'layout')
+    },
   )
 }

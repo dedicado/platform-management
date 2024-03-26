@@ -19,6 +19,7 @@ export const organizationRepositoryFindMany = async (): Promise<
         'Content-Type': 'application/json',
         authorizationKey: authorizationKey,
       },
+      next: { tags: ['organizations'], revalidate: 120 },
     })
     return data && (await data.json())
   } catch (error: any) {
@@ -42,6 +43,10 @@ export const organizationRepositoryFindByDocument = async (
           'Content-Type': 'application/json',
           authorizationKey: authorizationKey,
         },
+        next: {
+          tags: ['organization', 'organizationDocument'],
+          revalidate: 120,
+        },
       },
     )
     return data && (await data.json())
@@ -64,6 +69,10 @@ export const organizationRepositoryFindById = async (
         'Content-Type': 'application/json',
         authorizationKey: authorizationKey,
       },
+      next: {
+        tags: ['organization', 'organizationId'],
+        revalidate: 120,
+      },
     })
     return data && (await data.json())
   } catch (error: any) {
@@ -84,6 +93,10 @@ export const organizationRepositoryVerifyByDocument = async (
       headers: {
         'Content-Type': 'application/json',
         authorizationKey: authorizationKey,
+      },
+      next: {
+        tags: ['organization', 'organizationVerify'],
+        revalidate: 120,
       },
     })
     return data && (await data.json())

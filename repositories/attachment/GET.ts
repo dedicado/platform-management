@@ -19,6 +19,10 @@ export const attachmentRepositoryFindMany = async (): Promise<
         'Content-Type': 'application/json',
         authorizationKey: authorizationKey,
       },
+      next: {
+        tags: ['attachments'],
+        revalidate: 120,
+      },
     })
     return data && (await data.json())
   } catch (error: any) {
@@ -39,6 +43,10 @@ export const attachmentRepositoryFindById = async (
       headers: {
         'Content-Type': 'application/json',
         authorizationKey: authorizationKey,
+      },
+      next: {
+        tags: ['attachment', 'attachmentId'],
+        revalidate: 120,
       },
     })
     return data && (await data.json())

@@ -19,6 +19,10 @@ export const apiSpendRepositoryFindMany = async (): Promise<
         'Content-Type': 'application/json',
         authorizationKey: authorizationKey,
       },
+      next: {
+        tags: ['apiSpends'],
+        revalidate: 120,
+      },
     })
     return data && (await data.json())
   } catch (error: any) {
@@ -40,6 +44,10 @@ export const apiSpendRepositoryFindByKey = async (
         'Content-Type': 'application/json',
         authorizationKey: authorizationKey,
       },
+      next: {
+        tags: ['apiSpend', 'apiSpendKey'],
+        revalidate: 120,
+      },
     })
     return data && (await data.json())
   } catch (error: any) {
@@ -60,6 +68,10 @@ export const apiSpendRepositoryFindById = async (
       headers: {
         'Content-Type': 'application/json',
         authorizationKey: authorizationKey,
+      },
+      next: {
+        tags: ['apiSpend', 'apiSpendId'],
+        revalidate: 120,
       },
     })
     return data && (await data.json())

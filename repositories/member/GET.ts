@@ -19,6 +19,10 @@ export const memberRepositoryFindMany = async (): Promise<
         'Content-Type': 'application/json',
         authorizationKey: authorizationKey,
       },
+      next: {
+        tags: ['members'],
+        revalidate: 120,
+      },
     })
     return data && (await data.json())
   } catch (error: any) {
@@ -40,6 +44,10 @@ export const memberRepositoryFindByPhone = async (
         'Content-Type': 'application/json',
         authorizationKey: authorizationKey,
       },
+      next: {
+        tags: ['member', 'memberPhone'],
+        revalidate: 120,
+      },
     })
     return data && (await data.json())
   } catch (error: any) {
@@ -55,8 +63,18 @@ export const memberRepositoryFindById = async (
   const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
-    if (id) {
-    }
+    const data = await fetch(`${MEMBER_REPOSITORY}/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorizationKey: authorizationKey,
+      },
+      next: {
+        tags: ['member', 'memberId'],
+        revalidate: 120,
+      },
+    })
+    return data && (await data.json())
   } catch (error: any) {
     return error?.message || error
   }

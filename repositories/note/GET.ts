@@ -17,6 +17,10 @@ export const noteRepositoryFindMany = async (): Promise<NoteType[] | any> => {
         'Content-Type': 'application/json',
         authorizationKey: authorizationKey,
       },
+      next: {
+        tags: ['notes'],
+        revalidate: 120,
+      },
     })
     return data && (await data.json())
   } catch (error: any) {
@@ -37,6 +41,10 @@ export const noteRepositoryFindById = async (
       headers: {
         'Content-Type': 'application/json',
         authorizationKey: authorizationKey,
+      },
+      next: {
+        tags: ['note', 'noteId'],
+        revalidate: 120,
       },
     })
     return data && (await data.json())

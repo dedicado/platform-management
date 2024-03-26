@@ -17,20 +17,16 @@ interface Props {
 export default function OrderDetailMarker(props: Props) {
   const { order } = props
 
-  const [member, setMember] = useState<UserType | any>({})
-  const [customer, setCustomer] = useState<UserType | any>({})
+  const [member, setMember] = useState<UserType | any>()
+  const [customer, setCustomer] = useState<UserType | any>()
   const [address, setAddress] = useState<AddressTypeByGeolocation | any>()
-
-  //console.log('member: ', member)
-  //console.log('customer: ', customer)
-  //console.log('address: ', address)
 
   useEffect(() => {
     const data = async () => {
       try {
         if (order) {
           const member = await getUserByPhone(order?.member)
-          member?.available && setMember(member)
+          member && setMember(member)
 
           const customer = await getUserByDocument(order?.customer)
           customer && setCustomer(customer)
@@ -47,12 +43,12 @@ export default function OrderDetailMarker(props: Props) {
       }
     }
     data()
-  }, [order])
+  }, [order, member])
 
   return order && member && customer && address ? (
     <MapMarker
       color={order?.started && member?.available ? 'green' : 'red'}
-      image={order?.started && member?.available ? member?.image: null}
+      image={order?.started && member?.available ? member?.image : null}
       //key={order?.id}
       latitude={
         order?.started && member?.available

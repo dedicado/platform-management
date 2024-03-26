@@ -19,6 +19,10 @@ export const orderLocationRepositoryFindMany = async (): Promise<
         'Content-Type': 'application/json',
         authorizationKey: authorizationKey,
       },
+      next: {
+        tags: ['orderLocations'],
+        revalidate: 120,
+      },
     })
     return data && (await data.json())
   } catch (error: any) {
@@ -40,6 +44,10 @@ export const orderLocationRepositoryFindByCode = async (
         'Content-Type': 'application/json',
         authorizationKey: authorizationKey,
       },
+      next: {
+        tags: ['orderLocation', 'orderLocationCode'],
+        revalidate: 120,
+      },
     })
     return data && (await data.json())
   } catch (error: any) {
@@ -60,6 +68,10 @@ export const orderLocationRepositoryFindById = async (
       headers: {
         'Content-Type': 'application/json',
         authorizationKey: authorizationKey,
+      },
+      next: {
+        tags: ['orderLocation', 'orderLocationId'],
+        revalidate: 120,
       },
     })
     return data && (await data.json())

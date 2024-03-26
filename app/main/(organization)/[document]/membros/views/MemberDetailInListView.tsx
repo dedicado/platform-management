@@ -30,7 +30,7 @@ export default function MemberDetailInListView(props: Props) {
       }
     }
     userData()
-  }, [member])
+  }, [member, user])
 
   const image = user?.image || '/avatar.svg'
 

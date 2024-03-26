@@ -10,7 +10,7 @@ import {
   ProfileUpdateValidationType,
 } from '@/validations/profile'
 import { getServerSession } from 'next-auth'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 
 export const getProfile = async (): Promise<UserType | any> => {
   const session = await getServerSession(nextAuthOptions)
@@ -28,9 +28,10 @@ export const updateProfile = async (
 
   if (!session) return null
 
-  return await userRepositoryUpdate(userId, inputs).then(() =>
-    revalidatePath('/perfil'),
-  )
+  return await userRepositoryUpdate(userId, inputs).then(() => {
+    revalidateTag('user')
+    revalidatePath('/perfil')
+  })
 }
 
 export const updateProfilePassword = async (
@@ -53,8 +54,11 @@ export const updateProfileAvailable = async (
 
   if (!session) return null
 
-  return await userRepositoryUpdate(userId, { available: available }).then(() =>
-    revalidatePath('/', 'layout'),
+  return await userRepositoryUpdate(userId, { available: available }).then(
+    () => {
+      revalidateTag('user')
+      revalidatePath('/', 'layout')
+    },
   )
 }
 
@@ -66,7 +70,8 @@ export const updateProfileLocation = async (
 
   if (!session) return null
 
-  return await userRepositoryUpdate(userId, inputs).then(() =>
-    revalidatePath('/', 'layout'),
-  )
+  return await userRepositoryUpdate(userId, inputs).then(() => {
+    revalidateTag('user')
+    revalidatePath('/', 'layout')
+  })
 }

@@ -17,6 +17,10 @@ export const orderRepositoryFindMany = async (): Promise<OrderType[] | any> => {
         'Content-Type': 'application/json',
         authorizationKey: authorizationKey,
       },
+      next: {
+        tags: ['orders'],
+        revalidate: 120,
+      },
     })
     return data && (await data.json())
   } catch (error: any) {
@@ -37,6 +41,10 @@ export const orderRepositoryFindByCode = async (
       headers: {
         'Content-Type': 'application/json',
         authorizationKey: authorizationKey,
+      },
+      next: {
+        tags: ['order', 'orderCode'],
+        revalidate: 120,
       },
     })
     return data && (await data.json())
@@ -59,6 +67,10 @@ export const orderRepositoryFindByCustomer = async (
         'Content-Type': 'application/json',
         authorizationKey: authorizationKey,
       },
+      next: {
+        tags: ['order', 'orderCustomer'],
+        revalidate: 120,
+      },
     })
     return data && (await data.json())
   } catch (error: any) {
@@ -79,6 +91,10 @@ export const orderRepositoryFindByMember = async (
       headers: {
         'Content-Type': 'application/json',
         authorizationKey: authorizationKey,
+      },
+      next: {
+        tags: ['order', 'orderMember'],
+        revalidate: 120,
       },
     })
     return data && (await data.json())
@@ -103,6 +119,10 @@ export const orderRepositoryFindByOrganization = async (
           'Content-Type': 'application/json',
           authorizationKey: authorizationKey,
         },
+        next: {
+          tags: ['order', 'orderOrganization'],
+          revalidate: 120,
+        },
       },
     )
     return data && (await data.json())
@@ -124,6 +144,10 @@ export const orderRepositoryFindById = async (
       headers: {
         'Content-Type': 'application/json',
         authorizationKey: authorizationKey,
+      },
+      next: {
+        tags: ['order', 'orderId'],
+        revalidate: 120,
       },
     })
     return data && (await data.json())

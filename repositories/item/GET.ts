@@ -17,6 +17,10 @@ export const itemRepositoryFindMany = async (): Promise<ItemType[] | any> => {
         'Content-Type': 'application/json',
         authorizationKey: authorizationKey,
       },
+      next: {
+        tags: ['items'],
+        revalidate: 120,
+      },
     })
     return data && (await data.json())
   } catch (error: any) {
@@ -37,6 +41,10 @@ export const itemRepositoryFindById = async (
       headers: {
         'Content-Type': 'application/json',
         authorizationKey: authorizationKey,
+      },
+      next: {
+        tags: ['item', 'itemId'],
+        revalidate: 120,
       },
     })
     return data && (await data.json())

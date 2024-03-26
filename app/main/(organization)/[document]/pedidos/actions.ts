@@ -20,7 +20,7 @@ import {
   OrderCreateValidationType,
   OrderLocationValidationType,
 } from '@/validations/order'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 
 export const createOrder = async (
   inputs: OrderCreateValidationType,
@@ -43,6 +43,7 @@ export const createOrder = async (
         destinationLatitude: customer?.latitude || address?.lat,
         destinationLongitude: customer?.longitude || address?.lng,
       }).then((data: any) => {
+        revalidateTag('orders')
         revalidatePath(`/${inputs?.organization}/pedidos`)
         return data
       })
@@ -88,6 +89,7 @@ export const registerOrderLocation = async (
   inputs: OrderLocationValidationType,
 ): Promise<any> => {
   return await orderLocationRepositoryCreate(inputs).then((data: any) => {
+    revalidateTag('orderLocations')
     return data
   })
 }

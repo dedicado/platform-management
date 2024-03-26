@@ -12,13 +12,14 @@ import {
   MemberCreateValidationType,
   MemberUpdateValidationType,
 } from '@/validations/member'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 
 export const createMember = async (
   inputs: MemberCreateValidationType,
 ): Promise<any> => {
   return await memberRepositoryCreate(inputs).then((data: any) => {
-    revalidatePath(`/${inputs?.organizationDocument}/membros`)
+    revalidateTag('members')
+    revalidatePath(`/${inputs?.organizationDocument}/membros`, 'layout')
     return data
   })
 }
@@ -42,7 +43,8 @@ export const updateMember = async (
   inputs: MemberUpdateValidationType,
 ): Promise<any> => {
   return await memberRepositoryUpdate(id, inputs).then((data: any) => {
-    revalidatePath(`/${inputs?.organizationDocument}/membros`)
+    revalidateTag('member')
+    revalidatePath(`/${inputs?.organizationDocument}/membros`, 'layout')
     return data
   })
 }

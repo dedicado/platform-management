@@ -1,5 +1,3 @@
-'use client'
-
 import { Tab } from '@headlessui/react'
 import { Fragment, Suspense } from 'react'
 import OrderMapView from './OrderMapView'

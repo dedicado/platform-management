@@ -17,6 +17,7 @@ export const userRepositoryFindMany = async (): Promise<UserType[] | any> => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${authorization}`,
       },
+      next: { tags: ['users'], revalidate: 120 },
     })
     return data && (await data.json())
   } catch (error: any) {
@@ -38,6 +39,7 @@ export const userRepositoryFindByDocument = async (
         'Content-Type': 'application/json',
         Authorization: `Bearer ${authorization}`,
       },
+      next: { tags: ['user', 'userDocument'], revalidate: 120 },
     })
     return data && (await data.json())
   } catch (error: any) {
@@ -59,6 +61,7 @@ export const userRepositoryFindByEmail = async (
         'Content-Type': 'application/json',
         Authorization: `Bearer ${authorization}`,
       },
+      next: { tags: ['user', 'userEmail'], revalidate: 120 },
     })
     return data && (await data.json())
   } catch (error: any) {
@@ -80,6 +83,7 @@ export const userRepositoryFindById = async (
         'Content-Type': 'application/json',
         Authorization: `Bearer ${authorization}`,
       },
+      next: { tags: ['user', 'userId'], revalidate: 120 },
     })
     return data && (await data.json())
   } catch (error: any) {
@@ -101,6 +105,7 @@ export const userRepositoryFindByPhone = async (
         'Content-Type': 'application/json',
         Authorization: `Bearer ${authorization}`,
       },
+      next: { tags: ['user', 'userPhone'], revalidate: 120 },
     })
     return data && (await data.json())
   } catch (error: any) {
