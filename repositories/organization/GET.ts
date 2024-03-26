@@ -19,7 +19,7 @@ export const organizationRepositoryFindMany = async (): Promise<
         'Content-Type': 'application/json',
         authorizationKey: authorizationKey,
       },
-      next: { tags: ['organizations'], revalidate: 120 },
+      next: { tags: ['organizations'], revalidate: 3600 },
     })
     return data && (await data.json())
   } catch (error: any) {
@@ -45,7 +45,7 @@ export const organizationRepositoryFindByDocument = async (
         },
         next: {
           tags: ['organization', 'organizationDocument'],
-          revalidate: 120,
+          revalidate: 3600,
         },
       },
     )
@@ -71,7 +71,7 @@ export const organizationRepositoryFindById = async (
       },
       next: {
         tags: ['organization', 'organizationId'],
-        revalidate: 120,
+        revalidate: 3600,
       },
     })
     return data && (await data.json())
@@ -96,7 +96,7 @@ export const organizationRepositoryVerifyByDocument = async (
       },
       next: {
         tags: ['organization', 'organizationVerify'],
-        revalidate: 120,
+        revalidate: 3600,
       },
     })
     return data && (await data.json())

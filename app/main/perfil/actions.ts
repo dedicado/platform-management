@@ -56,7 +56,7 @@ export const updateProfileAvailable = async (
 
   return await userRepositoryUpdate(userId, { available: available }).then(
     () => {
-      revalidateTag('user')
+      revalidateTag('userPhone')
       revalidatePath('/', 'layout')
     },
   )
@@ -71,7 +71,7 @@ export const updateProfileLocation = async (
   if (!session) return null
 
   return await userRepositoryUpdate(userId, inputs).then(() => {
-    revalidateTag('user')
+    revalidateTag('userPhone')
     revalidatePath('/', 'layout')
   })
 }

@@ -46,9 +46,9 @@ export default function UserAvailable() {
         onClick={handleAvailable}
       >
         {!available ? (
-          <MdJoinRight size={24} />
+          <MdJoinRight size={24} className='rounded-full' />
         ) : (
-          <MdJoinLeft size={24} color="#16a34a" />
+          <MdJoinLeft size={24} className='rounded-full text-green-400' />
         )}
       </span>
     </div>

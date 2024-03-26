@@ -21,7 +21,7 @@ export const orderLocationRepositoryFindMany = async (): Promise<
       },
       next: {
         tags: ['orderLocations'],
-        revalidate: 120,
+        revalidate: 3600,
       },
     })
     return data && (await data.json())
@@ -46,7 +46,7 @@ export const orderLocationRepositoryFindByCode = async (
       },
       next: {
         tags: ['orderLocation', 'orderLocationCode'],
-        revalidate: 120,
+        revalidate: 3600,
       },
     })
     return data && (await data.json())
@@ -71,7 +71,7 @@ export const orderLocationRepositoryFindById = async (
       },
       next: {
         tags: ['orderLocation', 'orderLocationId'],
-        revalidate: 120,
+        revalidate: 3600,
       },
     })
     return data && (await data.json())

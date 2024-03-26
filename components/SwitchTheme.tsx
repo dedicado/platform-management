@@ -2,31 +2,30 @@
 
 import { useCallback, useState, useTransition } from 'react'
 import { Switch } from '@headlessui/react'
+import { MdOutlineBrightness4, MdOutlineBrightness5 } from 'react-icons/md'
 
 export default function SwitchTheme() {
-  const [dark, setDark] = useState<boolean>(false)
+  const [darkTheme, setDarkTheme] = useState<boolean>(false)
   const [isPending, startTransition] = useTransition()
 
-  console.log(dark)
-
   const handleAvailable = useCallback(() => {
-    startTransition(() => setDark(!dark))
-  }, [dark])
+    startTransition(() => setDarkTheme(!darkTheme))
+  }, [darkTheme])
 
   return (
     <div className="relative">
-      <Switch
-        checked={dark}
-        onChange={handleAvailable}
-        className={`${!dark ? 'bg-slate-600' : 'bg-sky-600'}
-          relative h-[26px] w-[52px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white/75 flex item-center`}
-      >
+      <Switch checked={darkTheme} onChange={handleAvailable}>
         <span
-          aria-hidden="true"
-          className={`${!dark ? 'translate-x-6' : 'translate-x-0'}
-            pointer-events-none h-[24px] w-[24px] transform rounded-full p-2 flex justify-center items-center text-xs bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
+          className={`flex justify-center items-center p-2 rounded-full cursor-pointer hover:shadow-md`}
         >
-          {!dark ? 'light' : 'dark'}
+          {!darkTheme ? (
+            <MdOutlineBrightness5
+              size={25}
+              className="rounded-full text-sky-600/60"
+            />
+          ) : (
+            <MdOutlineBrightness4 size={24} className="rounded-full" />
+          )}
         </span>
       </Switch>
     </div>

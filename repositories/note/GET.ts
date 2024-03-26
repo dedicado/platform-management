@@ -19,7 +19,7 @@ export const noteRepositoryFindMany = async (): Promise<NoteType[] | any> => {
       },
       next: {
         tags: ['notes'],
-        revalidate: 120,
+        revalidate: 3600,
       },
     })
     return data && (await data.json())
@@ -44,7 +44,7 @@ export const noteRepositoryFindById = async (
       },
       next: {
         tags: ['note', 'noteId'],
-        revalidate: 120,
+        revalidate: 3600,
       },
     })
     return data && (await data.json())

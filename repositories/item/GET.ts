@@ -19,7 +19,7 @@ export const itemRepositoryFindMany = async (): Promise<ItemType[] | any> => {
       },
       next: {
         tags: ['items'],
-        revalidate: 120,
+        revalidate: 3600,
       },
     })
     return data && (await data.json())
@@ -44,7 +44,7 @@ export const itemRepositoryFindById = async (
       },
       next: {
         tags: ['item', 'itemId'],
-        revalidate: 120,
+        revalidate: 3600,
       },
     })
     return data && (await data.json())

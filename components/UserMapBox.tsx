@@ -7,7 +7,6 @@ import { OrderType } from '@/types/order'
 import { UserType } from '@/types/user'
 import moment from 'moment-timezone'
 import 'moment/locale/pt-br'
-//import dynamic from 'next/dynamic'
 import { Fragment } from 'react'
 
 export default function UserMapBox() {
@@ -15,9 +14,7 @@ export default function UserMapBox() {
   const { user }: UserType | any = usePlatform()
   const { orders }: OrderType[] | any = usePlatform()
 
-  //console.log('orders: ', orders?.length)
-
-  //const Map = dynamic(() => import('@/components/MapBox'), { ssr: false })
+  const image = user?.image || 'avatar.svg'
 
   return location?.latitude ? (
     <div className="flex flex-col md:flex-row gap-4">
@@ -127,7 +124,7 @@ export default function UserMapBox() {
               })
             ) : (
               <MapMarker
-                image={user?.image}
+                image={image}
                 //key={user?.id!}
                 latitude={location?.latitude}
                 longitude={location?.longitude}

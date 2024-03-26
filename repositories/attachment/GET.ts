@@ -21,7 +21,7 @@ export const attachmentRepositoryFindMany = async (): Promise<
       },
       next: {
         tags: ['attachments'],
-        revalidate: 120,
+        revalidate: 3600,
       },
     })
     return data && (await data.json())
@@ -46,7 +46,7 @@ export const attachmentRepositoryFindById = async (
       },
       next: {
         tags: ['attachment', 'attachmentId'],
-        revalidate: 120,
+        revalidate: 3600,
       },
     })
     return data && (await data.json())

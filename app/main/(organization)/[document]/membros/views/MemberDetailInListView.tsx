@@ -24,8 +24,8 @@ export default function MemberDetailInListView(props: Props) {
           const user = await getUserByPhone(member?.phone)
           user && setUser(user)
         }
+        return user
       } catch (error: any) {
-        console.error(error)
         return null
       }
     }
@@ -34,7 +34,7 @@ export default function MemberDetailInListView(props: Props) {
 
   const image = user?.image || '/avatar.svg'
 
-  return (
+  return member && user ? (
     <li
       className={`my-2 p-4 bg-slate-200 dark:bg-slate-800 dark:text-sky-600 rounded-md hover:shadow-md cursor-pointer ${
         !member?.active && 'opacity-25'
@@ -78,5 +78,5 @@ export default function MemberDetailInListView(props: Props) {
         </div>
       </div>
     </li>
-  )
+  ) : null
 }

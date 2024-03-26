@@ -37,8 +37,8 @@ export default function OrderDetailMarker(props: Props) {
           })
           address && setAddress(address)
         }
+        return member
       } catch (error: any) {
-        console.error(error)
         return null
       }
     }

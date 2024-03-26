@@ -21,7 +21,7 @@ export const memberRepositoryFindMany = async (): Promise<
       },
       next: {
         tags: ['members'],
-        revalidate: 120,
+        revalidate: 3600,
       },
     })
     return data && (await data.json())
@@ -46,7 +46,7 @@ export const memberRepositoryFindByPhone = async (
       },
       next: {
         tags: ['member', 'memberPhone'],
-        revalidate: 120,
+        revalidate: 3600,
       },
     })
     return data && (await data.json())
@@ -71,7 +71,7 @@ export const memberRepositoryFindById = async (
       },
       next: {
         tags: ['member', 'memberId'],
-        revalidate: 120,
+        revalidate: 3600,
       },
     })
     return data && (await data.json())
