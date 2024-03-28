@@ -11,7 +11,7 @@ interface Props {
   image?: string | any
   latitude: number
   longitude: number
-  title?: string
+  title?: string | any
   key?: string | any
 }
 

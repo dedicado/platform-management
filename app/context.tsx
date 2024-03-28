@@ -49,9 +49,9 @@ export const PlatformProvider = ({
   const [orders, setOrders] = useState<OrderType[] | any>()
 
   useEffect(() => {
-    const data = async () => {
-      try {
-        if (session) {
+    if (session) {
+      const data = async () => {
+        try {
           const user = await getUserById(userId)
           user && setUser(user)
 
@@ -60,13 +60,13 @@ export const PlatformProvider = ({
 
           const member = await getMemberByUserPhone(userPhone)
           member && setMember(member)
+        } catch (error: any) {
+          console.error(error)
+          return null
         }
-      } catch (error: any) {
-        console.error(error)
-        return null
       }
+      data()
     }
-    data()
   }, [session, userId, userPhone])
 
   const organizations: OrganizationType[] | any = member?.map(
@@ -88,9 +88,9 @@ export const PlatformProvider = ({
   const [isPending, startTransition] = useTransition()
 
   useEffect(() => {
-    const getUserLocation = async () => {
-      try {
-        user &&
+    if (user) {
+      const getUserLocation = async () => {
+        try {
           navigator?.geolocation.watchPosition((position) => {
             if (!position) return null
             const coordinates: LocationType = {
@@ -100,22 +100,23 @@ export const PlatformProvider = ({
             startTransition(() => setLocation(coordinates))
           })
 
-        const available = user?.available
-        const unlike: boolean = location !== lastPosition
+          const available = user?.available
+          const unlike: boolean = location !== lastPosition
 
-        available &&
-          setTimeout(async () => {
-            const registerLocation: ProfileLocationUpdateValidationType = {
-              ...location,
-            }
+          available &&
+            setTimeout(async () => {
+              const registerLocation: ProfileLocationUpdateValidationType = {
+                ...location,
+              }
 
-            unlike && (await updateProfileLocation(registerLocation))
-          }, 60000)
-      } catch (error: any) {
-        return null
+              unlike && (await updateProfileLocation(registerLocation))
+            }, 60000)
+        } catch (error: any) {
+          return null
+        }
       }
+      getUserLocation()
     }
-    getUserLocation()
   }, [lastPosition, session, location, user])
 
   return (

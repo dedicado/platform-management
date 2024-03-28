@@ -35,9 +35,9 @@ export const OrganizationProvider = ({
   const [organization, setOrganization] = useState<OrganizationType | any>()
 
   useEffect(() => {
-    const data = async () => {
-      try {
-        if (session) {
+    if (session) {
+      const data = async () => {
+        try {
           const organization = await getOrganizationByDocument(document)
           setOrganization(organization)
 
@@ -45,13 +45,13 @@ export const OrganizationProvider = ({
 
           const orders = await getOrdersByOrganization(document)
           setOrders(orders)
+        } catch (error: any) {
+          console.error(error)
+          return null
         }
-      } catch (error: any) {
-        console.error(error)
-        return null
       }
+      data()
     }
-    data()
   }, [document, session])
 
   return (
