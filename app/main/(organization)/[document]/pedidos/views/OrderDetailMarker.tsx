@@ -22,9 +22,9 @@ export default function OrderDetailMarker(props: Props) {
   const [address, setAddress] = useState<AddressTypeByZipCode | any>()
 
   useEffect(() => {
-    const data = async () => {
-      try {
-        if (order) {
+    if (order) {
+      const data = async () => {
+        try {
           const member = await getUserByPhone(order?.member)
           member && setMember(member)
 
@@ -33,13 +33,14 @@ export default function OrderDetailMarker(props: Props) {
 
           const address = await getAddressByZipCode(customer?.zipCode)
           address && setAddress(address)
+
+          return member
+        } catch (error: any) {
+          return null
         }
-        return member
-      } catch (error: any) {
-        return null
       }
+      data()
     }
-    data()
   }, [order, member])
 
   return order && member && customer && address ? (
