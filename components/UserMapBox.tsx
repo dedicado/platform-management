@@ -8,6 +8,8 @@ import { UserType } from '@/types/user'
 import moment from 'moment-timezone'
 import 'moment/locale/pt-br'
 import { Fragment } from 'react'
+import UserMapMarker from './UserMapMarker'
+import MapSource from './MapSource'
 
 export default function UserMapBox() {
   const { location }: LocationType | any = usePlatform()
@@ -27,101 +29,42 @@ export default function UserMapBox() {
         >
           <Fragment>
             {orders?.length > 0 ? (
-              orders?.map((order: OrderType) => {
-                return (
-                  !order?.canceled &&
-                  !order?.completed && (
-                    <div key={order?.id}>
-                      <MapMarker
-                        color={order?.started ? 'green' : 'red'}
-                        image={order?.started && user?.image}
-                        //key={order?.id}
-                        latitude={
-                          order?.started
-                            ? location?.latitude
-                            : order?.latitude || order?.destinationLatitude
-                        }
-                        longitude={
-                          order?.started
-                            ? location?.longitude
-                            : order?.longitude || order?.destinationLongitude
-                        }
-                        title={order?.subject || order?.code}
-                      >
-                        <div className="flex flex-col justify-center items-center gap-2">
-                          <button
-                            type="button"
-                            className="p-2 w-full text-center font-light text-white uppercase cursor-pointer bg-sky-800 rounded-md shadow-md hover:opacity-75"
-                          >
-                            detalhes do pedido
-                          </button>
-                          <small className="text-center text-xs lowercase opacity-90">
-                            {order?.destinationComplement}
-                          </small>
-                        </div>
-                        <div
-                          className={`p-2 w-full flex flex-col gap-2 ${
-                            order?.started ? 'bg-sky-200/60' : 'bg-green-200/60'
-                          } rounded-md shadow-md`}
-                        >
-                          <div className="lowercase space-x-2">
-                            <label className="opacity-80">código:</label>
-                            <h6 className="font-semibold uppercase">
-                              {order?.code}
-                            </h6>
-                          </div>
-                          <div className="lowercase space-x-2">
-                            <label className="opacity-80">observações:</label>
-                            <p className="font-semibold italic">
-                              {order?.observation}
-                            </p>
-                          </div>
-                          <div className="lowercase space-x-2">
-                            <label className="opacity-80">prazo final:</label>
-                            <span className="font-semibold">
-                              {moment(order?.deadline)
-                                .tz('America/Sao_Paulo')
-                                .utc()
-                                .format('lll')}
-                            </span>
-                          </div>
-                          {order?.started ? (
-                            <div className="flex flex-col justify-center items-center gap-2 my-2">
-                              <button
-                                type="button"
-                                className="px-2 w-full text-center text-md text-white uppercase cursor-pointer bg-sky-400 rounded-md shadow-md hover:opacity-75"
-                              >
-                                adicionar uma observação ao pedido
-                              </button>
-                              <button
-                                type="button"
-                                className="px-2 w-full text-center text-md text-white uppercase cursor-pointer bg-green-400 rounded-md shadow-md hover:opacity-75"
-                              >
-                                finalizar pedido
-                              </button>
-                              <button
-                                type="button"
-                                className="px-2 w-full text-center text-md text-white uppercase cursor-pointer bg-orange-400 rounded-md shadow-md hover:opacity-75"
-                              >
-                                cancelar pedido
-                              </button>
-                            </div>
-                          ) : (
-                            <div className="flex flex-col justify-center items-center my-2">
-                              <button
-                                type="button"
-                                className="px-2 w-full text-center text-md text-white uppercase cursor-pointer bg-green-400 rounded-md shadow-md hover:opacity-75"
-                              >
-                                atender pedido
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      </MapMarker>
-                    </div>
+              <Fragment>
+                <MapMarker
+                  image={image}
+                  //key={user?.id!}
+                  latitude={location?.latitude}
+                  longitude={location?.longitude}
+                  title={user?.name}
+                />
+                {orders?.map((order: OrderType) => {
+                  return (
+                    !order?.canceled &&
+                    !order?.completed && (
+                      <div key={order?.id}>
+                        {order?.started && (
+                          <MapSource
+                            destination={{
+                              longitude: order?.destinationLongitude,
+                              latitude: order?.destinationLatitude,
+                            }}
+                            origin={{
+                              longitude: order?.originLongitude,
+                              latitude: order?.originLatitude,
+                            }}
+                            location={{
+                              longitude: location?.longitude,
+                              latitude: location?.latitude,
+                            }}
+                            id={order?.id}
+                          />
+                        )}
+                        <UserMapMarker order={order} />
+                      </div>
+                    )
                   )
-                )
-              })
+                })}
+              </Fragment>
             ) : (
               <MapMarker
                 image={image}

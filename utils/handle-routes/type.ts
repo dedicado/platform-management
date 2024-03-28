@@ -1,4 +1,4 @@
 export type RoutesByCoordinateType = {
-  destination: { latitude: number; longitude: number }
-  origin: { latitude: number; longitude: number }
+  destination: { longitude: number; latitude: number }
+  origin: { longitude: number; latitude: number }
 }

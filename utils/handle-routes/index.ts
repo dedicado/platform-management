@@ -9,7 +9,11 @@ export const getRoutesByCoordinate = async ({
   try {
     const url: string = 'https://api.mapbox.com/directions/v5/mapbox/driving'
     const response = await fetch(
-      `${url}/${origin};${destination}?steps=true&&geometries=geojson&access_token=${process.env.MAPBOX_ACCESS_TOKEN}`,
+      `${url}/${origin?.longitude + ',' + origin?.latitude};${
+        destination?.longitude + ',' + destination?.latitude
+      }?steps=true&&geometries=geojson&access_token=${
+        process.env.MAPBOX_ACCESS_TOKEN
+      }`,
       {
         method: 'GET',
         headers: {
@@ -18,7 +22,7 @@ export const getRoutesByCoordinate = async ({
       },
     )
     const data = await response.json()
-    const coordinates: [] | any = data?.routes[0]?.geometry?.coordinates
+    const coordinates = data?.routes[0]?.geometry?.coordinates
 
     return coordinates
   } catch (error: any) {
