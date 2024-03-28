@@ -2,7 +2,11 @@
 
 import LoadingPage from '@/app/loading'
 import { ReactNode, Suspense } from 'react'
-import Map from 'react-map-gl'
+import Map, {
+  FullscreenControl,
+  GeolocateControl,
+  NavigationControl,
+} from 'react-map-gl'
 
 interface Props {
   children?: ReactNode
@@ -31,6 +35,9 @@ export default function MapBox(props: Props) {
             style={{ width: '100%', height: 600, borderRadius: 10 }}
             mapStyle={process.env.MAPBOX_STYLES}
           >
+            <GeolocateControl />
+            <FullscreenControl />
+            <NavigationControl />
             <div className="relative">{children}</div>
           </Map>
         </Suspense>

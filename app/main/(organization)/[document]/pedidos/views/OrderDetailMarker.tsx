@@ -4,8 +4,8 @@ import { getUserByDocument, getUserByPhone } from '@/app/main/users/actions'
 import MapMarker from '@/components/MapMarker'
 import { OrderType } from '@/types/order'
 import { UserType } from '@/types/user'
-import { getAddressByGeolocation } from '@/utils/handle-address'
-import { AddressTypeByGeolocation } from '@/utils/handle-address/types'
+import { getAddressByZipCode } from '@/utils/handle-address'
+import { AddressTypeByZipCode } from '@/utils/handle-address/types'
 import moment from 'moment-timezone'
 import 'moment/locale/pt-br'
 import { useEffect, useState } from 'react'
@@ -19,7 +19,7 @@ export default function OrderDetailMarker(props: Props) {
 
   const [member, setMember] = useState<UserType | any>()
   const [customer, setCustomer] = useState<UserType | any>()
-  const [address, setAddress] = useState<AddressTypeByGeolocation | any>()
+  const [address, setAddress] = useState<AddressTypeByZipCode | any>()
 
   useEffect(() => {
     const data = async () => {
@@ -31,10 +31,7 @@ export default function OrderDetailMarker(props: Props) {
           const customer = await getUserByDocument(order?.customer)
           customer && setCustomer(customer)
 
-          const address = await getAddressByGeolocation({
-            latitude: order?.destinationLatitude,
-            longitude: order?.destinationLongitude,
-          })
+          const address = await getAddressByZipCode(customer?.zipCode)
           address && setAddress(address)
         }
         return member
@@ -81,7 +78,7 @@ export default function OrderDetailMarker(props: Props) {
           <h4 className="text-xl text-center lowercase">{customer?.name}</h4>
         </div>
         <small className="text-center text-xs lowercase opacity-90">
-          {address?.place}
+          {`${address?.address + ', ' ?? ''} ${customer?.complement}`}
         </small>
       </div>
       <div
