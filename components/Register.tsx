@@ -5,12 +5,12 @@ import { useRouter } from 'next/navigation'
 import { ChangeEvent, Fragment, useCallback, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { signIn } from 'next-auth/react'
+//import { signIn } from 'next-auth/react'
 import {
   RegisterValidation,
   RegisterValidationType,
 } from '@/validations/register'
-import { registerUser } from '@/app/main/registrar-se/actions'
+//import { registerUser } from '@/app/main/registrar-se/actions'
 import Modal from './Modal'
 import TermsAndPoliciesView from '@/app/main/(legal)/termos-e-politicas/views/TermsAndPoliciesView'
 
@@ -38,25 +38,28 @@ export default function Register() {
     resolver: zodResolver(RegisterValidation),
   })
   const onSubmit: SubmitHandler<RegisterValidationType> = async (inputs) => {
-    const result = await registerUser({ ...inputs, password: randomCode })
-    if (!result?.response?.error) {
-      return await signIn('credentials', {
-        redirect: false,
-        phone: inputs?.phone,
-        password: randomCode,
-      })
-        .then((res: any) => {
-          if (!res.ok) {
-            toast.error(res?.error)
-          } else {
-            toast.success(`boas vindas a dedicado ${inputs?.name}`)
-            router.push('/perfil')
-         }
-        })
-        .catch((error: any) => toast.error(error?.message))
-        .finally(() => reset())
-    }
-    toast.error(result?.message)
+    toast.success(
+      `${inputs?.name}, a plataforma está na vesão beta e nesse momento não está registrando novos usuários!`,
+    )
+    //const result = await registerUser({ ...inputs, password: randomCode })
+    //if (!result?.response?.error) {
+    //  return await signIn('credentials', {
+    //    redirect: false,
+    //    phone: inputs?.phone,
+    //    password: randomCode,
+    //  })
+    //    .then((res: any) => {
+    //      if (!res.ok) {
+    //        toast.error(res?.error)
+    //      } else {
+    //        toast.success(`boas vindas a dedicado ${inputs?.name}`)
+    //        router.push('/perfil')
+    //      }
+    //    })
+    //    .catch((error: any) => toast.error(error?.message))
+    //    .finally(() => reset())
+    //}
+    //toast.error(result?.message)
   }
 
   return (

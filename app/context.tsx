@@ -121,7 +121,7 @@ export const PlatformProvider = ({
 
   return (
     <PlatformContext.Provider
-      value={{ location, user, member, organizations, orders }}
+      value={session ? { location, user, member, organizations, orders } : null}
     >
       {children}
     </PlatformContext.Provider>

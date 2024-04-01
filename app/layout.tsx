@@ -1,8 +1,7 @@
 import './globals.css'
-import 'mapbox-gl/dist/mapbox-gl.css'
 import type { Metadata } from 'next'
 import { Comfortaa } from 'next/font/google'
-import { Fragment, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import Providers from './providers'
 import Footer from '@/components/Footer'
 import Topbar from '@/components/Topbar'
@@ -35,24 +34,16 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      suppressHydrationWarning
+      suppressHydrationWarning={true}
       className={`${comfortaa.variable} font-default dark`}
     >
       <body className="text-base text-sky-800 bg-slate-200 dark:bg-slate-800">
         <Providers>
-          {session ? (
-            <PlatformProvider session={session!}>
-              <Topbar session={session!} />
-              <main>{children}</main>
-              <Footer />
-            </PlatformProvider>
-          ) : (
-            <Fragment>
-              <Topbar session={session!} />
-              <main>{children}</main>
-              <Footer />
-            </Fragment>
-          )}
+          <PlatformProvider session={session!}>
+            <Topbar session={session!} />
+            <main>{children}</main>
+            <Footer />
+          </PlatformProvider>
         </Providers>
       </body>
     </html>

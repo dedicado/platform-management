@@ -1,7 +1,7 @@
 import { Tab } from '@headlessui/react'
 import { Fragment, Suspense } from 'react'
-import OrderMapView from './OrderMapView'
 import OrderListView from './OrderListView'
+import OrderMapView from './OrderMapView'
 
 export default function OrderTabsView() {
   return (

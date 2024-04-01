@@ -64,33 +64,3 @@ export const getAddressByZipCode = async (
     return error?.message || 'ocorreu um erro inesperado'
   }
 }
-
-export const getAddressByGeolocation = async (
-  geolocation: GeolocationType,
-): Promise<AddressTypeByGeolocation | any> => {
-  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${geolocation?.longitude},${geolocation?.latitude}.json?access_token=${process.env.MAPBOX_ACCESS_TOKEN}&autocomplete=true`
-  try {
-    const data = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    const result = await data.json()
-    const address: AddressTypeByGeolocation = {
-      place: result?.features[0]?.place_name,
-      street: result?.features[0]?.text,
-      number: result?.features[0]?.address,
-      district: result?.features[0]?.context[0]?.text,
-      zipCode: result?.features[0]?.context[1]?.text, // TODO
-      city: result?.features[0]?.context[3]?.text,
-      state: result?.features[0]?.context[4]?.text,
-      country: result?.features[0]?.context[5]?.text,
-    }
-    //console.log(address)
-
-    return address
-  } catch (error: any) {
-    return error?.message || 'ocorreu um erro inesperado'
-  }
-}

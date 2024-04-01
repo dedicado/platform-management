@@ -14,7 +14,6 @@ import { useRouter } from 'next/navigation'
 import { signOut } from 'next-auth/react'
 import { OrganizationType } from '@/types/organization'
 import { usePlatform } from '@/app/context'
-import { updateProfileAvailable } from '@/app/main/perfil/actions'
 import Link from 'next/link'
 import { UserType } from '@/types/user'
 
@@ -29,7 +28,6 @@ export default function UserMenu() {
 
   const route = useRouter()
   const handleSignOut = useCallback(async () => {
-    await updateProfileAvailable(false)
     signOut({ redirect: true })
     route.refresh()
   }, [route])

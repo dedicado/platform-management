@@ -4,7 +4,7 @@ import { memo } from 'react'
 import LandingView from './views/LandingView'
 import { getServerSession } from 'next-auth'
 import { nextAuthOptions } from '@/libraries/next-auth'
-import UserMapBox from '@/components/UserMapBox'
+import ManView from './views/MainView'
 
 export const metadata: Metadata = {
   title: {
@@ -24,7 +24,7 @@ const MainPage = async () => {
       subtitle="a melhor plataforma de serviços"
     >
       <div className="relative w-full">
-        <UserMapBox />
+        <ManView />
       </div>
     </PageDisplay>
   ) : (
