@@ -1,12 +1,13 @@
 'use client'
 
 import { getUserByDocument, getUserByPhone } from '@/app/main/users/actions'
-import MapMarker from '@/components/MapMarker'
+import LeafletMapMarker from '@/components/LeafletMapMarker'
+import LeafletMapPolyline from '@/components/LeafletMapPolyline'
 import { OrderType } from '@/types/order'
 import { UserType } from '@/types/user'
 import { getAddressByZipCode } from '@/utils/handle-address'
 import { AddressTypeByZipCode } from '@/utils/handle-address/types'
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense, useCallback, useEffect, useState } from 'react'
 
 interface Props {
   order: OrderType | any
@@ -19,31 +20,30 @@ export default function OrderMapMarker(props: Props) {
   const [customer, setCustomer] = useState<UserType | any>()
   const [address, setAddress] = useState<AddressTypeByZipCode | any>()
 
-  useEffect(() => {
-    if (order) {
-      const data = async () => {
-        try {
-          const member = await getUserByPhone(order?.member)
-          member && setMember(member)
+  const data = useCallback(async () => {
+    try {
+      const member = await getUserByPhone(order?.member)
+      member && setMember(member)
 
-          const customer = await getUserByDocument(order?.customer)
-          customer && setCustomer(customer)
+      const customer = await getUserByDocument(order?.customer)
+      customer && setCustomer(customer)
 
-          const address = await getAddressByZipCode(customer?.zipCode)
-          address && setAddress(address)
+      const address = await getAddressByZipCode(customer?.zipCode)
+      address && setAddress(address)
 
-          return member
-        } catch (error: any) {
-          return null
-        }
-      }
-      data()
+      return member
+    } catch (error: any) {
+      return null
     }
-  }, [order, member])
+  }, [order])
+
+  useEffect(() => {
+    if (order) data()
+  }, [data, order])
 
   return order && member && customer && address ? (
     <Suspense>
-      <MapMarker
+      <LeafletMapMarker
         //key={order?.id}
         latitude={
           order?.started && member?.available
@@ -58,7 +58,25 @@ export default function OrderMapMarker(props: Props) {
         title={order?.subject || order?.code}
       >
         ...
-      </MapMarker>
+      </LeafletMapMarker>
+      <LeafletMapPolyline
+        destination={{
+          latitude:
+            order?.latitude ||
+            order?.destinationLatitude ||
+            customer.latitude ||
+            address?.lat,
+          longitude:
+            order?.longitude ||
+            order?.destinationLongitude ||
+            customer?.longitude ||
+            address?.lng,
+        }}
+        origin={{
+          latitude: member?.latitude || order?.originLatitude,
+          longitude: member?.longitude || order?.originLongitude,
+        }}
+      />
     </Suspense>
   ) : null
 }

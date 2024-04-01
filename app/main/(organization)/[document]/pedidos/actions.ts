@@ -88,7 +88,7 @@ export const registerOrderLocation = async (
   inputs: OrderLocationValidationType,
 ): Promise<any> => {
   return await orderLocationRepositoryCreate(inputs).then((data: any) => {
-    revalidateTag('orderLocations')
+    revalidateTag('order')
     return data
   })
 }

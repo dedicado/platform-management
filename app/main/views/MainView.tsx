@@ -1,14 +1,14 @@
 'use client'
 
 import { LocationType, usePlatform } from '@/app/context'
-import MapMarker from '@/components/MapMarker'
+import LeafletMapMarker from '@/components/LeafletMapMarker'
 import dynamic from 'next/dynamic'
 
 export default function ManView() {
   const { location }: LocationType | any = usePlatform()
 
-  const Map = dynamic(() => import('@/components/Map'), {
-    ssr: false,
+  const LeafletMap = dynamic(() => import('@/components/LeafletMap'), {
+    ssr: true,
     loading: () => (
       <div className="w-full h-screen flex justify-center items-center">
         <p className="text-center text-xs">...carregando</p>
@@ -16,17 +16,17 @@ export default function ManView() {
     ),
   })
 
-  return (
+  return location ? (
     <div className="relative">
-      {location && (
-        <Map latitude={location?.latitude} longitude={location?.longitude}>
-          <MapMarker
-            latitude={location?.latitude}
-            longitude={location?.longitude}
-            title={'sua localização'}
-          />
-        </Map>
-      )}
+      <LeafletMap latitude={location?.latitude} longitude={location?.longitude}>
+        <LeafletMapMarker
+          latitude={location?.latitude}
+          longitude={location?.longitude}
+          title={'sua localização'}
+        >
+          <small className="text-xs opacity-50">{`${location?.latitude}, ${location?.longitude}`}</small>
+        </LeafletMapMarker>
+      </LeafletMap>
     </div>
-  )
+  ) : null
 }

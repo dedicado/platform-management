@@ -4,7 +4,7 @@ import { OrderType } from '@/types/order'
 import { useOrganization } from '../../context'
 import { OrganizationType } from '@/types/organization'
 import { Suspense } from 'react'
-import MapMarker from '@/components/MapMarker'
+import LeafletMapMarker from '@/components/LeafletMapMarker'
 import { usePlatform, LocationType } from '@/app/context'
 import dynamic from 'next/dynamic'
 import OrderMapMarker from './OrderMapMarker'
@@ -14,10 +14,10 @@ export default function OrderMapView() {
   const { organization }: OrganizationType | any = useOrganization()
   const { location }: LocationType | any = usePlatform()
 
-  const logotipo = organization?.image || '/logotipo.svg'
+  //const logotipo = organization?.image || '/logotipo.svg'
 
-  const Map = dynamic(() => import('@/components/Map'), {
-    ssr: false,
+  const LeafletMap = dynamic(() => import('@/components/LeafletMap'), {
+    ssr: true,
     loading: () => (
       <div className="w-full flex justify-center items-center">
         <p className="text-center text-xs">...carregando</p>
@@ -29,15 +29,15 @@ export default function OrderMapView() {
     <div className="relative">
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex flex-col w-full space-2">
-          <Map
-            //key={organization?.id!}
+          <LeafletMap
+            //key={organization?.id}
             latitude={organization?.latitude || location?.latitude}
             longitude={organization?.longitude || location?.longitude}
             zoom={12}
           >
             <Suspense>
-              <MapMarker
-                //key={userProfile?.id!}
+              <LeafletMapMarker
+                //key={organization?.id}
                 latitude={organization?.latitude}
                 longitude={organization?.longitude}
                 title={organization?.name}
@@ -52,7 +52,7 @@ export default function OrderMapView() {
                 )
               })}
             </Suspense>
-          </Map>
+          </LeafletMap>
         </div>
       </div>
     </div>

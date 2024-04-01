@@ -44,7 +44,7 @@ export const organizationRepositoryFindByDocument = async (
           authorizationKey: authorizationKey,
         },
         next: {
-          tags: ['organization', 'organizationDocument'],
+          tags: ['organization'],
           revalidate: 120,
         },
       },
@@ -70,7 +70,7 @@ export const organizationRepositoryFindById = async (
         authorizationKey: authorizationKey,
       },
       next: {
-        tags: ['organization', 'organizationId'],
+        tags: ['organization'],
         revalidate: 120,
       },
     })
@@ -95,7 +95,7 @@ export const organizationRepositoryVerifyByDocument = async (
         authorizationKey: authorizationKey,
       },
       next: {
-        tags: ['organization', 'organizationVerify'],
+        tags: ['organization'],
         revalidate: 120,
       },
     })

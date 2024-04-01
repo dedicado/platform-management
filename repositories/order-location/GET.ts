@@ -45,7 +45,7 @@ export const orderLocationRepositoryFindByCode = async (
         authorizationKey: authorizationKey,
       },
       next: {
-        tags: ['orderLocation', 'orderLocationCode'],
+        tags: ['orderLocation'],
         revalidate: 120,
       },
     })
@@ -70,7 +70,7 @@ export const orderLocationRepositoryFindById = async (
         authorizationKey: authorizationKey,
       },
       next: {
-        tags: ['orderLocation', 'orderLocationId'],
+        tags: ['orderLocation'],
         revalidate: 120,
       },
     })

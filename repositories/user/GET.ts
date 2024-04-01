@@ -105,7 +105,7 @@ export const userRepositoryFindByPhone = async (
         'Content-Type': 'application/json',
         Authorization: `Bearer ${authorization}`,
       },
-      next: { tags: ['user', 'userPhone'], revalidate: 120 },
+      next: { tags: ['user'], revalidate: 120 },
     })
     return data && (await data.json())
   } catch (error: any) {

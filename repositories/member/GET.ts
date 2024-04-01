@@ -45,7 +45,7 @@ export const memberRepositoryFindByPhone = async (
         authorizationKey: authorizationKey,
       },
       next: {
-        tags: ['member', 'memberPhone'],
+        tags: ['member'],
         revalidate: 120,
       },
     })
@@ -70,7 +70,7 @@ export const memberRepositoryFindById = async (
         authorizationKey: authorizationKey,
       },
       next: {
-        tags: ['member', 'memberId'],
+        tags: ['member'],
         revalidate: 120,
       },
     })

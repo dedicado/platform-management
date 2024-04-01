@@ -16,7 +16,7 @@ export const createOrganizationForUser = async (
   return await organizationRepositoryCreateForUser(userPhone, inputs).then(
     () => {
       revalidateTag('organizations')
-      revalidatePath('/', 'layout')
+      revalidatePath('/')
     },
   )
 }

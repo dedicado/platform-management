@@ -2,6 +2,9 @@ import createMDX from '@next/mdx'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  compiler: {
+    styledComponents: true,
+  },
   pageExtensions: ['md', 'mdx', 'ts', 'tsx'],
   experimental: {
     mdxRs: true,

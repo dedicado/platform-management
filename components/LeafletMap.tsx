@@ -1,6 +1,6 @@
 'use client'
 
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+import { MapContainer, TileLayer } from 'react-leaflet'
 import { FullscreenControl } from 'react-leaflet-fullscreen'
 import 'leaflet/dist/leaflet.css'
 import { ReactNode } from 'react'
@@ -13,7 +13,7 @@ interface Props {
   zoom?: number
 }
 
-export default function Map(props: Props) {
+export default function LeafletMap(props: Props) {
   const { children, key, latitude, longitude, zoom } = props
 
   return (
@@ -23,6 +23,8 @@ export default function Map(props: Props) {
       minZoom={4}
       zoom={zoom || 12}
       maxZoom={16}
+      zoomAnimation={true}
+      markerZoomAnimation={true}
       scrollWheelZoom={true}
       fadeAnimation={true}
       style={{ width: '100%', height: 600, borderRadius: 10, zIndex: 0 }}

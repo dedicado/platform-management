@@ -5,7 +5,7 @@ import { celularMask } from 'masks-br'
 import { getUserByPhone } from '@/app/main/users/actions'
 import { MemberType } from '@/types/organization'
 import { UserType } from '@/types/user'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import UpdateMemberView from './UpdateMemberView'
 
 interface Props {
@@ -17,21 +17,20 @@ export default function MemberDetailInListView(props: Props) {
 
   const [user, setUser] = useState<UserType | any>()
 
-  useEffect(() => {
-    if (member) {
-      const userData = async () => {
-        try {
-          const user = await getUserByPhone(member?.phone)
-          user && setUser(user)
+  const data = useCallback(async () => {
+    try {
+      const user = await getUserByPhone(member?.phone)
+      user && setUser(user)
 
-          return user
-        } catch (error: any) {
-          return null
-        }
-      }
-      userData()
+      return user
+    } catch (error: any) {
+      return null
     }
-  }, [member, user])
+  }, [member])
+
+  useEffect(() => {
+    if (member) data()
+  }, [data, member])
 
   const image = user?.image || '/avatar.svg'
 

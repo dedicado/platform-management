@@ -6,6 +6,7 @@ import { Session } from 'next-auth'
 import {
   ReactNode,
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -34,25 +35,26 @@ export const OrganizationProvider = ({
   const [orders, setOrders] = useState<OrderType[] | any>()
   const [organization, setOrganization] = useState<OrganizationType | any>()
 
-  useEffect(() => {
-    if (session) {
-      const data = async () => {
-        try {
-          const organization = await getOrganizationByDocument(document)
-          setOrganization(organization)
+  const data = useCallback(async () => {
+    try {
+      if (!session) return null
 
-          organization && setMembers(organization?.members)
+      const organization = await getOrganizationByDocument(document)
+      setOrganization(organization)
 
-          const orders = await getOrdersByOrganization(document)
-          setOrders(orders)
-        } catch (error: any) {
-          console.error(error)
-          return null
-        }
-      }
-      data()
+      organization && setMembers(organization?.members)
+
+      const orders = await getOrdersByOrganization(document)
+      setOrders(orders)
+    } catch (error: any) {
+      console.error(error)
+      return null
     }
   }, [document, session])
+
+  useEffect(() => {
+    if (session) data()
+  }, [data, session])
 
   return (
     <OrganizationContext.Provider

@@ -1,6 +1,6 @@
 import PageDisplay from '@/components/PageDisplay'
 import { Metadata } from 'next'
-import { memo } from 'react'
+import { memo, Suspense } from 'react'
 import LandingView from './views/LandingView'
 import { getServerSession } from 'next-auth'
 import { nextAuthOptions } from '@/libraries/next-auth'
@@ -24,7 +24,9 @@ const MainPage = async () => {
       subtitle="a melhor plataforma de serviços"
     >
       <div className="relative w-full">
-        <ManView />
+        <Suspense>
+          <ManView />
+        </Suspense>
       </div>
     </PageDisplay>
   ) : (

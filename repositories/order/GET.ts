@@ -43,7 +43,7 @@ export const orderRepositoryFindByCode = async (
         authorizationKey: authorizationKey,
       },
       next: {
-        tags: ['order', 'orderCode'],
+        tags: ['order'],
         revalidate: 120,
       },
     })
@@ -68,7 +68,7 @@ export const orderRepositoryFindByCustomer = async (
         authorizationKey: authorizationKey,
       },
       next: {
-        tags: ['order', 'orderCustomer'],
+        tags: ['order'],
         revalidate: 120,
       },
     })
@@ -93,7 +93,7 @@ export const orderRepositoryFindByMember = async (
         authorizationKey: authorizationKey,
       },
       next: {
-        tags: ['order', 'orderMember'],
+        tags: ['order'],
         revalidate: 120,
       },
     })
@@ -120,7 +120,7 @@ export const orderRepositoryFindByOrganization = async (
           authorizationKey: authorizationKey,
         },
         next: {
-          tags: ['order', 'orderOrganization'],
+          tags: ['order'],
           revalidate: 120,
         },
       },
@@ -146,7 +146,7 @@ export const orderRepositoryFindById = async (
         authorizationKey: authorizationKey,
       },
       next: {
-        tags: ['order', 'orderId'],
+        tags: ['order'],
         revalidate: 120,
       },
     })

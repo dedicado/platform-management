@@ -43,7 +43,7 @@ export const noteRepositoryFindById = async (
         authorizationKey: authorizationKey,
       },
       next: {
-        tags: ['note', 'noteId'],
+        tags: ['note'],
         revalidate: 3600,
       },
     })

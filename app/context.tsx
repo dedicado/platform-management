@@ -6,6 +6,7 @@ import { UserType } from '@/types/user'
 import {
   ReactNode,
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -48,26 +49,27 @@ export const PlatformProvider = ({
   const [member, setMember] = useState<MemberType[] | any>()
   const [orders, setOrders] = useState<OrderType[] | any>()
 
-  useEffect(() => {
-    if (session) {
-      const data = async () => {
-        try {
-          const user = await getUserById(userId)
-          user && setUser(user)
+  const data = useCallback(async () => {
+    try {
+      if (!session) return null
 
-          const orders = await getOrdersByMember(userPhone)
-          orders && setOrders(orders)
+      const user = await getUserById(userId)
+      user && setUser(user)
 
-          const member = await getMemberByUserPhone(userPhone)
-          member && setMember(member)
-        } catch (error: any) {
-          console.error(error)
-          return null
-        }
-      }
-      data()
+      const orders = await getOrdersByMember(userPhone)
+      orders && setOrders(orders)
+
+      const member = await getMemberByUserPhone(userPhone)
+      member && setMember(member)
+    } catch (error: any) {
+      console.error(error)
+      return null
     }
   }, [session, userId, userPhone])
+
+  useEffect(() => {
+    if (session) data()
+  }, [data, session])
 
   const organizations: OrganizationType[] | any = member?.map(
     (member: MemberType) => member.organization,
@@ -84,40 +86,40 @@ export const PlatformProvider = ({
   }, [user])
 
   const [location, setLocation] = useState<LocationType>(lastPosition)
-
   const [isPending, startTransition] = useTransition()
 
-  useEffect(() => {
-    if (user) {
-      const getUserLocation = async () => {
-        try {
-          navigator?.geolocation.watchPosition((position) => {
-            if (!position) return null
-            const coordinates: LocationType = {
-              latitude: position?.coords?.latitude,
-              longitude: position?.coords?.longitude,
-            }
-            startTransition(() => setLocation(coordinates))
-          })
+  const getUserLocation = useCallback(async () => {
+    try {
+      if (!user) return null
 
-          const available = user?.available
-          const unlike: boolean = location !== lastPosition
-
-          available &&
-            setTimeout(async () => {
-              const registerLocation: ProfileLocationUpdateValidationType = {
-                ...location,
-              }
-
-              unlike && (await updateProfileLocation(registerLocation))
-            }, 60000)
-        } catch (error: any) {
-          return null
+      navigator?.geolocation.watchPosition((position) => {
+        if (!position) return null
+        const coordinates: LocationType = {
+          latitude: position?.coords?.latitude,
+          longitude: position?.coords?.longitude,
         }
-      }
-      getUserLocation()
+        startTransition(() => setLocation(coordinates))
+      })
+
+      const available = user?.available
+      const unlike: boolean = location !== lastPosition
+
+      available &&
+        setTimeout(async () => {
+          const registerLocation: ProfileLocationUpdateValidationType = {
+            ...location,
+          }
+
+          unlike && (await updateProfileLocation(registerLocation))
+        }, 60000)
+    } catch (error: any) {
+      return null
     }
-  }, [lastPosition, session, location, user])
+  }, [lastPosition, location, user])
+
+  useEffect(() => {
+    if (user) getUserLocation()
+  }, [getUserLocation, user])
 
   return (
     <PlatformContext.Provider

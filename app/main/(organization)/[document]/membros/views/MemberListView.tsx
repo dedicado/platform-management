@@ -5,6 +5,7 @@ import { useOrganization } from '../../context'
 import Unauthorized from '@/components/Unauthorized'
 import CreateMemberView from './CreateMemberView'
 import MemberDetailInListView from './MemberDetailInListView'
+import { Suspense } from 'react'
 
 export default function MemberListView() {
   const { members }: MemberType[] | any = useOrganization()
@@ -19,24 +20,26 @@ export default function MemberListView() {
           </h6>
         </div>
         <hr className="border-1 border-slate-400" />
-        <ul className="w-full">
-          {members?.message ? (
-            <div className="block">
-              <Unauthorized
-                message={members?.message}
-                statusCode={members?.statusCode}
-              />
-            </div>
-          ) : (
-            members?.map((member: MemberType) => {
-              return (
-                <div key={member?.id}>
-                  <MemberDetailInListView member={member} />
-                </div>
-              )
-            })
-          )}
-        </ul>
+        <Suspense>
+          <ul className="w-full">
+            {members?.message ? (
+              <div className="block">
+                <Unauthorized
+                  message={members?.message}
+                  statusCode={members?.statusCode}
+                />
+              </div>
+            ) : (
+              members?.map((member: MemberType) => {
+                return (
+                  <div key={member?.id}>
+                    <MemberDetailInListView member={member} />
+                  </div>
+                )
+              })
+            )}
+          </ul>
+        </Suspense>
       </div>
     </div>
   ) : (

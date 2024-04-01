@@ -45,7 +45,7 @@ export const apiSpendRepositoryFindByKey = async (
         authorizationKey: authorizationKey,
       },
       next: {
-        tags: ['apiSpend', 'apiSpendKey'],
+        tags: ['apiSpend'],
         revalidate: 120,
       },
     })
@@ -70,7 +70,7 @@ export const apiSpendRepositoryFindById = async (
         authorizationKey: authorizationKey,
       },
       next: {
-        tags: ['apiSpend', 'apiSpendId'],
+        tags: ['apiSpend'],
         revalidate: 120,
       },
     })

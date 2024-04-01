@@ -1,9 +1,9 @@
 'use client'
 
+import { ReactNode } from 'react'
 import { Marker, Popup } from 'react-leaflet'
 import 'leaflet-defaulticon-compatibility'
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
-import { ReactNode } from 'react'
 
 interface Props {
   children?: ReactNode
@@ -13,7 +13,7 @@ interface Props {
   key?: string | any
 }
 
-export default function MapMarker(props: Props) {
+export default function LeafletMapMarker(props: Props) {
   const { children, latitude, longitude, title, key } = props
 
   return (

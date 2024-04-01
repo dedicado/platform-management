@@ -45,7 +45,7 @@ export const attachmentRepositoryFindById = async (
         authorizationKey: authorizationKey,
       },
       next: {
-        tags: ['attachment', 'attachmentId'],
+        tags: ['attachment'],
         revalidate: 3600,
       },
     })

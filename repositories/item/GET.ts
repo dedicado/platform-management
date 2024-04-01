@@ -43,7 +43,7 @@ export const itemRepositoryFindById = async (
         authorizationKey: authorizationKey,
       },
       next: {
-        tags: ['item', 'itemId'],
+        tags: ['item'],
         revalidate: 3600,
       },
     })
