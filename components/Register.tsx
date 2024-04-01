@@ -38,24 +38,23 @@ export default function Register() {
     resolver: zodResolver(RegisterValidation),
   })
   const onSubmit: SubmitHandler<RegisterValidationType> = async (inputs) => {
-    toast.success(`olá ${inputs?.name}, breve estaremos aceitando novos usuários na plataforma!`)
-    //const result = await registerUser({ ...inputs, password: randomCode })
-    //if (!result?.response?.error) {
-    //  return await signIn('credentials', {
-    //    redirect: false,
-    //    phone: inputs?.phone,
-    //    password: randomCode,
-    //  })
-    //    .then((res: any) => {
-    //      if (!res.ok) {
-    //        toast.error(res?.error)
-    //      } else {
-    //        toast.success(`boas vindas a dedicado ${inputs?.name}`)
-    //        router.push('/perfil')
-    //     }
-    //    })
-    //    .catch((error: any) => toast.error(error?.message))
-    //    .finally(() => reset())
+    const result = await registerUser({ ...inputs, password: randomCode })
+    if (!result?.response?.error) {
+      return await signIn('credentials', {
+        redirect: false,
+        phone: inputs?.phone,
+        password: randomCode,
+      })
+        .then((res: any) => {
+          if (!res.ok) {
+            toast.error(res?.error)
+          } else {
+            toast.success(`boas vindas a dedicado ${inputs?.name}`)
+            router.push('/perfil')
+         }
+        })
+        .catch((error: any) => toast.error(error?.message))
+        .finally(() => reset())
     }
     toast.error(result?.message)
   }
