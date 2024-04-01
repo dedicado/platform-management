@@ -55,7 +55,9 @@ export const OrganizationProvider = ({
   }, [document, session])
 
   return (
-    <OrganizationContext.Provider value={{ members, orders, organization }}>
+    <OrganizationContext.Provider
+      value={session ? { members, orders, organization } : null}
+    >
       {children}
     </OrganizationContext.Provider>
   )

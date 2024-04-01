@@ -3,11 +3,11 @@
 import { OrderType } from '@/types/order'
 import { useOrganization } from '../../context'
 import { OrganizationType } from '@/types/organization'
-import MapBox from '@/components/MapBox'
 import { Suspense } from 'react'
 import MapMarker from '@/components/MapMarker'
-import OrderDetailMarker from './OrderDetailMarker'
 import { usePlatform, LocationType } from '@/app/context'
+import dynamic from 'next/dynamic'
+import OrderMapMarker from './OrderMapMarker'
 
 export default function OrderMapView() {
   const { orders }: OrderType[] | any = useOrganization()
@@ -16,11 +16,20 @@ export default function OrderMapView() {
 
   const logotipo = organization?.image || '/logotipo.svg'
 
+  const Map = dynamic(() => import('@/components/Map'), {
+    ssr: false,
+    loading: () => (
+      <div className="w-full flex justify-center items-center">
+        <p className="text-center text-xs">...carregando</p>
+      </div>
+    ),
+  })
+
   return orders?.length > 0 ? (
     <div className="relative">
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex flex-col w-full space-2">
-          <MapBox
+          <Map
             //key={organization?.id!}
             latitude={organization?.latitude || location?.latitude}
             longitude={organization?.longitude || location?.longitude}
@@ -28,9 +37,7 @@ export default function OrderMapView() {
           >
             <Suspense>
               <MapMarker
-                image={logotipo}
                 //key={userProfile?.id!}
-                color="blue"
                 latitude={organization?.latitude}
                 longitude={organization?.longitude}
                 title={organization?.name}
@@ -39,13 +46,13 @@ export default function OrderMapView() {
                 return (
                   !order?.completed && (
                     <div key={order?.id}>
-                      <OrderDetailMarker order={order} />
+                      <OrderMapMarker order={order} />
                     </div>
                   )
                 )
               })}
             </Suspense>
-          </MapBox>
+          </Map>
         </div>
       </div>
     </div>

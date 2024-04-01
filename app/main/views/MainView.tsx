@@ -1,11 +1,32 @@
 'use client'
 
-const MainView = () => {
+import { LocationType, usePlatform } from '@/app/context'
+import MapMarker from '@/components/MapMarker'
+import dynamic from 'next/dynamic'
+
+export default function ManView() {
+  const { location }: LocationType | any = usePlatform()
+
+  const Map = dynamic(() => import('@/components/Map'), {
+    ssr: false,
+    loading: () => (
+      <div className="w-full h-screen flex justify-center items-center">
+        <p className="text-center text-xs">...carregando</p>
+      </div>
+    ),
+  })
+
   return (
-    <div className="flex flex-col md:flex-row gap-4">
-      <div className="flex flex-col w-full space-2"></div>
+    <div className="relative">
+      {location && (
+        <Map latitude={location?.latitude} longitude={location?.longitude}>
+          <MapMarker
+            latitude={location?.latitude}
+            longitude={location?.longitude}
+            title={'sua localização'}
+          />
+        </Map>
+      )}
     </div>
   )
 }
-
-export default MainView
