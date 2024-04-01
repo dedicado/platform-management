@@ -5,12 +5,12 @@ import { useRouter } from 'next/navigation'
 import { ChangeEvent, Fragment, useCallback, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { signIn } from 'next-auth/react'
+//import { signIn } from 'next-auth/react'
 import {
   RegisterValidation,
   RegisterValidationType,
 } from '@/validations/register'
-import { registerUser } from '@/app/main/registrar-se/actions'
+//import { registerUser } from '@/app/main/registrar-se/actions'
 import Modal from './Modal'
 import TermsAndPoliciesView from '@/app/main/(legal)/termos-e-politicas/views/TermsAndPoliciesView'
 
