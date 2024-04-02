@@ -38,7 +38,7 @@ export default function CompleteOrderButton(props: Props) {
       .catch((error: any) =>
         toast.error(error?.message || 'ocorreu um erro inesperado'),
       )
-  }, [canceled, member, orderId, started])
+  }, [member, orderId])
 
   return started || canceled ? (
     <div className="relative">

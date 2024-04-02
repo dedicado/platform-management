@@ -7,7 +7,7 @@ export type OrderType = {
   code: string
   requirement: string
   subject: string
-  price: Decimal
+  price: number
   observation: string
   organization: string
   customer: string
