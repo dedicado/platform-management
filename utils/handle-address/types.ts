@@ -1,6 +1,6 @@
 import { AddressValidationType } from '@/validations/address'
 
-export type AddressTypeByZipCode = {
+export type AddressByZipCodeType = {
   cep: string
   address_type: string
   address_name: string
@@ -20,12 +20,7 @@ export type UpdateAddressType = {
   entity: 'users' | 'organizations'
 }
 
-export type GeolocationType = {
-  latitude: number
-  longitude: number
-}
-
-export type AddressTypeByGeolocation = {
+export type AddressByGeolocationType = {
   place: string
   street: string
   number: string

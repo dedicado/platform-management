@@ -2,9 +2,8 @@
 
 import { getServerSession } from 'next-auth'
 import {
-  AddressTypeByGeolocation,
-  AddressTypeByZipCode,
-  GeolocationType,
+  AddressByGeolocationType,
+  AddressByZipCodeType,
   UpdateAddressType,
 } from './types'
 import { nextAuthOptions } from '@/libraries/next-auth'
@@ -51,7 +50,7 @@ export const updateAddress = async (
 
 export const getAddressByZipCode = async (
   zipCode: string,
-): Promise<AddressTypeByZipCode | any> => {
+): Promise<AddressByZipCodeType | any> => {
   try {
     const address = await fetch(`${process.env.ZIPCODE_API_URL}/${zipCode}`, {
       method: 'GET',
@@ -60,6 +59,34 @@ export const getAddressByZipCode = async (
       },
     })
     return await address.json()
+  } catch (error: any) {
+    return error?.message || 'ocorreu um erro inesperado'
+  }
+}
+
+export const getAddressByGeolocationType = async (
+  latitude: number,
+  longitude: number,
+): Promise<AddressByGeolocationType | any> => {
+  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${process.env.MAPBOX_ACCESS_TOKEN}&autocomplete=true`
+  try {
+    const data = await fetch(url, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    })
+    const result = await data.json()
+    const locale: AddressByGeolocationType = {
+      place: result?.features[0]?.place_name,
+      street: result?.features[0]?.text,
+      number: result?.features[0]?.address,
+      district: result?.features[0]?.context[0]?.text,
+      zipCode: result?.features[0]?.context[1]?.text,
+      city: result?.features[0]?.context[3]?.text,
+      state: result?.features[0]?.context[4]?.text,
+      country: result?.features[0]?.context[5]?.text,
+    }
+
+    return locale
   } catch (error: any) {
     return error?.message || 'ocorreu um erro inesperado'
   }
