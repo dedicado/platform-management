@@ -4,43 +4,33 @@ import { OrderType } from '@/types/order'
 import { useOrganization } from '../../context'
 import { OrganizationType } from '@/types/organization'
 import { Suspense } from 'react'
-import LeafletMapMarker from '@/components/LeafletMapMarker'
 import { usePlatform, LocationType } from '@/app/context'
-import dynamic from 'next/dynamic'
 import OrderMapMarker from './OrderMapMarker'
+import MapBox from '@/components/MapBox'
+import MapBoxMarker from '@/components/MapBoxMarker'
 
 export default function OrderMapView() {
   const { orders }: OrderType[] | any = useOrganization()
   const { organization }: OrganizationType | any = useOrganization()
   const { location }: LocationType | any = usePlatform()
 
-  //const logotipo = organization?.image || '/logotipo.svg'
-
-  const LeafletMap = dynamic(() => import('@/components/LeafletMap'), {
-    ssr: true,
-    loading: () => (
-      <div className="w-full flex justify-center items-center">
-        <p className="text-center text-xs">...carregando</p>
-      </div>
-    ),
-  })
+  const logotipo = organization?.image || '/logotipo.svg'
 
   return orders?.length > 0 ? (
     <div className="relative">
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex flex-col w-full space-2">
-          <LeafletMap
-            //key={organization?.id}
+          <MapBox
             latitude={organization?.latitude || location?.latitude}
             longitude={organization?.longitude || location?.longitude}
             zoom={12}
           >
             <Suspense>
-              <LeafletMapMarker
-                //key={organization?.id}
+              <MapBoxMarker
                 latitude={organization?.latitude}
                 longitude={organization?.longitude}
                 title={organization?.name}
+                image={logotipo}
               />
               {orders?.map((order: OrderType) => {
                 return (
@@ -52,7 +42,7 @@ export default function OrderMapView() {
                 )
               })}
             </Suspense>
-          </LeafletMap>
+          </MapBox>
         </div>
       </div>
     </div>
