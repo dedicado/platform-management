@@ -10,7 +10,7 @@ import { UserType } from '@/types/user'
 import CompleteOrderButton from '@/app/main/(organization)/[document]/pedidos/components/CompleteOrderButton'
 import CancelOrderButton from '@/app/main/(organization)/[document]/pedidos/components/CancelOrderButton'
 import OrderStartButton from '@/app/main/(organization)/[document]/pedidos/components/OrderStartButton'
-import { AddressTypeByZipCode } from '@/utils/handle-address/types'
+import { AddressByZipCodeType } from '@/utils/handle-address/types'
 import { getUserByDocument } from '@/app/main/users/actions'
 import { getAddressByZipCode } from '@/utils/handle-address'
 
@@ -25,7 +25,7 @@ export default function UserMapBoxMarker(props: Props) {
 
   const [routes, setRoutes] = useState<[]>([])
   const [customer, setCustomer] = useState<UserType | any>()
-  const [address, setAddress] = useState<AddressTypeByZipCode | any>()
+  const [address, setAddress] = useState<AddressByZipCodeType | any>()
 
   const data = useCallback(async () => {
     const customer = await getUserByDocument(order?.customer)

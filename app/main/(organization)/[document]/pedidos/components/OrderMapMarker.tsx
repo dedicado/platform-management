@@ -5,7 +5,7 @@ import MapBoxMarker from '@/components/MapBoxMarker'
 import { OrderType } from '@/types/order'
 import { UserType } from '@/types/user'
 import { getAddressByZipCode } from '@/utils/handle-address'
-import { AddressTypeByZipCode } from '@/utils/handle-address/types'
+import { AddressByZipCodeType } from '@/utils/handle-address/types'
 import { Suspense, useCallback, useEffect, useState } from 'react'
 import OrderStartButton from './OrderStartButton'
 import AssignOrderButton from './AssignOrderButton'
@@ -21,7 +21,7 @@ export default function OrderMapMarker(props: Props) {
 
   const [member, setMember] = useState<UserType | any>()
   const [customer, setCustomer] = useState<UserType | any>()
-  const [address, setAddress] = useState<AddressTypeByZipCode | any>()
+  const [address, setAddress] = useState<AddressByZipCodeType | any>()
 
   const data = useCallback(async () => {
     try {

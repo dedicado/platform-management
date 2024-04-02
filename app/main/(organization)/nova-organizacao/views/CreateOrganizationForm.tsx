@@ -8,7 +8,7 @@ import {
   CreateOrganizationValidationType,
 } from '@/validations/organization'
 import { useState, useTransition } from 'react'
-import { AddressTypeByZipCode } from '@/utils/handle-address/types'
+import { AddressByZipCodeType } from '@/utils/handle-address/types'
 import { getAddressByZipCode } from '@/utils/handle-address'
 import { createOrganizationForUser } from '../actions'
 import { useRouter } from 'next/navigation'
@@ -26,7 +26,7 @@ export default function CreateOrganizationForm() {
     const data = event.target.value?.replace(/[^0-9]/g, '')
     if (data.length == 8) {
       startTransition(async () => {
-        const { cep, address, lat, lng }: AddressTypeByZipCode | any =
+        const { cep, address, lat, lng }: AddressByZipCodeType | any =
           await getAddressByZipCode(data)
 
         if (cep) {

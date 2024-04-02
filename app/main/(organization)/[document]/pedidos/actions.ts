@@ -17,7 +17,7 @@ import { OrderType } from '@/types/order'
 import { OrganizationType } from '@/types/organization'
 import { UserType } from '@/types/user'
 import { getAddressByZipCode } from '@/utils/handle-address'
-import { AddressTypeByZipCode } from '@/utils/handle-address/types'
+import { AddressByZipCodeType } from '@/utils/handle-address/types'
 import {
   OrderCreateValidation,
   OrderCreateValidationType,
@@ -35,7 +35,7 @@ export const createOrder = async (
         await organizationRepositoryFindByDocument(inputs?.organization)
       if (organization?.response?.error) return organization
 
-      const organizationAddress: AddressTypeByZipCode | any =
+      const organizationAddress: AddressByZipCodeType | any =
         await getAddressByZipCode(organization?.zipCode)
 
       const customer: UserType | any = await userRepositoryFindByDocument(
@@ -43,7 +43,7 @@ export const createOrder = async (
       )
       if (customer?.response?.error) return customer
 
-      const customerAddress: AddressTypeByZipCode | any =
+      const customerAddress: AddressByZipCodeType | any =
         await getAddressByZipCode(customer?.zipCode)
 
       return await orderRepositoryCreate({

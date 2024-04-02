@@ -2,7 +2,7 @@
 
 import { getAddressByZipCode, updateAddress } from '@/utils/handle-address'
 import {
-  AddressTypeByZipCode,
+  AddressByZipCodeType,
   UpdateAddressType,
 } from '@/utils/handle-address/types'
 import { AddressValidation, AddressValidationType } from '@/validations/address'
@@ -19,7 +19,7 @@ export default function AddressForm(data: UpdateAddressType) {
     const data = event.target.value?.replace(/[^0-9]/g, '')
     if (data.length == 8) {
       startTransition(async () => {
-        const { cep, address, lat, lng }: AddressTypeByZipCode | any =
+        const { cep, address, lat, lng }: AddressByZipCodeType | any =
           await getAddressByZipCode(data)
 
         if (cep) {
