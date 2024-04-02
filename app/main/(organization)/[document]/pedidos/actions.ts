@@ -9,9 +9,12 @@ import {
   orderRepositoryFindByOrganization,
   orderRepositoryFindMany,
 } from '@/repositories/order/GET'
+import { orderRepositoryUpdate } from '@/repositories/order/PATCH'
 import { orderRepositoryCreate } from '@/repositories/order/POST'
+import { organizationRepositoryFindByDocument } from '@/repositories/organization/GET'
 import { userRepositoryFindByDocument } from '@/repositories/user/GET'
 import { OrderType } from '@/types/order'
+import { OrganizationType } from '@/types/organization'
 import { UserType } from '@/types/user'
 import { getAddressByZipCode } from '@/utils/handle-address'
 import { AddressTypeByZipCode } from '@/utils/handle-address/types'
@@ -19,6 +22,7 @@ import {
   OrderCreateValidation,
   OrderCreateValidationType,
   OrderLocationValidationType,
+  OrderUpdateValidationType,
 } from '@/validations/order'
 import { revalidatePath, revalidateTag } from 'next/cache'
 
@@ -27,20 +31,36 @@ export const createOrder = async (
 ): Promise<any> => {
   try {
     if (await OrderCreateValidation.parseAsync(inputs)) {
+      const organization: OrganizationType | any =
+        await organizationRepositoryFindByDocument(inputs?.organization)
+      if (organization?.response?.error) return organization
+
+      const organizationAddress: AddressTypeByZipCode | any =
+        await getAddressByZipCode(organization?.zipCode)
+
       const customer: UserType | any = await userRepositoryFindByDocument(
         inputs?.customer,
       )
       if (customer?.response?.error) return customer
 
-      const address: AddressTypeByZipCode | any = await getAddressByZipCode(
-        customer?.zipCode,
-      )
+      const customerAddress: AddressTypeByZipCode | any =
+        await getAddressByZipCode(customer?.zipCode)
 
       return await orderRepositoryCreate({
         ...inputs,
-        destinationZipCode: customer?.zipCode || address.cep,
-        destinationLatitude: customer?.latitude || address?.lat,
-        destinationLongitude: customer?.longitude || address?.lng,
+        originZipCode:
+          organization?.zipCode || organizationAddress?.cep || null,
+        originLatitude: organization?.latitude || customerAddress?.lat || null,
+        originLongitude:
+          organization?.longitude || organizationAddress?.lng || null,
+        originComplement:
+          organization?.complement || organizationAddress?.district || null,
+        destinationZipCode: customer?.zipCode || customerAddress?.cep || null,
+        destinationLatitude: customer?.latitude || customerAddress?.lat || null,
+        destinationLongitude:
+          customer?.longitude || customerAddress?.lng || null,
+        destinationComplement:
+          customer?.complement || customerAddress?.district || null,
       }).then((data: any) => {
         revalidateTag('orders')
         revalidatePath(`/${inputs?.organization}/pedidos`)
@@ -89,6 +109,19 @@ export const registerOrderLocation = async (
 ): Promise<any> => {
   return await orderLocationRepositoryCreate(inputs).then((data: any) => {
     revalidateTag('order')
+    
+    return data
+  })
+}
+
+export const updateOrder = async (
+  id: string,
+  inputs: OrderUpdateValidationType,
+): Promise<any> => {
+  return await orderRepositoryUpdate(id, inputs).then((data: any) => {
+    revalidateTag('order')
+    revalidatePath('/')
+
     return data
   })
 }

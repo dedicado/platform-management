@@ -3,7 +3,7 @@
 import Modal from '@/components/Modal'
 import { useState, useCallback } from 'react'
 import { MdLibraryAdd } from 'react-icons/md'
-import CreateOrderForm from './CreateOrderForm'
+import CreateOrderForm from '../components/CreateOrderForm'
 
 export default function CreateOrderView() {
   const [openModal, setOpenModal] = useState<boolean>(false)

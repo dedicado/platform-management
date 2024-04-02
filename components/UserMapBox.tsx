@@ -32,7 +32,11 @@ export default function UserMapBox() {
             return (
               !order?.completed && (
                 <div key={order?.id}>
-                  <UserMapBoxMarker location={location} order={order} />
+                  <UserMapBoxMarker
+                    location={location}
+                    order={order}
+                    user={user}
+                  />
                 </div>
               )
             )

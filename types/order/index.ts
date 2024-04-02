@@ -7,7 +7,7 @@ export type OrderType = {
   code: string
   requirement: string
   subject: string
-  price: number
+  price: Decimal
   observation: string
   organization: string
   customer: string
@@ -22,6 +22,7 @@ export type OrderType = {
   destinationLongitude: number
   latitude: number
   longitude: number
+  directions: string
   deadline: Date
   started: boolean
   startDate: Date

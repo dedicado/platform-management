@@ -6,17 +6,40 @@ import { getRoutesByCoordinations } from '@/utils/handle-location'
 import { Fragment, useCallback, useEffect, useState } from 'react'
 import MapBoxMarker from './MapBoxMarker'
 import MapBoxSource from './MapBoxSource'
+import { UserType } from '@/types/user'
+import CompleteOrderButton from '@/app/main/(organization)/[document]/pedidos/components/CompleteOrderButton'
+import CancelOrderButton from '@/app/main/(organization)/[document]/pedidos/components/CancelOrderButton'
+import OrderStartButton from '@/app/main/(organization)/[document]/pedidos/components/OrderStartButton'
+import { AddressTypeByZipCode } from '@/utils/handle-address/types'
+import { getUserByDocument } from '@/app/main/users/actions'
+import { getAddressByZipCode } from '@/utils/handle-address'
 
 interface Props {
   location: LocationType
   order: OrderType
+  user: UserType
 }
 
 export default function UserMapBoxMarker(props: Props) {
-  const { location, order } = props
+  const { location, order, user } = props
 
   const [routes, setRoutes] = useState<[]>([])
+  const [customer, setCustomer] = useState<UserType | any>()
+  const [address, setAddress] = useState<AddressTypeByZipCode | any>()
+
   const data = useCallback(async () => {
+    const customer = await getUserByDocument(order?.customer)
+    customer && setCustomer(customer)
+
+    const address = await getAddressByZipCode(customer?.zipCode)
+    address && setAddress(address)
+  }, [order])
+
+  useEffect(() => {
+    if (order) data()
+  }, [data, order])
+
+  const coordinates = useCallback(async () => {
     if (!order) return null
     const coordinates = await getRoutesByCoordinations({
       origin: {
@@ -36,8 +59,8 @@ export default function UserMapBoxMarker(props: Props) {
   }, [order, location])
 
   useEffect(() => {
-    if (order?.started) data()
-  }, [data, order])
+    if (order?.started) coordinates()
+  }, [coordinates, order])
 
   return order ? (
     <Fragment>
@@ -45,13 +68,54 @@ export default function UserMapBoxMarker(props: Props) {
         latitude={order?.latitude || order?.destinationLatitude}
         longitude={order?.longitude || order?.destinationLongitude}
         title={order?.subject || order?.code}
-        color={order?.started ? 'green' : 'orange'}
+        color={
+          order?.started ? 'green' : 'grey' || (order?.canceled && 'orange')
+        }
       >
-        <div className="flex justify-center">
+        <div className="flex justify-center mb-2">
           <small className="text-xs text-center opacity-50">{`${
             order?.destinationLatitude || order?.latitude
           }, ${order?.destinationLongitude || order?.longitude}`}</small>
         </div>
+        <div className="w-full bg-slate-200 shadow-md p-2 my-2 rounded-md">
+          <div className="flex items-center gap-2">
+            <small className="text-xs font-thin">cliente:</small>
+            <h4 className="text-lg font-semibold lowercase">
+              {customer?.name}
+            </h4>
+          </div>
+          <div>
+            <p className="italic opacity-50">{order?.observation}</p>
+          </div>
+        </div>
+
+        {order?.canceled && (
+          <div className="flex justify-center bg-orange-200 rounded-md p-2">
+            <small className="text-xs text-center italic">
+              {order?.cancellationNote}
+            </small>
+          </div>
+        )}
+        {!order?.canceled && (
+          <OrderStartButton
+            member={user}
+            orderId={order?.id}
+            started={order?.started}
+          />
+        )}
+        <CompleteOrderButton
+          canceled={order?.canceled}
+          member={user}
+          orderId={order?.id}
+          started={order?.started}
+        />
+        {!order?.canceled && (
+          <CancelOrderButton
+            canceled={order?.canceled}
+            member={user}
+            orderId={order?.id}
+          />
+        )}
       </MapBoxMarker>
       {order?.started && <MapBoxSource routes={routes} />}
     </Fragment>

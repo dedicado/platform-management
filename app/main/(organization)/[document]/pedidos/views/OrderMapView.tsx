@@ -5,7 +5,7 @@ import { useOrganization } from '../../context'
 import { OrganizationType } from '@/types/organization'
 import { Suspense } from 'react'
 import { usePlatform, LocationType } from '@/app/context'
-import OrderMapMarker from './OrderMapMarker'
+import OrderMapMarker from '../components/OrderMapMarker'
 import MapBox from '@/components/MapBox'
 import MapBoxMarker from '@/components/MapBoxMarker'
 

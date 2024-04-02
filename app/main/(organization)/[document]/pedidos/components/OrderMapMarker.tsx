@@ -7,6 +7,10 @@ import { UserType } from '@/types/user'
 import { getAddressByZipCode } from '@/utils/handle-address'
 import { AddressTypeByZipCode } from '@/utils/handle-address/types'
 import { Suspense, useCallback, useEffect, useState } from 'react'
+import OrderStartButton from './OrderStartButton'
+import AssignOrderButton from './AssignOrderButton'
+import CompleteOrderButton from './CompleteOrderButton'
+import CancelOrderButton from './CancelOrderButton'
 
 interface Props {
   order: OrderType | any
@@ -57,33 +61,85 @@ export default function OrderMapMarker(props: Props) {
 
       <MapBoxMarker
         latitude={
-          order?.destinationLatitude ||
           order?.latitude ||
+          order?.destinationLatitude ||
           customer?.latitude ||
           address?.lat
         }
         longitude={
-          order?.destinationLongitude ||
           order?.longitude ||
+          order?.destinationLongitude ||
           customer?.longitude ||
           address?.lng
         }
         title={order?.subject || order?.code}
-        color={order?.started ? 'green' : 'orange'}
+        color={
+          (order?.started && 'green') ||
+          (order?.canceled && 'orange') ||
+          (!order?.member && 'grey')
+        }
       >
-        <div className="flex justify-center">
+        <div className="flex justify-center mb-2">
           <small className="text-xs text-center opacity-50">{`${
-            order?.destinationLatitude ||
             order?.latitude ||
+            order?.destinationLatitude ||
             customer?.latitude ||
             address?.lat
           }, ${
-            order?.destinationLongitude ||
             order?.longitude ||
+            order?.destinationLongitude ||
             customer?.longitude ||
             address?.lng
           }`}</small>
         </div>
+
+        <div className="w-full bg-slate-200 shadow-md p-2 my-2 rounded-md">
+          <div className="flex items-center gap-2">
+            <small className="text-xs font-thin">cliente:</small>
+            <h4 className="text-lg font-semibold lowercase">
+              {customer?.name}
+            </h4>
+          </div>
+          <div>
+            <p className="italic opacity-50">{order?.observation}</p>
+          </div>
+        </div>
+        {order?.canceled && (
+          <div className="flex justify-center bg-orange-200 rounded-md p-2">
+            <small className="text-xs text-center italic">
+              {order?.cancellationNote}
+            </small>
+          </div>
+        )}
+        {order?.member && (
+          <div className="flex items-center gap-2">
+            <small className="text-xs font-thin">responsável:</small>
+            <h4 className="text-lg font-semibold lowercase">{member?.name}</h4>
+          </div>
+        )}
+        {!order?.member && (
+          <AssignOrderButton member={member} orderId={order?.id} />
+        )}
+        {!order?.canceled && (
+          <OrderStartButton
+            member={member}
+            orderId={order?.id}
+            started={order?.started}
+          />
+        )}
+        <CompleteOrderButton
+          canceled={order?.canceled}
+          member={member}
+          orderId={order?.id}
+          started={order?.started}
+        />
+        {!order?.canceled && (
+          <CancelOrderButton
+            canceled={order?.canceled}
+            member={member}
+            orderId={order?.id}
+          />
+        )}
       </MapBoxMarker>
     </Suspense>
   ) : null

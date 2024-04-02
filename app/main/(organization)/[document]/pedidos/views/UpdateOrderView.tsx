@@ -1,9 +1,13 @@
 'use client'
 
+import { usePlatform } from '@/app/context'
 import Modal from '@/components/Modal'
 import { OrderType } from '@/types/order'
+import { UserType } from '@/types/user'
 import { useState, useCallback } from 'react'
 import { MdEditSquare } from 'react-icons/md'
+import CancelOrderButton from '../components/CancelOrderButton'
+import AssignOrderToMemberForm from '../components/AssignOrderToMemberForm'
 
 interface Props {
   order: OrderType | any
@@ -11,6 +15,8 @@ interface Props {
 
 export default function UpdateOrderView(props: Props) {
   const { order } = props
+
+  const { user }: UserType | any = usePlatform()
 
   const [openModal, setOpenModal] = useState<boolean>(false)
   const handleModal = useCallback(() => {
@@ -31,6 +37,14 @@ export default function UpdateOrderView(props: Props) {
         subtitle={`atualizar pedido ${order?.code}`}
       >
         atualizar pedido
+        <AssignOrderToMemberForm onClose={handleModal} />
+        {!order?.canceled && (
+          <CancelOrderButton
+            canceled={order?.canceled}
+            member={user}
+            orderId={order?.id}
+          />
+        )}
       </Modal>
     </div>
   )
