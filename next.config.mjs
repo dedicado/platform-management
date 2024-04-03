@@ -20,8 +20,8 @@ const nextConfig = {
     ZIPCODE_API_URL: process.env.ZIPCODE_API_URL ?? '',
     MAPBOX_ACCESS_TOKEN: process.env.MAPBOX_ACCESS_TOKEN ?? '',
     MAPBOX_STYLES: process.env.MAPBOX_STYLES ?? '',
-    AWS_ACCESS_KEY: process.env.AWS_ACCESS_KEY ?? '',
-    AWS_PRIVATE_KEY: process.env.AWS_PRIVATE_KEY ?? '',
+    PLATFORM_AWS_ACCESS_KEY: process.env.PLATFORM_AWS_ACCESS_KEY ?? '',
+    PLATFORM_AWS_PRIVATE_KEY: process.env.PLATFORM_AWS_PRIVATE_KEY ?? '',
   },
   images: {
     remotePatterns: [

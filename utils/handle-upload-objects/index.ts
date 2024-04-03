@@ -14,8 +14,8 @@ export const uploadFileToS3 = async ({
 
   const fileName = name ? `${session?.user?.id}/${name}` : session?.user?.id
 
-  const ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY ?? ''
-  const SECRET_ACCESS_KEY = process.env.AWS_PRIVATE_KEY ?? ''
+  const ACCESS_KEY_ID = process.env.PLATFORM_AWS_ACCESS_KEY ?? ''
+  const SECRET_ACCESS_KEY = process.env.PLATFORM_AWS_PRIVATE_KEY ?? ''
 
   const s3Client = new S3Client({
     region: 'sa-east-1',
