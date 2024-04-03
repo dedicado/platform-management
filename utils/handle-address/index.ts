@@ -75,7 +75,7 @@ export const getAddressByGeolocationType = async (
       headers: { 'Content-Type': 'application/json' },
     })
     const result = await data.json()
-    const locale: AddressByGeolocationType = {
+    const address: AddressByGeolocationType = {
       place: result?.features[0]?.place_name,
       street: result?.features[0]?.text,
       number: result?.features[0]?.address,
@@ -86,7 +86,7 @@ export const getAddressByGeolocationType = async (
       country: result?.features[0]?.context[5]?.text,
     }
 
-    return locale
+    return address
   } catch (error: any) {
     return error?.message || 'ocorreu um erro inesperado'
   }
