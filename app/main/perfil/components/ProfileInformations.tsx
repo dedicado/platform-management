@@ -30,16 +30,14 @@ export default function ProfileInformations() {
   const onSubmit: SubmitHandler<ProfileUpdateValidationType> = async (
     inputs,
   ) => {
-    try {
-      const result = await updateProfile(inputs)
-      if (result?.response?.error) {
-        toast.error(result?.message)
-      } else {
-        toast.success(result)
-      }
-    } catch (error: any) {
-      toast.success(error?.message || 'ocorreu um erro inesperado')
-    }
+    await updateProfile(inputs)
+      .then((response: any) => {
+        console.log(response)
+        toast.success(response)
+      })
+      .catch((error: any) => {
+        toast.error(error?.message || 'ocorreu um erro inesperado')
+      })
   }
 
   return (
@@ -83,9 +81,10 @@ export default function ProfileInformations() {
           <label htmlFor="phone">telefone</label>
           <input
             id="phone"
-            className="w-full rounded-md"
+            className="w-full rounded-md bg-slate-200/50 border-0"
             {...register('phone')}
             type="number"
+            disabled
           />
           {errors && (
             <span className="text-xs text-red-400 italic lowercase">

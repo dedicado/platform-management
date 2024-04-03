@@ -28,9 +28,10 @@ export const updateProfile = async (
 
   if (!session) return null
 
-  return await userRepositoryUpdate(userId, inputs).then(() => {
+  return await userRepositoryUpdate(userId, inputs).then((data: any) => {
     revalidateTag('user')
     revalidatePath('/perfil')
+    return data
   })
 }
 
@@ -43,9 +44,11 @@ export const updateProfileAvailable = async (
   if (!session) return null
 
   return await userRepositoryUpdate(userId, { available: available }).then(
-    () => {
+    (data: any) => {
       revalidateTag('user')
       revalidatePath('/')
+
+      return data
     },
   )
 }
@@ -56,9 +59,11 @@ export const updateProfileAvatar = async (image: string): Promise<any> => {
 
   if (!session) return null
 
-  return await userRepositoryUpdate(userId, { image: image }).then(() => {
+  return await userRepositoryUpdate(userId, { image: image }).then((data: any) => {
     revalidateTag('user')
-    revalidatePath('/')
+    revalidatePath('/profile')
+
+    return data
   })
 }
 
@@ -70,9 +75,11 @@ export const updateProfileLocation = async (
 
   if (!session) return null
 
-  return await userRepositoryUpdate(userId, inputs).then(() => {
+  return await userRepositoryUpdate(userId, inputs).then((data: any) => {
     revalidateTag('user')
     revalidatePath('/')
+
+    return data
   })
 }
 

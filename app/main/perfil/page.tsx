@@ -2,7 +2,7 @@
 
 import PageDisplay from '@/components/PageDisplay'
 import ProfileView from './views/ProfileView'
-import { memo, Suspense } from 'react'
+import { memo } from 'react'
 import { usePlatform } from '@/app/context'
 
 const ProfilePage = async () => {
@@ -14,11 +14,7 @@ const ProfilePage = async () => {
       subtitle="este é o seu espaço dedicado"
     >
       <div className="relative w-full">
-        {user ? (
-          <Suspense>
-            <ProfileView />
-          </Suspense>
-        ) : null}
+        <ProfileView />
       </div>
     </PageDisplay>
   )

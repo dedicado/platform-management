@@ -53,16 +53,13 @@ export default function AddressForm(data: UpdateAddressType) {
 
   const onSubmit: SubmitHandler<AddressValidationType> = async (inputs) => {
     try {
-      const result = await updateAddress({
+      await updateAddress({
         address: inputs,
         entity: entity,
         id: id,
       })
-      if (result?.error) {
-        toast.error(result?.message)
-      } else {
-        toast.success(result)
-      }
+        .then((data: any) => toast.success(data))
+        .catch((error: any) => toast.error(error?.message || error))
     } catch (error: any) {
       toast.success(error?.message || 'ocorreu um erro inesperado')
     }
@@ -82,6 +79,7 @@ export default function AddressForm(data: UpdateAddressType) {
             {...register('zipCode')}
             type="number"
             onBlur={handleZipCode}
+            placeholder='00.000-000'
           />
           {errors && (
             <span className="text-xs text-red-400 italic lowercase">
@@ -113,6 +111,7 @@ export default function AddressForm(data: UpdateAddressType) {
             className="w-full rounded-md"
             {...register('complement')}
             type="text"
+            placeholder='número e ponto de referência'
           />
           {errors && (
             <span className="text-xs text-red-400 italic lowercase">
