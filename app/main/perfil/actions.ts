@@ -34,18 +34,6 @@ export const updateProfile = async (
   })
 }
 
-export const updateProfilePassword = async (
-  inputs: ProfilePasswordUpdateValidationType,
-): Promise<any> => {
-  const session = await getServerSession(nextAuthOptions)
-  const userId = session?.user?.id ?? ''
-
-  if (!session) return null
-
-  const { newPassword } = inputs
-  return await userRepositoryUpdate(userId, { password: newPassword })
-}
-
 export const updateProfileAvailable = async (
   available: boolean,
 ): Promise<any> => {
@@ -62,6 +50,18 @@ export const updateProfileAvailable = async (
   )
 }
 
+export const updateProfileAvatar = async (image: string): Promise<any> => {
+  const session = await getServerSession(nextAuthOptions)
+  const userId = session?.user?.id ?? ''
+
+  if (!session) return null
+
+  return await userRepositoryUpdate(userId, { image: image }).then(() => {
+    revalidateTag('user')
+    revalidatePath('/')
+  })
+}
+
 export const updateProfileLocation = async (
   inputs: ProfileLocationUpdateValidationType,
 ): Promise<any> => {
@@ -74,4 +74,16 @@ export const updateProfileLocation = async (
     revalidateTag('user')
     revalidatePath('/')
   })
+}
+
+export const updateProfilePassword = async (
+  inputs: ProfilePasswordUpdateValidationType,
+): Promise<any> => {
+  const session = await getServerSession(nextAuthOptions)
+  const userId = session?.user?.id ?? ''
+
+  if (!session) return null
+
+  const { newPassword } = inputs
+  return await userRepositoryUpdate(userId, { password: newPassword })
 }

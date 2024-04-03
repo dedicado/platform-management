@@ -10,6 +10,7 @@ import {
   useTransition,
 } from 'react'
 import toast from 'react-hot-toast'
+import { updateProfileAvatar } from '../actions'
 
 interface Props {
   image: string
@@ -52,9 +53,15 @@ export default function ProfileAvatarPreview(props: Props) {
     uploadFile && data.append('file', uploadFile)
 
     await uploadFileToS3({ data: data, pathname: 'profile' })
-      .then(async (res: any) => {
-        toast.success('sua imagem foi atualizada')
-        onClose()
+      .then(async (response: any) => {
+        if (!response?.url) {
+          toast.error(response)
+        } else {
+          await updateProfileAvatar(response?.url).then(() => {
+            toast.success('sua imagem foi atualizada')
+            onClose()
+          })
+        }
       })
       .catch((error: any) =>
         toast.error(error?.message || 'ocorreu um erro inesperado'),

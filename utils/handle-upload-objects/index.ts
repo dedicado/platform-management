@@ -3,6 +3,7 @@
 import { getServerSession } from 'next-auth'
 import { UploadFileType } from './types'
 import { nextAuthOptions } from '@/libraries/next-auth'
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 
 export const uploadFileToS3 = async ({
   data,
@@ -10,7 +11,19 @@ export const uploadFileToS3 = async ({
   pathname,
 }: UploadFileType): Promise<any> => {
   const session = await getServerSession(nextAuthOptions)
-  const fileName = name || session?.user?.name?.replace(' ', '-').toLowerCase()
+
+  const fileName = name ? `${session?.user?.id}/${name}` : session?.user?.id
+
+  const ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY ?? ''
+  const SECRET_ACCESS_KEY = process.env.AWS_PRIVATE_KEY ?? ''
+
+  const s3Client = new S3Client({
+    region: 'sa-east-1',
+    credentials: {
+      accessKeyId: ACCESS_KEY_ID,
+      secretAccessKey: SECRET_ACCESS_KEY,
+    },
+  })
 
   try {
     if (!session) return null
@@ -23,7 +36,7 @@ export const uploadFileToS3 = async ({
 
     const params = {
       Bucket: 'dedicated-platform',
-      Key: pathname + '/' + session?.user?.phone + '/' + fileName,
+      Key: `${pathname}/${fileName}`,
       ContentType: type,
       ContentLength: size,
       Body: buffer,
@@ -32,10 +45,21 @@ export const uploadFileToS3 = async ({
         userId: session?.user?.id,
       },
     }
+    const putObjectCommand = new PutObjectCommand(params)
 
-    let url = ''
+    let url =
+      'https://s3.sa-east-1.amazonaws.com/dedicated-platform/' +
+      encodeURIComponent(params?.Key)
 
-    return { url }
+    return await s3Client
+      .send(putObjectCommand)
+      .then(() => {
+        return { url: url }
+      })
+      .catch((error: any) => {
+        console.log(error?.message || error)
+        return error?.message || 'ocorreu um erro inesperado'
+      })
   } catch (error: any) {
     return error?.message || 'ocorreu um erro inesperado'
   }
