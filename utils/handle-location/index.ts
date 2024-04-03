@@ -1,3 +1,5 @@
+'use server'
+
 import { RoutesByCoordinationsType } from './types'
 
 export const getRoutesByCoordinations = async ({
