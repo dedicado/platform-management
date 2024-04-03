@@ -1,5 +1,6 @@
 'use client'
 
+import { uploadFileToS3 } from '@/utils/handle-upload-objects'
 import Image from 'next/image'
 import {
   ChangeEvent,
@@ -37,15 +38,19 @@ export default function ProfileAvatarPreview(props: Props) {
   )
 
   const handleSendFile = useCallback(async () => {
-    try {
-      toast.success('esta funcionalidade está em fase de implementação')
-    } catch (error: any) {
-      toast.error(error?.message || 'ocorreu um erro inesperado')
-      console.error(error)
-    } finally{
-      onClose()
-    }
-  }, [onClose])
+    if (!uploadFile) toast.error('o arquivo não foi carregado')
+    const data = new FormData()
+    uploadFile && data.append('file', uploadFile)
+
+    await uploadFileToS3({ data: data, pathname: 'profile' })
+      .then(async (res: any) => {
+        toast.success('sua imagem foi atualizada')
+        onClose()
+      })
+      .catch((error: any) =>
+        toast.error(error?.message || 'ocorreu um erro inesperado'),
+      )
+  }, [onClose, uploadFile])
 
   return (
     <div className="relative flex flex-col justify-center gap-4">
