@@ -36,7 +36,7 @@ export default function ProfileAvatar({ image }: { image: string }) {
           onClose={handleModal}
           subtitle="atualizar imagem do perfil"
         >
-          <ProfileAvatarPreview data={avatar} onClose={handleModal} />
+          <ProfileAvatarPreview image={avatar} onClose={handleModal} />
         </Modal>
       </div>
     </div>

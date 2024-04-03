@@ -1,9 +1,9 @@
 'use client'
 
 import { MdAccountBox } from 'react-icons/md'
-import ProfileAvatar from './ProfileAvatar'
-import ProfileInformations from './ProfileInformations'
-import ProfilePassword from './ProfilePassword'
+import ProfileAvatar from '../components/ProfileAvatar'
+import ProfileInformations from '../components/ProfileInformations'
+import ProfilePassword from '../components/ProfilePassword'
 import AddressForm from '@/components/AddressForm'
 import { AddressType } from '@/types/address'
 import { usePlatform } from '@/app/context'

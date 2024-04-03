@@ -13,6 +13,8 @@ export const uploadFileToS3 = async ({
   const fileName = name || session?.user?.name?.replace(' ', '-').toLowerCase()
 
   try {
+    if (!session) return null
+
     const file: File | null = (data.get('file') as File) || null
     const size = file?.size
     const type = file?.type
@@ -31,7 +33,9 @@ export const uploadFileToS3 = async ({
       },
     }
 
-    return { url: params }
+    let url = ''
+
+    return { url }
   } catch (error: any) {
     return error?.message || 'ocorreu um erro inesperado'
   }

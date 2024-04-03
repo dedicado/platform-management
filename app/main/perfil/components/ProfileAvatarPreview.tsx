@@ -12,27 +12,36 @@ import {
 import toast from 'react-hot-toast'
 
 interface Props {
-  data: string
+  image: string
   onClose: () => void
 }
 export default function ProfileAvatarPreview(props: Props) {
-  const { data, onClose } = props
+  const { image, onClose } = props
 
   const [isPending, startTransition] = useTransition()
 
   const [uploadFile, setUploadFile] = useState<File | null>(null)
-  const [previewUrl, setPreviewUrl] = useState<string | null>(data)
+  const [previewUrl, setPreviewUrl] = useState<string | null>(image)
   const [loaded, setLoaded] = useState<boolean>(false)
 
   const handleUploadFile = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       let file = event.target.files?.[0] as File
-      let url = URL?.createObjectURL(file)
-      if (file) {
+      let size = file?.size
+      if (!file) {
+        toast.error('o arquivo não foi carregado corretamente')
+        return null
+      }
+      if (size > 1024 * 1024 * 10) {
+        toast.error(`o arquivo é maior que 10Mb`)
+        return null
+      } else {
+        let url = URL?.createObjectURL(file)
         setUploadFile(file)
         startTransition(() => setPreviewUrl(url))
         setLoaded(true)
       }
+      return null
     },
     [],
   )
@@ -59,7 +68,7 @@ export default function ProfileAvatarPreview(props: Props) {
           <Suspense fallback={'...carregando'}>
             <Image
               className="rounded-md"
-              src={previewUrl || data}
+              src={previewUrl || image}
               loading="lazy"
               alt="user"
               width={218}
@@ -73,6 +82,7 @@ export default function ProfileAvatarPreview(props: Props) {
         <input
           className="block p-1 rounded-md bg-slate-200 text-sm font-thin"
           type="file"
+          accept="image/*"
           onChange={handleUploadFile}
         />
         <button
