@@ -2,7 +2,7 @@
 
 import { LocationType } from '@/app/context'
 import { OrderType } from '@/types/order'
-import { getRoutesByCoordinations } from '@/utils/handle-location'
+import { getRoutesByCoordinates } from '@/utils/handle-location'
 import { Fragment, useCallback, useEffect, useState } from 'react'
 import MapBoxMarker from './MapBoxMarker'
 import MapBoxSource from './MapBoxSource'
@@ -41,7 +41,7 @@ export default function UserMapBoxMarker(props: Props) {
 
   const coordinates = useCallback(async () => {
     if (!order) return null
-    const coordinates = await getRoutesByCoordinations({
+    const coordinates = await getRoutesByCoordinates({
       origin: {
         latitude: order?.started
           ? location?.latitude || order?.latitude || order?.originLatitude

@@ -1,11 +1,11 @@
 'use server'
 
-import { RoutesByCoordinationsType } from './types'
+import { RoutesByCoordinatesType } from './types'
 
-export const getRoutesByCoordinations = async ({
+export const getRoutesByCoordinates = async ({
   destination,
   origin,
-}: RoutesByCoordinationsType): Promise<any> => {
+}: RoutesByCoordinatesType): Promise<any> => {
   const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${
     origin?.longitude + ',' + origin?.latitude
   };${

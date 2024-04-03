@@ -18,6 +18,7 @@ import { OrganizationType } from '@/types/organization'
 import { UserType } from '@/types/user'
 import { getAddressByZipCode } from '@/utils/handle-address'
 import { AddressByZipCodeType } from '@/utils/handle-address/types'
+//import { getRoutesByCoordinates } from '@/utils/handle-location'
 import {
   OrderCreateValidation,
   OrderCreateValidationType,
@@ -46,11 +47,23 @@ export const createOrder = async (
       const customerAddress: AddressByZipCodeType | any =
         await getAddressByZipCode(customer?.zipCode)
 
+      //const coordinates = await getRoutesByCoordinates({
+      //  destination: {
+      //    latitude: customer?.latitude || customerAddress?.lat,
+      //    longitude: customer?.longitude || customerAddress?.lng,
+      //  },
+      //  origin: {
+      //    latitude: organization?.latitude || organizationAddress?.lat,
+      //    longitude: organization?.longitude || organizationAddress?.lng,
+      //  },
+      //})
+
       return await orderRepositoryCreate({
         ...inputs,
         originZipCode:
           organization?.zipCode || organizationAddress?.cep || null,
-        originLatitude: organization?.latitude || customerAddress?.lat || null,
+        originLatitude:
+          organization?.latitude || organizationAddress?.lat || null,
         originLongitude:
           organization?.longitude || organizationAddress?.lng || null,
         originComplement:
@@ -109,7 +122,7 @@ export const registerOrderLocation = async (
 ): Promise<any> => {
   return await orderLocationRepositoryCreate(inputs).then((data: any) => {
     revalidateTag('order')
-    
+
     return data
   })
 }
