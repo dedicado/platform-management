@@ -71,11 +71,12 @@ export const sendSms = ({ content, to }: SendSmsType) => {
 
   try {
     return client.messages
-      .create({ to: to, from: TWILIO_PHONE_NUMBER, body: content })
+      .create({ to: '+55' + to, from: TWILIO_PHONE_NUMBER, body: content })
       .then(async (message: any) => {
         //console.log('TWILIO: ', message?.sid)
       })
       .catch((error: any) => {
+        console.log(error)
         console.error('TWILIO ERROR: ', error?.status)
       })
   } catch (error: any) {

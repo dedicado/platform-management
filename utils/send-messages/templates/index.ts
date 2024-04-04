@@ -49,7 +49,7 @@ export const emailNewOrganization = ({
 }: NewOrganizationTemplateType) => {
   return `<div>
     <h4>olá <string>${name.toLowerCase()}</string>!</h4>
-    <p>sua organização <string>${organization.toLowerCase()}</string> foi criada na plataforma dedicado e agora está pronta para você adiconar membros e utilize nossas soluções.</p>
+    <p>sua organização <string>${organization.toLowerCase()}</string> foi criada na plataforma dedicado e agora está pronta para você adiconar membros e utilizar nossas melhores soluções.</p>
     <p>estamos felizes em ter você por aqui!</p>
     </div>`
 }
