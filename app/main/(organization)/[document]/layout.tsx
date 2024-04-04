@@ -6,6 +6,7 @@ import { ReactNode } from 'react'
 import { OrganizationProvider } from './context'
 import { getOrganizationByDocument } from './actions'
 import { OrganizationType } from '@/types/organization'
+import { memberAuthorized } from '@/utils/handle-authorization'
 
 export async function generateMetadata({
   params,
@@ -39,7 +40,9 @@ export default async function OrganizationLayout({
   const session = await getServerSession(nextAuthOptions)
   const { document } = params
 
-  return session ? (
+  const authorized = await memberAuthorized(document)
+
+  return session && authorized ? (
     <OrganizationProvider document={document} session={session!}>
       {children}
     </OrganizationProvider>

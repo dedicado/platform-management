@@ -72,7 +72,7 @@ export const PlatformProvider = ({
   }, [data, session])
 
   const organizations: OrganizationType[] | any = member?.map(
-    (member: MemberType) => member.organization,
+    (member: MemberType) => member?.active && member.organization,
   )
 
   const lastPosition: LocationType | any = useMemo(() => {

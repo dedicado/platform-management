@@ -5,9 +5,10 @@ import { Suspense } from 'react'
 import OrganizationView from './views/OrganizationView'
 import { useOrganization } from './context'
 import OrganizationMenu from './components/OrganizationMenu'
+import { OrganizationType } from '@/types/organization'
 
 const OrganizationPage = () => {
-  const { organization }: any = useOrganization()
+  const { organization }: OrganizationType | any = useOrganization()
 
   return (
     <PageDisplay
