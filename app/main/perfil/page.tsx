@@ -5,7 +5,7 @@ import ProfileView from './views/ProfileView'
 import { memo } from 'react'
 import { usePlatform } from '@/app/context'
 
-const ProfilePage = async () => {
+const ProfilePage = () => {
   const { user }: any = usePlatform()
 
   return (

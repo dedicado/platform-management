@@ -5,22 +5,28 @@ import { MemberType } from '@/types/organization'
 
 import { useState, useCallback } from 'react'
 import { MdEditSquare } from 'react-icons/md'
-import UpdateMemberForm from './UpdateMemberForm'
+import UpdateMemberForm from '../components/UpdateMemberForm'
+import { useSession } from 'next-auth/react'
 
 interface Props {
-  member: MemberType | any
+  member: MemberType
   name?: string
 }
 
 export default function UpdateMemberView(props: Props) {
   const { member, name } = props
 
+  const { data: session } = useSession()
+  const userPhone: string = session?.user?.phone!
+  const memberPhone = member?.phone
+  let myself: boolean = userPhone == memberPhone
+
   const [openModal, setOpenModal] = useState<boolean>(false)
   const handleModal = useCallback(() => {
     setOpenModal(!openModal)
   }, [openModal])
 
-  return (
+  return !myself ? (
     <div>
       <span
         className="flex rounded-full mx-auto p-1 cursor-pointer hover:opacity-50 hover:shadow-md"
@@ -38,5 +44,5 @@ export default function UpdateMemberView(props: Props) {
         <UpdateMemberForm member={member} onClose={handleModal} />
       </Modal>
     </div>
-  )
+  ) : null
 }

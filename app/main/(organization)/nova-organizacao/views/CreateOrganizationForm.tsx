@@ -53,18 +53,19 @@ export default function CreateOrganizationForm() {
   const onSubmit: SubmitHandler<CreateOrganizationValidationType> = async (
     inputs,
   ) => {
-    const result = await createOrganizationForUser({
+    await createOrganizationForUser({
       ...inputs,
       latitude: location?.latitude,
       longitude: location?.longitude,
-    })
-    if (result?.response?.error) {
-      toast.error(result?.message)
-    } else {
-      reset()
-      router.push(`/${inputs?.document}`)
-      toast.success(result)
-    }
+    }).then((data: any) => {
+      if (data?.response?.error) {
+        toast.error(data?.message)
+      } else {
+        reset()
+        router.push(`/${inputs?.document}`)
+        toast.success(data)
+      }
+    }).catch((error: any) => toast.error(error?.message))
   }
 
   return (
@@ -83,7 +84,7 @@ export default function CreateOrganizationForm() {
             className="w-full rounded-md"
             {...register('name')}
             type="text"
-            placeholder='nome da organização'
+            placeholder="nome da organização"
           />
           {errors && (
             <span className="text-xs text-red-400 italic lowercase">
@@ -102,7 +103,7 @@ export default function CreateOrganizationForm() {
             className="w-full rounded-md"
             {...register('document')}
             type="number"
-            placeholder='00.000.000/0000-00'
+            placeholder="00.000.000/0000-00"
           />
           {errors && (
             <span className="text-xs text-red-400 italic lowercase">
@@ -119,7 +120,7 @@ export default function CreateOrganizationForm() {
             className="w-full rounded-md"
             {...register('email')}
             type="text"
-            placeholder='email@suaorganizacao.com.br'
+            placeholder="email@suaorganizacao.com.br"
           />
           {errors && (
             <span className="text-xs text-red-400 italic lowercase">
@@ -136,7 +137,7 @@ export default function CreateOrganizationForm() {
             className="w-full rounded-md"
             {...register('phone')}
             type="number"
-            placeholder='48 98765 4321'
+            placeholder="48 98765 4321"
           />
           {errors && (
             <span className="text-xs text-red-400 italic lowercase">
@@ -155,7 +156,7 @@ export default function CreateOrganizationForm() {
             {...register('zipCode')}
             type="number"
             onBlur={handleZipCode}
-            placeholder='00.000-000'
+            placeholder="00.000-000"
           />
           {errors && (
             <span className="text-xs text-red-400 italic lowercase">
@@ -191,7 +192,7 @@ export default function CreateOrganizationForm() {
             className="w-full rounded-md"
             {...register('complement')}
             type="text"
-            placeholder='número e ponto de referência'
+            placeholder="número e ponto de referência"
           />
           {errors && (
             <span className="text-xs text-red-400 italic lowercase">

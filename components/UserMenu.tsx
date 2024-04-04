@@ -16,6 +16,8 @@ import { OrganizationType } from '@/types/organization'
 import { usePlatform } from '@/app/context'
 import Link from 'next/link'
 import { UserType } from '@/types/user'
+import { updateProfileAvailable } from '@/app/main/perfil/actions'
+import toast from 'react-hot-toast'
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ')
@@ -28,9 +30,14 @@ export default function UserMenu() {
 
   const route = useRouter()
   const handleSignOut = useCallback(async () => {
-    signOut({ redirect: true })
-    route.refresh()
-  }, [route])
+    await updateProfileAvailable(false)
+      .then(() => {
+        toast.success(`até breve ${user?.name}`)
+        signOut({ redirect: true })
+        route.refresh()
+      })
+      .catch((error: any) => console.log(error))
+  }, [route, user])
 
   return (
     <Fragment>

@@ -1,11 +1,12 @@
 import * as z from 'zod'
 
 const REQUIREMENT = [
-  'pick-up',
-  'deliver',
-  'charge',
-  'perform',
-  'support',
+  'cobrança',
+  'coleta',
+  'entrega',
+  'manutenção',
+  'serviço',
+  'suporte',
 ] as const
 
 export const OrderLocationValidation = z.object({
@@ -19,7 +20,7 @@ export type OrderLocationValidationType = z.infer<
 
 export const OrderCreateValidation = z.object({
   code: z.string().optional(),
-  requirement: z.enum(REQUIREMENT).default('pick-up').optional(),
+  requirement: z.enum(REQUIREMENT).default('serviço').optional(),
   subject: z.string().optional(),
   price: z.coerce.number().optional(),
   observation: z.string().optional(),

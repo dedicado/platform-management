@@ -53,19 +53,19 @@ export default function ProfileAvatarPreview(props: Props) {
     uploadFile && data.append('file', uploadFile)
 
     await uploadFileToS3({ data: data, pathname: 'profile' })
-      .then(async (response: any) => {
-        if (!response?.url) {
-          toast.error(response)
+      .then(async (data: any) => {
+        if (!data?.url) {
+          toast.error(data)
         } else {
-          await updateProfileAvatar(response?.url).then(() => {
-            toast.success('sua imagem foi atualizada')
-            onClose()
-          })
+          await updateProfileAvatar(data?.url)
+            .then(() => {
+              toast.success('sua imagem foi atualizada')
+              onClose()
+            })
+            .catch((error: any) => toast.error(error?.message))
         }
       })
-      .catch((error: any) =>
-        toast.error(error?.message || 'ocorreu um erro inesperado'),
-      )
+      .catch((error: any) => toast.error(error?.message))
   }, [onClose, uploadFile])
 
   return (

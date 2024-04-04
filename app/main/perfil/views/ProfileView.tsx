@@ -8,9 +8,10 @@ import AddressForm from '@/components/AddressForm'
 import { AddressType } from '@/types/address'
 import { usePlatform } from '@/app/context'
 import { Suspense } from 'react'
+import { UserType } from '@/types/user'
 
 export default function ProfileView() {
-  const { user }: any = usePlatform()
+  const { user }: UserType | any = usePlatform()
   const address: AddressType = {
     zipCode: user?.zipCode,
     street: user?.street,
@@ -19,7 +20,7 @@ export default function ProfileView() {
     longitude: user?.longitude,
   }
 
-  return (
+  return user ? (
     <div className="flex flex-col sm:flex-row gap-2">
       <div className="flex flex-wrap justify-center items-center w-full sm:max-w-xs p-2">
         <div className="flex flex-col justify-center items-center gap-4">
@@ -50,5 +51,5 @@ export default function ProfileView() {
         </div>
       </div>
     </div>
-  )
+  ) : null
 }

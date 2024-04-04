@@ -31,12 +31,15 @@ export default function ProfileInformations() {
     inputs,
   ) => {
     await updateProfile(inputs)
-      .then((response: any) => {
-        console.log(response)
-        toast.success(response)
+      .then((data: any) => {
+        if (data?.response?.error) {
+          toast.error(data?.message)
+        } else {
+          toast.success(data)
+        }
       })
       .catch((error: any) => {
-        toast.error(error?.message || 'ocorreu um erro inesperado')
+        toast.error(error?.message)
       })
   }
 

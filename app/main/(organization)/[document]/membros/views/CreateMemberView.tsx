@@ -3,7 +3,7 @@
 import Modal from '@/components/Modal'
 import { useState, useCallback } from 'react'
 import { MdLibraryAdd } from 'react-icons/md'
-import CreateMemberForm from './CreateMemberForm'
+import CreateMemberForm from '../components/CreateMemberForm'
 
 export default function CreateMemberView() {
   const [openModal, setOpenModal] = useState<boolean>(false)

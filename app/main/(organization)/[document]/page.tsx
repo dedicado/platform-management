@@ -4,7 +4,7 @@ import PageDisplay from '@/components/PageDisplay'
 import { Suspense } from 'react'
 import OrganizationView from './views/OrganizationView'
 import { useOrganization } from './context'
-import OrganizationMenu from './views/OrganizationMenu'
+import OrganizationMenu from './components/OrganizationMenu'
 
 const OrganizationPage = () => {
   const { organization }: any = useOrganization()

@@ -38,29 +38,29 @@ export default function Register() {
     resolver: zodResolver(RegisterValidation),
   })
   const onSubmit: SubmitHandler<RegisterValidationType> = async (inputs) => {
-    toast.success(
-      `${inputs?.name}, a plataforma está na vesão beta e nesse momento não está registrando novos usuários!`,
-    )
-    const result = await registerUser({ ...inputs, password: randomCode })
-    if (!result?.response?.error) {
-      return await signIn('credentials', {
-        redirect: false,
-        phone: inputs?.phone,
-        password: randomCode,
+    await registerUser({ ...inputs, password: randomCode })
+      .then(async (data: any) => {
+        if (data?.response?.error) {
+          toast.error(data?.message)
+        } else {
+          return await signIn('credentials', {
+            redirect: false,
+            phone: inputs?.phone,
+            password: randomCode,
+          })
+            .then((res: any) => {
+              if (!res.ok) {
+                toast.error(res?.error)
+              } else {
+                reset()
+                router.refresh()
+                toast.success(`boas vindas a dedicado ${inputs?.name}`)
+              }
+            })
+            .catch((error: any) => toast.error(error?.message))
+        }
       })
-        .then((res: any) => {
-          if (!res.ok) {
-            toast.error(res?.error)
-          } else {
-            router.refresh()
-            toast.success(`boas vindas a dedicado ${inputs?.name}`)
-            router.push('/perfil')
-          }
-        })
-        .catch((error: any) => toast.error(error?.message))
-        .finally(() => reset())
-    }
-    toast.error(result?.message)
+      .catch((error: any) => toast.error(error?.message))
   }
 
   return (

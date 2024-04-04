@@ -3,7 +3,7 @@
 import PageDisplay from '@/components/PageDisplay'
 import { Suspense } from 'react'
 import { useOrganization } from '../context'
-import OrganizationMenu from '../views/OrganizationMenu'
+import OrganizationMenu from '../components/OrganizationMenu'
 import MemberListView from './views/MemberListView'
 
 const MemberPage = () => {

@@ -29,20 +29,18 @@ export default function ProfilePassword() {
   const onSubmit: SubmitHandler<ProfilePasswordUpdateValidationType> = async (
     inputs,
   ) => {
-    try {
-      const result = await updateProfilePassword(inputs)
-      if (result?.error) {
-        toast.error(result?.message)
-      } else {
-        setOpenModal(!openModal)
-        toast.success('autentique-se novamente com a nova senha')
-        signOut()
-      }
-    } catch (error: any) {
-      toast.error(error?.message || 'ocorreu um erro inesperado')
-    } finally {
-      reset()
-    }
+    await updateProfilePassword(inputs)
+      .then((data: any) => {
+        if (data?.response?.error) {
+          toast.error(data?.message)
+        } else {
+          setOpenModal(!openModal)
+          toast.success('autentique-se novamente com a nova senha')
+          signOut()
+        }
+      })
+      .catch((error: any) => toast.error(error?.message))
+      .finally(() => reset())
   }
 
   return (

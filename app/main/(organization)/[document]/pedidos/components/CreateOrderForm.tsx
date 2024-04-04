@@ -22,8 +22,8 @@ export default function CreateOrderForm(props: Props) {
   const { document }: any = params
 
   const [requirement, setRequirement] = useState<
-    'pick-up' | 'deliver' | 'charge' | 'perform' | 'support'
-  >('deliver')
+    'cobrança' | 'coleta' | 'entrega' | 'manutenção' | 'serviço' | 'suporte'
+  >('serviço')
   const handleRequirement = (e: any) => {
     setRequirement(e.target?.value)
   }
@@ -40,14 +40,17 @@ export default function CreateOrderForm(props: Props) {
     },
   })
   const onSubmit: SubmitHandler<OrderCreateValidationType> = async (inputs) => {
-    const result = await createOrder(inputs)
-    if (result?.response?.error || result?.error) {
-      toast.error(result?.message || result?.message[0])
-    } else {
-      toast.success(result)
-      reset()
-      onClose()
-    }
+    await createOrder(inputs)
+      .then((data: any) => {
+        if (data?.response?.error) {
+          toast.error(data?.message || data?.message[0])
+        } else {
+          toast.success(data)
+          reset()
+          onClose()
+        }
+      })
+      .catch((error: any) => toast.error(error?.message))
   }
 
   return (
@@ -66,10 +69,12 @@ export default function CreateOrderForm(props: Props) {
             value={requirement}
             onChange={handleRequirement}
           >
-            <option value={'pick-up'}>coletar</option>
-            <option value={'deliver'}>entregar</option>
-            <option value={'charge'}>cobrar</option>
-            <option value={'perform'}>executar</option>
+            <option value={'cobrança'}>cobrança</option>
+            <option value={'coleta'}>coleta</option>
+            <option value={'entrega'}>entrega</option>
+            <option value={'manutenção'}>manutenção</option>
+            <option value={'serviço'}>serviço</option>
+            <option value={'suporte'}>suporte</option>
           </select>
           {errors && (
             <span className="text-xs text-red-400 italic lowercase">

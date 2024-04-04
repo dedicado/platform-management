@@ -47,7 +47,6 @@ export const updateProfileAvailable = async (
     (data: any) => {
       revalidateTag('user')
       revalidatePath('/')
-
       return data
     },
   )
