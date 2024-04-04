@@ -16,10 +16,12 @@ const OrganizationPage = () => {
       subtitle={`a melhor plataforma de serviços`}
     >
       {organization ? (
-        <Suspense>
-          <OrganizationMenu />
-          <OrganizationView />
-        </Suspense>
+        <div className="w-full">
+          <Suspense>
+            <OrganizationMenu />
+            <OrganizationView />
+          </Suspense>
+        </div>
       ) : null}
     </PageDisplay>
   )
