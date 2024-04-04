@@ -1,12 +1,18 @@
 'use server'
 
 import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses'
-import { SendEmailType } from './types'
+import { SendEmailType, SendSmsType } from './types'
+import twilio from 'twilio'
+
+const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID ?? ''
+const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN ?? ''
+const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER ?? ''
 
 const ACCESS_KEY_ID = process.env.PLATFORM_AWS_ACCESS_KEY ?? ''
 const SECRET_ACCESS_KEY = process.env.PLATFORM_AWS_PRIVATE_KEY ?? ''
 
 export const sendEmail = async ({
+  bbc,
   body,
   from,
   subject,
@@ -24,6 +30,7 @@ export const sendEmail = async ({
     const input = {
       Destination: {
         ToAddresses: [to],
+        BccAddresses: [bbc || 'master@dedicado.digital'],
       },
       Message: {
         Body: {
@@ -53,6 +60,23 @@ export const sendEmail = async ({
       })
       .catch((error: any) => {
         console.log(error)
+      })
+  } catch (error: any) {
+    return error?.message || 'ocorreu um erro inesperado'
+  }
+}
+
+export const sendSms = ({ content, to }: SendSmsType) => {
+  const client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+
+  try {
+    return client.messages
+      .create({ to: to, from: TWILIO_PHONE_NUMBER, body: content })
+      .then(async (message: any) => {
+        //console.log('TWILIO: ', message?.sid)
+      })
+      .catch((error: any) => {
+        console.error('TWILIO ERROR: ', error?.status)
       })
   } catch (error: any) {
     return error?.message || 'ocorreu um erro inesperado'

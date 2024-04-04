@@ -1,8 +1,11 @@
 'use server'
 
 import { userRepositoryCreate } from '@/repositories/user/POST'
-import { sendEmail } from '@/utils/send-messages'
-import { emailWelcomeToThePlatform } from '@/utils/send-messages/templates'
+import { sendEmail, sendSms } from '@/utils/send-messages'
+import {
+  emailWelcomeToThePlatform,
+  smsWelcomeToThePlatform,
+} from '@/utils/send-messages/templates'
 import {
   RegisterValidation,
   RegisterValidationType,
@@ -26,6 +29,11 @@ export const registerUser = async (
             subject: 'boas vindas a melhor plataforma de serviços',
             to: inputs?.email,
           })
+          const content = smsWelcomeToThePlatform({
+            name: inputs?.name,
+            password: inputs?.password!,
+          })
+          sendSms({ content: content, to: inputs?.phone })
           revalidateTag('users')
           revalidatePath('/')
         },

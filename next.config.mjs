@@ -22,6 +22,9 @@ const nextConfig = {
     MAPBOX_STYLES: process.env.MAPBOX_STYLES ?? '',
     PLATFORM_AWS_ACCESS_KEY: process.env.PLATFORM_AWS_ACCESS_KEY ?? '',
     PLATFORM_AWS_PRIVATE_KEY: process.env.PLATFORM_AWS_PRIVATE_KEY ?? '',
+    TWILIO_AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN ?? '',
+    TWILIO_ACCOUNT_SID: process.env.TWILIO_ACCOUNT_SID ?? '',
+    TWILIO_PHONE_NUMBER: process.env.TWILIO_PHONE_NUMBER ?? '',
   },
   images: {
     dangerouslyAllowSVG: true,
