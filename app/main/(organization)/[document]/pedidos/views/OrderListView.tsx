@@ -1,8 +1,8 @@
 'use client'
 
 import { OrderType } from '@/types/order'
-import { useOrganization } from '../../context'
-import CreateOrderView from './CreateOrderView'
+import { useOrganization } from '../../../../../../contexts/OrganizationContext'
+import CreateOrderButton from '../components/CreateOrderButton'
 import Unauthorized from '@/components/Unauthorized'
 import moment from 'moment'
 import 'moment/locale/pt-br'
@@ -15,10 +15,7 @@ export default function OrderListView() {
   return (
     <div className="relative">
       <div className="flex flex-col space-y-4">
-        <div className="flex items-center space-x-2">
-          <CreateOrderView />
-          <h6 className="text-lg dark:text-white lowercase">criar pedido</h6>
-        </div>
+        <div className="flex items-center space-x-2"></div>
         <hr className="border-1 border-slate-400" />
         <Suspense>
           {orders?.length > 0 ? (

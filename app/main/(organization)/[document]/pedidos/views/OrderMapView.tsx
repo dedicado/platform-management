@@ -1,10 +1,10 @@
 'use client'
 
 import { OrderType } from '@/types/order'
-import { useOrganization } from '../../context'
+import { useOrganization } from '../../../../../../contexts/OrganizationContext'
 import { OrganizationType } from '@/types/organization'
 import { Suspense } from 'react'
-import { usePlatform, LocationType } from '@/app/context'
+import { usePlatform, LocationType } from '@/contexts/PlatformContext'
 import OrderMapMarker from '../components/OrderMapMarker'
 import MapBox from '@/components/MapBox'
 import MapBoxMarker from '@/components/MapBoxMarker'

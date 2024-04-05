@@ -8,7 +8,7 @@ import Footer from '@/components/Footer'
 import Topbar from '@/components/Topbar'
 import { getServerSession } from 'next-auth'
 import { nextAuthOptions } from '@/libraries/next-auth'
-import { PlatformProvider } from './context'
+import { PlatformProvider } from '@/contexts/PlatformContext'
 
 const comfortaa = Comfortaa({
   subsets: ['latin'],

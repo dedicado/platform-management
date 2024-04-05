@@ -17,10 +17,10 @@ export default function UpdateOrganizationButton(props: Props) {
   return (
     <div>
       <span
-        className="flex rounded-full mx-auto p-1 cursor-pointer hover:opacity-50 hover:shadow-md"
+        className="flex rounded-md bg-sky-600/50 hover:bg-sky-400 mx-auto p-1 cursor-pointer"
         onClick={handleModal}
       >
-        <MdEditSquare size={24} />
+        <MdEditSquare className="hover:text-white" size={24} />
       </span>
       <Modal
         open={openModal}

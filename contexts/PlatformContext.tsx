@@ -15,10 +15,10 @@ import {
 } from 'react'
 import { ProfileLocationUpdateValidationType } from '@/validations/profile'
 import { Session } from 'next-auth'
-import { updateProfileLocation } from './main/perfil/actions'
-import { getUserById } from './main/users/actions'
-import { getOrdersByMember } from './main/(organization)/[document]/pedidos/actions'
-import { getMemberByUserPhone } from './main/(organization)/[document]/membros/actions'
+import { updateProfileLocation } from '@/app/main/perfil/actions'
+import { getUserById } from '@/app/main/users/actions'
+import { getOrdersByMember } from '@/app/main/(organization)/[document]/pedidos/actions'
+import { getMemberByUserPhone } from '@/app/main/(organization)/[document]/membros/actions'
 
 export type LocationType = {
   latitude: number

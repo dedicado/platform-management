@@ -1,32 +1,50 @@
 'use server'
 
-import { getMemberByUserPhone } from '@/app/main/(organization)/[document]/membros/actions'
 import { nextAuthOptions } from '@/libraries/next-auth'
 import { MemberType, OrganizationType } from '@/types/organization'
 import { getServerSession } from 'next-auth'
+import { MemberAuthorizedType, UserAuthorizedType } from './types'
+import { getOrganizationByDocument } from '@/app/main/(organization)/[document]/actions'
 
-export const memberAuthorized = async (
-  organizationDocument: string,
-  role?: string,
-): Promise<{ authorized: boolean; role?: string } | any> => {
+export const memberAuthorized = async ({
+  organizationDocument,
+  roles,
+}: MemberAuthorizedType): Promise<boolean | any> => {
   const session = await getServerSession(nextAuthOptions)
   const userPhone: string = session?.user?.phone!
 
   try {
-    const member = await getMemberByUserPhone(userPhone)
-    const organizations: OrganizationType[] = member?.map(
-      (member: MemberType) =>
-        role
-          ? member?.active && member?.role == role && member.organization
-          : member?.active && member.organization,
-    )
+    if (!organizationDocument) return false
+    const organization: OrganizationType | any =
+      await getOrganizationByDocument(organizationDocument)
 
-    const organization = organizations.map(
-      (organization: OrganizationType) =>
-        organizationDocument == organization?.document,
+    if (!organization) return false
+    return organization?.members.map((member: MemberType) =>
+      roles
+        ? roles?.includes(member?.role) &&
+          member?.active &&
+          member?.phone == userPhone
+          ? true
+          : false
+        : member?.active && member?.phone == userPhone
+        ? true
+        : false,
     )
+  } catch (error: any) {
+    return error?.message || 'ocorreu um erro inesperado'
+  }
+}
 
-    return organization
+export const userAuthorized = async ({
+  profiles,
+}: UserAuthorizedType): Promise<boolean | any> => {
+  const session = await getServerSession(nextAuthOptions)
+  const userProfile = session?.user?.profile ?? ''
+
+  try {
+    if (!profiles) return false
+
+    return userProfile && profiles.includes(userProfile)
   } catch (error: any) {
     return error?.message || 'ocorreu um erro inesperado'
   }

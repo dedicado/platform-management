@@ -1,5 +1,7 @@
 'use client'
 
+import { getOrganizationByDocument } from '@/app/main/(organization)/[document]/actions'
+import { getOrdersByOrganization } from '@/app/main/(organization)/[document]/pedidos/actions'
 import { OrderType } from '@/types/order'
 import { MemberType, OrganizationType } from '@/types/organization'
 import { Session } from 'next-auth'
@@ -11,8 +13,6 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { getOrganizationByDocument } from './actions'
-import { getOrdersByOrganization } from './pedidos/actions'
 
 interface Props {
   organization: OrganizationType

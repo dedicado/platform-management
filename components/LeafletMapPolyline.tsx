@@ -1,6 +1,6 @@
 'use client'
 
-import { LocationType } from '@/app/context'
+import { LocationType } from '@/contexts/PlatformContext'
 import { useState } from 'react'
 import { Polyline } from 'react-leaflet'
 

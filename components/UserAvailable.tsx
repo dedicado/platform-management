@@ -1,6 +1,6 @@
 'use client'
 
-import { usePlatform } from '@/app/context'
+import { usePlatform } from '@/contexts/PlatformContext'
 import { updateProfileAvailable } from '@/app/main/perfil/actions'
 import { UserType } from '@/types/user'
 import { useCallback, useEffect, useState, useTransition } from 'react'

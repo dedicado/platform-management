@@ -6,7 +6,7 @@ import ProfileInformations from '../components/ProfileInformations'
 import ProfilePassword from '../components/ProfilePassword'
 import AddressForm from '@/components/AddressForm'
 import { AddressType } from '@/types/address'
-import { usePlatform } from '@/app/context'
+import { usePlatform } from '@/contexts/PlatformContext'
 import { Suspense } from 'react'
 import { UserType } from '@/types/user'
 

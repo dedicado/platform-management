@@ -3,9 +3,9 @@
 import Modal from '@/components/Modal'
 import { useState, useCallback } from 'react'
 import { MdLibraryAdd } from 'react-icons/md'
-import CreateOrderForm from '../components/CreateOrderForm'
+import CreateMemberForm from './CreateMemberForm'
 
-export default function CreateOrderView() {
+export default function CreateMemberButton() {
   const [openModal, setOpenModal] = useState<boolean>(false)
   const handleModal = useCallback(() => {
     setOpenModal(!openModal)
@@ -17,10 +17,14 @@ export default function CreateOrderView() {
         className="flex rounded-md bg-sky-600/50 hover:bg-sky-400 mx-auto p-1 cursor-pointer"
         onClick={handleModal}
       >
-        <MdLibraryAdd className="hover:text-white" size={24} />
+        <MdLibraryAdd className="hover:text-white animate-pulse" size={24} />
       </span>
-      <Modal open={openModal} onClose={handleModal} subtitle={`criar pedido`}>
-        <CreateOrderForm onClose={handleModal} />
+      <Modal
+        open={openModal}
+        onClose={handleModal}
+        subtitle={`adicionar membro nesta organização`}
+      >
+        <CreateMemberForm onClose={handleModal} />
       </Modal>
     </div>
   )

@@ -2,9 +2,10 @@
 
 import PageDisplay from '@/components/PageDisplay'
 import { Suspense } from 'react'
-import { useOrganization } from '../context'
 import OrganizationMenu from '../components/OrganizationMenu'
 import MemberListView from './views/MemberListView'
+import { RoleProvider } from '@/contexts/RoleContext'
+import { useOrganization } from '@/contexts/OrganizationContext'
 
 const MemberPage = () => {
   const { organization, members }: any = useOrganization()
@@ -17,7 +18,12 @@ const MemberPage = () => {
       {members ? (
         <Suspense>
           <OrganizationMenu />
-          <MemberListView />
+          <RoleProvider
+            document={organization?.document}
+            roles={['owner', 'administrator']}
+          >
+            <MemberListView />
+          </RoleProvider>
         </Suspense>
       ) : null}
     </PageDisplay>

@@ -1,6 +1,6 @@
 'use client'
 
-import { usePlatform } from '@/app/context'
+import { usePlatform } from '@/contexts/PlatformContext'
 import Modal from '@/components/Modal'
 import { OrderType } from '@/types/order'
 import { UserType } from '@/types/user'

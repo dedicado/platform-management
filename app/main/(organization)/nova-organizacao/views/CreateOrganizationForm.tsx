@@ -57,15 +57,18 @@ export default function CreateOrganizationForm() {
       ...inputs,
       latitude: location?.latitude,
       longitude: location?.longitude,
-    }).then((data: any) => {
-      if (data?.response?.error) {
-        toast.error(data?.message)
-      } else {
-        reset()
-        router.push(`/${inputs?.document}`)
-        toast.success(data)
-      }
-    }).catch((error: any) => toast.error(error?.message))
+    })
+      .then((data: any) => {
+        if (data?.response?.error) {
+          toast.error(data?.message)
+        } else {
+          reset()
+          toast.success(data)
+          router.refresh()
+          setTimeout(() => router.push(`/${inputs?.document}`), 5000)
+        }
+      })
+      .catch((error: any) => toast.error(error?.message))
   }
 
   return (

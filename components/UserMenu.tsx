@@ -13,7 +13,7 @@ import {
 import { useRouter } from 'next/navigation'
 import { signOut } from 'next-auth/react'
 import { OrganizationType } from '@/types/organization'
-import { usePlatform } from '@/app/context'
+import { usePlatform } from '@/contexts/PlatformContext'
 import Link from 'next/link'
 import { UserType } from '@/types/user'
 import { updateProfileAvailable } from '@/app/main/perfil/actions'

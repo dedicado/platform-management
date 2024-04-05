@@ -4,7 +4,7 @@ import PageDisplay from '@/components/PageDisplay'
 import { memo } from 'react'
 import CreateOrganizationForm from './views/CreateOrganizationForm'
 import { redirect } from 'next/navigation'
-import { usePlatform } from '@/app/context'
+import { usePlatform } from '@/contexts/PlatformContext'
 import { UserType } from '@/types/user'
 
 const OrganizationCreatePage = () => {

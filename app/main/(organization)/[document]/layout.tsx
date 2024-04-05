@@ -3,10 +3,9 @@ import { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import { ReactNode } from 'react'
-import { OrganizationProvider } from './context'
 import { getOrganizationByDocument } from './actions'
 import { OrganizationType } from '@/types/organization'
-import { memberAuthorized } from '@/utils/handle-authorization'
+import { OrganizationProvider } from '@/contexts/OrganizationContext'
 
 export async function generateMetadata({
   params,
@@ -40,9 +39,7 @@ export default async function OrganizationLayout({
   const session = await getServerSession(nextAuthOptions)
   const { document } = params
 
-  const authorized = await memberAuthorized(document)
-
-  return session && authorized ? (
+  return session ? (
     <OrganizationProvider document={document} session={session!}>
       {children}
     </OrganizationProvider>

@@ -1,6 +1,6 @@
 'use client'
 
-import { usePlatform } from '@/app/context'
+import { usePlatform } from '@/contexts/PlatformContext'
 import { OrderType } from '@/types/order'
 import { MdListAlt } from 'react-icons/md'
 import moment from 'moment'

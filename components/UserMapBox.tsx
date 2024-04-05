@@ -1,6 +1,6 @@
 'use client'
 
-import { LocationType, usePlatform } from '@/app/context'
+import { LocationType, usePlatform } from '@/contexts/PlatformContext'
 import MapBox from '@/components/MapBox'
 import MapBoxMarker from '@/components/MapBoxMarker'
 import { OrderType } from '@/types/order'

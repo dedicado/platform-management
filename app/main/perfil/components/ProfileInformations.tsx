@@ -9,7 +9,7 @@ import {
   ProfileUpdateValidationType,
 } from '@/validations/profile'
 import { updateProfile } from '../actions'
-import { usePlatform } from '@/app/context'
+import { usePlatform } from '@/contexts/PlatformContext'
 
 export default function ProfileInformations() {
   const { user }: any = usePlatform()

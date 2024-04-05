@@ -15,8 +15,8 @@ export const createOrganizationForUser = async (
   const session = await getServerSession(nextAuthOptions)
   const userPhone = session?.user?.phone ?? ''
 
-  return await organizationRepositoryCreateForUser(userPhone, inputs).then(
-    async (data: any) => {
+  return await organizationRepositoryCreateForUser(userPhone, inputs)
+    .then(async (data: any) => {
       const message = emailNewOrganization({
         name: session?.user?.name!,
         organization: inputs?.name,
@@ -31,6 +31,8 @@ export const createOrganizationForUser = async (
       revalidatePath('/')
 
       return data
-    },
-  )
+    })
+    .catch((error: any) => {
+      return error?.message
+    })
 }

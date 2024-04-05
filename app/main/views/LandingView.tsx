@@ -1,7 +1,6 @@
 import Image from 'next/image'
-import { memo } from 'react'
 
-const LandingView = () => {
+export default function LandingView() {
   const logotipo = '/logotipo.svg'
 
   return (
@@ -23,5 +22,3 @@ const LandingView = () => {
     </div>
   )
 }
-
-export default memo(LandingView)

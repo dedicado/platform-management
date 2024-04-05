@@ -3,7 +3,7 @@
 import PageDisplay from '@/components/PageDisplay'
 import ProfileView from './views/ProfileView'
 import { memo } from 'react'
-import { usePlatform } from '@/app/context'
+import { usePlatform } from '@/contexts/PlatformContext'
 
 const ProfilePage = () => {
   const { user }: any = usePlatform()

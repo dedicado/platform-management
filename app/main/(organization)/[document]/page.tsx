@@ -3,9 +3,10 @@
 import PageDisplay from '@/components/PageDisplay'
 import { Suspense } from 'react'
 import OrganizationView from './views/OrganizationView'
-import { useOrganization } from './context'
 import OrganizationMenu from './components/OrganizationMenu'
 import { OrganizationType } from '@/types/organization'
+import { RoleProvider } from '@/contexts/RoleContext'
+import { useOrganization } from '@/contexts/OrganizationContext'
 
 const OrganizationPage = () => {
   const { organization }: OrganizationType | any = useOrganization()
@@ -16,12 +17,14 @@ const OrganizationPage = () => {
       subtitle={`a melhor plataforma de serviços`}
     >
       {organization ? (
-        <div className="w-full">
-          <Suspense>
-            <OrganizationMenu />
-            <OrganizationView />
-          </Suspense>
-        </div>
+        <RoleProvider document={organization?.document}>
+          <div className="w-full">
+            <Suspense>
+              <OrganizationMenu />
+              <OrganizationView />
+            </Suspense>
+          </div>
+        </RoleProvider>
       ) : null}
     </PageDisplay>
   )

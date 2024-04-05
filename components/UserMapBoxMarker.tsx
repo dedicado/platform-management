@@ -1,6 +1,6 @@
 'use client'
 
-import { LocationType } from '@/app/context'
+import { LocationType } from '@/contexts/PlatformContext'
 import { OrderType } from '@/types/order'
 import { getRoutesByCoordinates } from '@/utils/handle-location'
 import { Fragment, useCallback, useEffect, useState } from 'react'
