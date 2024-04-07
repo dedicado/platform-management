@@ -5,6 +5,8 @@ import OrganizationCreditBox from '../components/OrganizationCreditBox'
 import OrganizationMemberBox from '../components/OrganizationMember Box'
 import OrganizationOrderBox from '../components/OrganizationOrderBox'
 import { Suspense } from 'react'
+import OrganizationInventoryBox from '../components/OrganizationInventoryBox'
+import OrganizationFinanceBox from '../components/OrganizationFinanceBox'
 
 export default function OrganizationView() {
   const params = useParams()
@@ -19,6 +21,9 @@ export default function OrganizationView() {
               <Suspense>
                 <a href={`/${document}/pedidos`} className="hover:opacity-80">
                   <OrganizationOrderBox />
+                </a>
+                <a href={`#`} className="hover:opacity-80">
+                  <OrganizationInventoryBox />
                 </a>
               </Suspense>
             </div>

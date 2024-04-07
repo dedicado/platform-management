@@ -23,7 +23,7 @@ export const RoleProvider = ({
   document,
   roles,
 }: Readonly<{ children?: ReactNode; document: string; roles?: string[] }>) => {
-  const [authorized, setAuthorized] = useState<boolean>()
+  const [authorized, setAuthorized] = useState<boolean>(true)
 
   const data = useCallback(async () => {
     try {
