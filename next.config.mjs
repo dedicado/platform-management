@@ -13,6 +13,7 @@ const nextConfig = {
     SECRET: process.env.SECRET ?? '',
     BASE_URL: process.env.BASE_URL ?? '',
     NEXTAUTH_URL: process.env.NEXTAUTH_URL ?? '',
+    MANAGEMENT_API_URL: process.env.MANAGEMENT_API_URL ?? '',
     USER_API_URL: process.env.USER_API_URL ?? '',
     ORGANIZATION_API_URL: process.env.ORGANIZATION_API_URL ?? '',
     ORDER_API_URL: process.env.ORDER_API_URL ?? '',
