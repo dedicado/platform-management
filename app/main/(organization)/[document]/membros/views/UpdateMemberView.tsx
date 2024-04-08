@@ -10,11 +10,10 @@ import { useSession } from 'next-auth/react'
 
 interface Props {
   member: MemberType
-  name?: string
 }
 
 export default function UpdateMemberView(props: Props) {
-  const { member, name } = props
+  const { member } = props
 
   const { data: session } = useSession()
   const userId: string = session?.user?.id ?? ''
@@ -38,7 +37,7 @@ export default function UpdateMemberView(props: Props) {
         open={openModal}
         onClose={handleModal}
         subtitle={`atualizar informações do membro ${
-          name ?? ''
+          member?.user?.name ?? ''
         } na organização`}
       >
         <UpdateMemberForm member={member} onClose={handleModal} />

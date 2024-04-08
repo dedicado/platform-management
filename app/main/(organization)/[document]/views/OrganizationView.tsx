@@ -12,35 +12,54 @@ export default function OrganizationView() {
   const { document } = params
 
   return (
-    <div className="relative">
-      <div className="w-full flex flex-col sm:flex-row gap-2">
-        <div className="block w-full">
-          <div className="flex flex-col gap-2">
-            <div className="w-full flex flex-col sm:flex-row gap-2">
-              <Suspense>
-                <a href={`/${document}/pedidos`} className="hover:opacity-80">
-                  <OrganizationOrderBox />
+    <div className="flex flex-col gap-4">
+      <div className="w-full space-y-4">
+        <div className="relative flex flex-col sm:flex-row gap-4">
+          <div className="w-full space-y-2">
+            <ul className="flex flex-col lg:flex-row gap-2">
+              <li className="w-full">
+                <a
+                  href={`/${document}/pedidos`}
+                  className="block hover:opacity-80"
+                >
+                  <Suspense>
+                    <OrganizationOrderBox />
+                  </Suspense>
                 </a>
-                <a href={`#`} className="hover:opacity-80">
-                  <OrganizationInventoryBox />
+              </li>
+              <li className="w-full">
+                <a href={`#`} className="block hover:opacity-80">
+                  <Suspense>
+                    <OrganizationInventoryBox />
+                  </Suspense>
                 </a>
-              </Suspense>
-            </div>
-            <div className="w-full flex flex-col sm:flex-row gap-2"></div>
+              </li>
+            </ul>
+          </div>
+          <div className="flex flex-1">
+            <ul className="flex flex-col md:flex-row gap-2">
+              <li className="w-full sm:max-w-xs">
+                <a href={`#`} className="block hover:opacity-80">
+                  <Suspense>
+                    <OrganizationCreditBox />
+                  </Suspense>
+                </a>
+              </li>
+              <li className="w-full sm:max-w-xs">
+                <a
+                  href={`/${document}/membros`}
+                  className="block hover:opacity-80"
+                >
+                  <Suspense>
+                    <OrganizationMemberBox />
+                  </Suspense>
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
-        <Suspense>
-          <a href={`#`} className="mx-auto hover:opacity-80">
-            <OrganizationCreditBox />
-          </a>
-        </Suspense>
-        <Suspense>
-          <a href={`/${document}/membros`} className="mx-auto hover:opacity-80">
-            <OrganizationMemberBox />
-          </a>
-        </Suspense>
       </div>
-      <div className="w-full"></div>
+      <div className="w-full space-y-4"></div>
     </div>
   )
 }

@@ -2,39 +2,28 @@
 
 import Image from 'next/image'
 import { celularMask } from 'masks-br'
-import { getUserByPhone } from '@/app/main/users/actions'
 import { MemberType } from '@/types/organization'
-import { UserType } from '@/types/user'
-import { useCallback, useEffect, useState } from 'react'
 import UpdateMemberView from './UpdateMemberView'
+import { useEffect, useState } from 'react'
 
 interface Props {
-  member: MemberType | any
+  member: MemberType
 }
 
 export default function MemberDetailInListView(props: Props) {
   const { member } = props
 
-  const [user, setUser] = useState<UserType | any>()
+  let userAvailable: boolean = member?.user?.available
 
-  const data = useCallback(async () => {
-    try {
-      const user = await getUserByPhone(member?.phone)
-      user && setUser(user)
-
-      return user
-    } catch (error: any) {
-      return null
-    }
-  }, [member])
+  const [available, setAvailable] = useState<boolean>(userAvailable)
 
   useEffect(() => {
-    if (member) data()
-  }, [data, member])
+    userAvailable && setAvailable(userAvailable)
+  }, [userAvailable])
 
-  const image = user?.image || '/avatar.svg'
+  const image = member?.user?.image || '/avatar.svg'
 
-  return member && user ? (
+  return member ? (
     <li
       className={`my-2 p-4 bg-slate-200 dark:bg-slate-800 dark:text-sky-600 rounded-md hover:shadow-md cursor-pointer ${
         !member?.active && 'opacity-25'
@@ -45,9 +34,7 @@ export default function MemberDetailInListView(props: Props) {
           <div className="flex items-center space-x-2">
             <div
               className={`p-1 rounded-md ${
-                user?.available
-                  ? 'bg-green-400/50 animate-pulse'
-                  : 'bg-sky-400/50'
+                available ? 'bg-green-400/50 animate-pulse' : 'bg-sky-400/50'
               } shadow-md`}
             >
               <div className="w-['32px'] w-h-['32px']">
@@ -55,7 +42,7 @@ export default function MemberDetailInListView(props: Props) {
                   className="rounded-md hover:opacity-80"
                   src={image}
                   loading="lazy"
-                  alt={user?.name || member?.phone}
+                  alt={member?.user?.name ?? ''}
                   width={32}
                   height={32}
                 />
@@ -63,20 +50,20 @@ export default function MemberDetailInListView(props: Props) {
             </div>
             <div className="flex flex-col">
               <h6 className="text-xl font-semibold hover:opacity-50 lowercase">
-                {user?.name ?? ''}
+                {member?.user?.name ?? ''}
               </h6>
               <span className="text-xs text-white bg-sky-600/50 p-1 rounded-md">
                 {member?.role}
               </span>
 
               <small className="normal-nums font-thin">
-                {celularMask(member?.phone)}
+                {celularMask(member?.user?.phone)}
               </small>
             </div>
           </div>
         </a>
         <div className="flex items-center space-x-2">
-          <UpdateMemberView member={member} name={user?.name} />
+          <UpdateMemberView member={member} />
         </div>
       </div>
     </li>

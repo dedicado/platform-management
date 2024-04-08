@@ -5,7 +5,7 @@ export const ProfileUpdateValidation = z.object({
   name: z.string(),
   document: z.string().min(11).max(14),
   email: z.string().email(),
-  phone: z.string().min(10).max(12),
+  phone: z.string().min(10).max(14),
 })
 export type ProfileUpdateValidationType = z.infer<
   typeof ProfileUpdateValidation

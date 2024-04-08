@@ -14,6 +14,7 @@ export const orderRepositoryFindMany = async (): Promise<OrderType[] | any> => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        authorizationKey: authorization,
       },
       next: {
         tags: ['orders'],
@@ -37,6 +38,7 @@ export const orderRepositoryFindByCode = async (
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        authorizationKey: authorization,
       },
       next: {
         tags: ['order'],
@@ -60,6 +62,7 @@ export const orderRepositoryFindByCustomer = async (
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        authorizationKey: authorization,
       },
       next: {
         tags: ['order'],
@@ -83,6 +86,7 @@ export const orderRepositoryFindByMember = async (
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        authorizationKey: authorization,
       },
       next: {
         tags: ['order'],
@@ -108,6 +112,7 @@ export const orderRepositoryFindByOrganization = async (
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          authorizationKey: authorization,
         },
         next: {
           tags: ['order'],
@@ -132,6 +137,7 @@ export const orderRepositoryFindById = async (
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        authorizationKey: authorization,
       },
       next: {
         tags: ['order'],

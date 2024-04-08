@@ -1,9 +1,9 @@
 'use client'
 
 import { MemberType } from '@/types/organization'
-import { useOrganization } from '../../../../../../contexts/OrganizationContext'
 import MemberDetailInListView from './MemberDetailInListView'
 import { Suspense } from 'react'
+import { useOrganization } from '@/contexts/OrganizationContext'
 
 export default function MemberListView() {
   const { members }: MemberType[] | any = useOrganization()

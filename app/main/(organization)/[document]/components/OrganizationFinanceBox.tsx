@@ -9,9 +9,9 @@ export default function OrganizationFinanceBox(props: Props) {
 
   return (
     <div
-      className={`relative w-full max-w-sm p-4 rounded-md shadow-md bg-gradient-to-r from-sky-600/80 to-sky-800/60 opacity-20 hover:opacity-80`}
+      className={`relative p-4 rounded-md shadow-md bg-gradient-to-r from-sky-600/80 to-sky-800/60 opacity-20 hover:opacity-80`}
     >
-      <div className="h-auto flex flex-col sm:flex-row justify-around items-center">
+      <div className="h-auto w-full flex flex-col sm:flex-row justify-around items-center">
         <div className="mx-auto p-2">
           <MdPayments className="text-white" size={48} />
         </div>

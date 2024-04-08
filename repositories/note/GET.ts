@@ -14,6 +14,7 @@ export const noteRepositoryFindMany = async (): Promise<NoteType[] | any> => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        authorizationKey: authorization,
       },
       next: {
         tags: ['notes'],
@@ -37,6 +38,7 @@ export const noteRepositoryFindById = async (
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        authorizationKey: authorization,
       },
       next: {
         tags: ['note'],

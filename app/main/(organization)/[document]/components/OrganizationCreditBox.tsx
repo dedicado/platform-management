@@ -15,11 +15,11 @@ export default function OrganizationCreditBox(props: Props) {
   }, [spendCount])
 
   return (
-    <div className="relative w-full min-w-sm sm:max-w-xs bg-sky-800/60 p-4 rounded-md shadow-md">
+    <div className="relative bg-sky-800/60 p-4 rounded-md shadow-md">
       <div className={`absolute w-full rounded-t-md -m-4 ${count < 50 ? 'bg-red-400': 'bg-sky-600'} text-center animate-bounce`}>
         <small className={`mx-auto text-xs text-slate-200 font-bold animate-pulse`}>adicione + créditos</small>
       </div>
-      <div className="h-80 flex flex-col justify-center items-center">
+      <div className="h-80 w-full flex flex-col justify-center items-center">
         <div className="mx-auto p-2">
           <span
             className={`text-8xl sm:text-6xl ${

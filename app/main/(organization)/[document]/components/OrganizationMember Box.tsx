@@ -19,8 +19,8 @@ export default function OrganizationMemberBox(props: Props) {
   }, [memberCount, members])
 
   return members ? (
-    <div className="relative w-full min-w-sm sm:max-w-xs bg-sky-600/80 p-4 rounded-md shadow-md">
-      <div className="h-80 flex flex-col justify-center items-center">
+    <div className="relative bg-sky-600/80 p-4 rounded-md shadow-md">
+      <div className="h-80 w-full flex flex-col justify-center items-center">
         <div className="mx-auto p-2">
           <span className="text-8xl sm:text-6xl text-slate-200">{count}</span>
         </div>
