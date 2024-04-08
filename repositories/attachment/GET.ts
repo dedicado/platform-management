@@ -16,7 +16,7 @@ export const attachmentRepositoryFindMany = async (): Promise<
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        authorizationKey: authorization,
+        Authorization: authorization,
       },
       next: {
         tags: ['attachments'],
@@ -40,7 +40,7 @@ export const attachmentRepositoryFindById = async (
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        authorizationKey: authorization,
+        Authorization: authorization,
       },
       next: {
         tags: ['attachment'],

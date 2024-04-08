@@ -16,6 +16,7 @@ export const apiSpendRepositoryFindMany = async (): Promise<
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: authorization,
       },
       next: {
         tags: ['apiSpends'],
@@ -39,6 +40,7 @@ export const apiSpendRepositoryFindByKey = async (
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: authorization,
       },
       next: {
         tags: ['apiSpend'],
@@ -62,6 +64,7 @@ export const apiSpendRepositoryFindById = async (
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: authorization,
       },
       next: {
         tags: ['apiSpend'],

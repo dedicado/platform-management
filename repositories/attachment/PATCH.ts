@@ -22,7 +22,7 @@ export const attachmentRepositoryUpdate = async (
         body: JSON.stringify(inputs),
         headers: {
           'Content-Type': 'application/json',
-          authorizationKey: authorization,
+          Authorization: authorization,
         },
       })
       return data && (await data.json())

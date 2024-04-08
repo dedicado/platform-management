@@ -16,6 +16,7 @@ export const orderLocationRepositoryFindMany = async (): Promise<
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: authorization,
       },
       next: {
         tags: ['orderLocations'],
@@ -39,6 +40,7 @@ export const orderLocationRepositoryFindByCode = async (
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: authorization,
       },
       next: {
         tags: ['orderLocation'],
@@ -62,6 +64,7 @@ export const orderLocationRepositoryFindById = async (
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: authorization,
       },
       next: {
         tags: ['orderLocation'],

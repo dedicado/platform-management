@@ -14,7 +14,7 @@ export const itemRepositoryFindMany = async (): Promise<ItemType[] | any> => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        authorizationKey: authorization,
+        Authorization: authorization,
       },
       next: {
         tags: ['items'],
@@ -38,7 +38,7 @@ export const itemRepositoryFindById = async (
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        authorizationKey: authorization,
+        Authorization: authorization,
       },
       next: {
         tags: ['item'],

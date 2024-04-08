@@ -21,6 +21,7 @@ export const orderLocationRepositoryCreate = async (
         body: JSON.stringify(inputs),
         headers: {
           'Content-Type': 'application/json',
+          Authorization: authorization,
         },
       })
       return data && (await data.json())
