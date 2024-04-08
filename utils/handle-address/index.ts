@@ -17,27 +17,30 @@ export const updateAddress = async (
     switch (entity) {
       case 'organizations':
         const organization = await fetch(
-          `${process.env.ORGANIZATION_API_URL}/organizations/${id}`,
+          `${process.env.MANAGEMENT_API_URL}/organizations/${id}`,
           {
             method: 'PATCH',
             body: JSON.stringify(address),
             headers: {
               'Content-Type': 'application/json',
-              Authorization: `Bearer ${session?.user?.authorizationKey}`,
+              Authorization: `Bearer ${session?.user?.authorization}`,
             },
           },
         )
         return organization && (await organization.json())
 
       case 'users':
-        const user = await fetch(`${process.env.USER_API_URL}/users/${id}`, {
-          method: 'PATCH',
-          body: JSON.stringify(address),
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${session?.user?.authorization}`,
+        const user = await fetch(
+          `${process.env.MANAGEMENT_API_URL}/users/${id}`,
+          {
+            method: 'PATCH',
+            body: JSON.stringify(address),
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${session?.user?.authorization}`,
+            },
           },
-        })
+        )
 
         return user && (await user.json())
       default:

@@ -6,7 +6,6 @@ import OrganizationMemberBox from '../components/OrganizationMember Box'
 import OrganizationOrderBox from '../components/OrganizationOrderBox'
 import { Suspense } from 'react'
 import OrganizationInventoryBox from '../components/OrganizationInventoryBox'
-import OrganizationFinanceBox from '../components/OrganizationFinanceBox'
 
 export default function OrganizationView() {
   const params = useParams()

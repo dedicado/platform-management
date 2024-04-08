@@ -64,12 +64,12 @@ export default function CreateMemberForm(props: Props) {
           <input
             id="userPhone"
             className="w-full rounded-md"
-            {...register('phone')}
+            {...register('userPhone')}
             type="number"
           />
           {errors && (
             <span className="text-xs text-red-400 italic lowercase">
-              {errors?.phone?.message}
+              {errors?.userPhone?.message}
             </span>
           )}
         </div>

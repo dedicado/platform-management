@@ -17,9 +17,9 @@ export default function UpdateMemberView(props: Props) {
   const { member, name } = props
 
   const { data: session } = useSession()
-  const userPhone: string = session?.user?.phone!
-  const memberPhone = member?.phone
-  let myself: boolean = userPhone == memberPhone
+  const userId: string = session?.user?.id ?? ''
+  const memberUserId = member?.userId
+  let myself: boolean = userId == memberUserId
 
   const [openModal, setOpenModal] = useState<boolean>(false)
   const handleModal = useCallback(() => {

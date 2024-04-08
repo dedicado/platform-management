@@ -6,7 +6,6 @@ import { getServerSession } from 'next-auth'
 export const apiSpendRepositoryUpdate = async (inputs: any): Promise<any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization
-  const authorizationKey = session?.user?.authorizationKey
 
   try {
     if (inputs) {

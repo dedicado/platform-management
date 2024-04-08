@@ -8,14 +8,12 @@ import { ItemType } from '@/types/order'
 export const itemRepositoryFindMany = async (): Promise<ItemType[] | any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
-  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
     const data = await fetch(`${ITEM_REPOSITORY}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        authorizationKey: authorizationKey,
       },
       next: {
         tags: ['items'],
@@ -33,14 +31,12 @@ export const itemRepositoryFindById = async (
 ): Promise<ItemType | any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
-  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
     const data = await fetch(`${ITEM_REPOSITORY}/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        authorizationKey: authorizationKey,
       },
       next: {
         tags: ['item'],

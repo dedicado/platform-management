@@ -13,7 +13,6 @@ export const orderRepositoryCreate = async (
 ): Promise<any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
-  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
     if (await OrderCreateValidation.parseAsync(inputs)) {
@@ -22,7 +21,6 @@ export const orderRepositoryCreate = async (
         body: JSON.stringify(inputs),
         headers: {
           'Content-Type': 'application/json',
-          authorizationKey: authorizationKey,
         },
       })
       return data && (await data.json())

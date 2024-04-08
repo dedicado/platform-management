@@ -8,14 +8,12 @@ import { NoteType } from '@/types/order'
 export const noteRepositoryFindMany = async (): Promise<NoteType[] | any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
-  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
     const data = await fetch(`${NOTE_REPOSITORY}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        authorizationKey: authorizationKey,
       },
       next: {
         tags: ['notes'],
@@ -33,14 +31,12 @@ export const noteRepositoryFindById = async (
 ): Promise<NoteType | any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
-  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
     const data = await fetch(`${NOTE_REPOSITORY}/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        authorizationKey: authorizationKey,
       },
       next: {
         tags: ['note'],

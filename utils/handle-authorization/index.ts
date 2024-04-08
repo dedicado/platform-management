@@ -11,7 +11,7 @@ export const memberAuthorized = async ({
   roles,
 }: MemberAuthorizedType): Promise<boolean | any> => {
   const session = await getServerSession(nextAuthOptions)
-  const userPhone: string = session?.user?.phone!
+  const userId: string = session?.user?.id ?? ''
 
   try {
     if (!organizationDocument) return false
@@ -23,10 +23,10 @@ export const memberAuthorized = async ({
       roles
         ? roles?.includes(member?.role) &&
           member?.active &&
-          member?.phone == userPhone
+          member?.userId == userId
           ? true
           : false
-        : member?.active && member?.phone == userPhone
+        : member?.active && member?.userId == userId
         ? true
         : false,
     )

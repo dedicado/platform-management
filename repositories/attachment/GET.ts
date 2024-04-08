@@ -10,14 +10,12 @@ export const attachmentRepositoryFindMany = async (): Promise<
 > => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
-  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
     const data = await fetch(`${ATTACHMENT_REPOSITORY}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        authorizationKey: authorizationKey,
       },
       next: {
         tags: ['attachments'],
@@ -35,14 +33,12 @@ export const attachmentRepositoryFindById = async (
 ): Promise<AttachmentType | any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
-  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
     const data = await fetch(`${ATTACHMENT_REPOSITORY}/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        authorizationKey: authorizationKey,
       },
       next: {
         tags: ['attachment'],

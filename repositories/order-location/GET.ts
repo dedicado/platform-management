@@ -10,14 +10,12 @@ export const orderLocationRepositoryFindMany = async (): Promise<
 > => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
-  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
     const data = await fetch(`${ORDER_LOCATION_REPOSITORY}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        authorizationKey: authorizationKey,
       },
       next: {
         tags: ['orderLocations'],
@@ -35,14 +33,12 @@ export const orderLocationRepositoryFindByCode = async (
 ): Promise<OrderLocationType | any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
-  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
     const data = await fetch(`${ORDER_LOCATION_REPOSITORY}/code/${code}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        authorizationKey: authorizationKey,
       },
       next: {
         tags: ['orderLocation'],
@@ -60,14 +56,12 @@ export const orderLocationRepositoryFindById = async (
 ): Promise<OrderLocationType | any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
-  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
     const data = await fetch(`${ORDER_LOCATION_REPOSITORY}/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        authorizationKey: authorizationKey,
       },
       next: {
         tags: ['orderLocation'],

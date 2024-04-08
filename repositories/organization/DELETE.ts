@@ -7,8 +7,7 @@ export const organizationRepositoryRemove = async (
   id: string,
 ): Promise<any> => {
   const session = await getServerSession(nextAuthOptions)
-  const authorization = session?.user?.authorization
-  const authorizationKey = session?.user?.authorizationKey
+  const authorization = session?.user?.authorization ?? ''
 
   try {
     if (id) {

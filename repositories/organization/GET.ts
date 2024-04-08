@@ -10,14 +10,13 @@ export const organizationRepositoryFindMany = async (): Promise<
 > => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
-  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
     const data = await fetch(`${ORGANIZATION_REPOSITORY}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        authorizationKey: authorizationKey,
+        Authorization: `Bearer ${authorization}`,
       },
       next: { tags: ['organizations'], revalidate: 3600 },
     })
@@ -32,7 +31,6 @@ export const organizationRepositoryFindByDocument = async (
 ): Promise<OrganizationType | any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
-  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
     const data = await fetch(
@@ -41,7 +39,7 @@ export const organizationRepositoryFindByDocument = async (
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          authorizationKey: authorizationKey,
+          Authorization: `Bearer ${authorization}`,
         },
         next: {
           tags: ['organization'],
@@ -60,14 +58,13 @@ export const organizationRepositoryFindById = async (
 ): Promise<OrganizationType | any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
-  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
     const data = await fetch(`${ORGANIZATION_REPOSITORY}/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        authorizationKey: authorizationKey,
+        Authorization: `Bearer ${authorization}`,
       },
       next: {
         tags: ['organization'],
@@ -85,14 +82,13 @@ export const organizationRepositoryVerifyByDocument = async (
 ): Promise<OrganizationType | any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
-  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
     const data = await fetch(`${ORGANIZATION_REPOSITORY}/verify/${document}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        authorizationKey: authorizationKey,
+        Authorization: `Bearer ${authorization}`,
       },
       next: {
         tags: ['organization'],

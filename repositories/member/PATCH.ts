@@ -14,7 +14,6 @@ export const memberRepositoryUpdate = async (
 ): Promise<any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
-  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
     if (await MemberUpdateValidation.parseAsync(inputs)) {
@@ -23,7 +22,7 @@ export const memberRepositoryUpdate = async (
         body: JSON.stringify(inputs),
         headers: {
           'Content-Type': 'application/json',
-          authorizationKey: authorizationKey,
+          Authorization: `Bearer ${authorization}`,
         },
       })
       return data && (await data.json())

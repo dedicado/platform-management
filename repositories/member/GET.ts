@@ -10,14 +10,13 @@ export const memberRepositoryFindMany = async (): Promise<
 > => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
-  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
     const data = await fetch(`${MEMBER_REPOSITORY}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        authorizationKey: authorizationKey,
+        Authorization: `Bearer ${authorization}`,
       },
       next: {
         tags: ['members'],
@@ -35,14 +34,13 @@ export const memberRepositoryFindByPhone = async (
 ): Promise<MemberType[] | any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
-  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
     const data = await fetch(`${MEMBER_REPOSITORY}/phone/${phone}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        authorizationKey: authorizationKey,
+        Authorization: `Bearer ${authorization}`,
       },
       next: {
         tags: ['member'],
@@ -60,14 +58,13 @@ export const memberRepositoryFindById = async (
 ): Promise<MemberType | any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
-  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
     const data = await fetch(`${MEMBER_REPOSITORY}/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        authorizationKey: authorizationKey,
+        Authorization: `Bearer ${authorization}`,
       },
       next: {
         tags: ['member'],

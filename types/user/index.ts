@@ -1,3 +1,5 @@
+import { MemberType } from '../organization'
+
 export type UserType = {
   id: string
   createdAt: Date
@@ -5,9 +7,7 @@ export type UserType = {
   deletedAt: Date
   softDeleted: boolean
   active: boolean
-  subscriber: boolean
   available: boolean
-  authorizationKey: boolean
   profile: 'guest' | 'consumer' | 'member' | 'master'
   name: string
   image: string
@@ -21,4 +21,5 @@ export type UserType = {
   complement: string
   latitude: number
   longitude: number
+  organizations: MemberType[]
 }

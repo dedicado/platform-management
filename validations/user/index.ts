@@ -20,7 +20,6 @@ export type UserCreateValidationType = z.infer<typeof UserCreateValidation>
 
 export const UserUpdateValidation = z.object({
   active: z.boolean().optional(),
-  subscriber: z.boolean().optional(),
   available: z.boolean().optional(),
   profile: z.enum(PROFILE).optional(),
   name: z.string().optional(),

@@ -8,7 +8,6 @@ import { USER_REPOSITORY } from '..'
 export const userRepositoryFindMany = async (): Promise<UserType[] | any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
-  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
     const data = await fetch(`${USER_REPOSITORY}`, {
@@ -30,7 +29,6 @@ export const userRepositoryFindByDocument = async (
 ): Promise<UserType | any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
-  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
     const data = await fetch(`${USER_REPOSITORY}/document/${document}`, {
@@ -52,7 +50,6 @@ export const userRepositoryFindByEmail = async (
 ): Promise<UserType | any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
-  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
     const data = await fetch(`${USER_REPOSITORY}/email/${email}`, {
@@ -74,7 +71,6 @@ export const userRepositoryFindById = async (
 ): Promise<UserType | any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
-  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
     const data = await fetch(`${USER_REPOSITORY}/${id}`, {
@@ -96,7 +92,6 @@ export const userRepositoryFindByPhone = async (
 ): Promise<UserType | any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
-  const authorizationKey = session?.user?.authorizationKey ?? ''
 
   try {
     const data = await fetch(`${USER_REPOSITORY}/phone/${phone}`, {

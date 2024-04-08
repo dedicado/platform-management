@@ -8,7 +8,6 @@ export const orderLocationRepositoryRemove = async (
 ): Promise<any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization
-  const authorizationKey = session?.user?.authorizationKey
 
   try {
     if (id) {

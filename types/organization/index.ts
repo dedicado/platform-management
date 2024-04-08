@@ -1,3 +1,5 @@
+import { UserType } from '../user'
+
 export type OrganizationType = {
   id: string
   createdAt: Date
@@ -16,7 +18,7 @@ export type OrganizationType = {
   complement: string
   latitude: number
   longitude: number
-  members: MemberType[] | any
+  members: MemberType[]
 }
 
 export type MemberType = {
@@ -26,9 +28,9 @@ export type MemberType = {
   deletedAt: Date
   softDeleted: boolean
   active: boolean
-  available: boolean
   role: 'client' | 'assistant' | 'technician' | 'administrator' | 'owner'
-  phone: string
+  user: UserType
+  userId: string
+  organization: OrganizationType
   organizationId: string
-  organization: OrganizationType | any
 }
