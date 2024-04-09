@@ -4,7 +4,6 @@ import PageDisplay from '@/components/PageDisplay'
 import { Suspense } from 'react'
 import OrganizationMenu from '../components/OrganizationMenu'
 import OrderTabsView from './views/OrderTabsView'
-import { RoleProvider } from '@/contexts/RoleContext'
 import { useOrganization } from '@/contexts/OrganizationContext'
 
 const OrderPage = () => {
@@ -18,12 +17,7 @@ const OrderPage = () => {
       {orders ? (
         <Suspense>
           <OrganizationMenu />
-          <RoleProvider
-            document={organization?.document}
-            roles={['owner', 'administrator']}
-          >
-            <OrderTabsView />
-          </RoleProvider>
+          <OrderTabsView />
         </Suspense>
       ) : null}
     </PageDisplay>
