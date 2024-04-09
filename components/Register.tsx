@@ -80,6 +80,7 @@ export default function Register() {
               className="w-full rounded-md"
               {...register('name')}
               type="text"
+              placeholder='seu nome completo'
             />
             {errors && (
               <span className="text-xs text-red-400 italic lowercase">
@@ -98,6 +99,7 @@ export default function Register() {
               className="w-full rounded-md"
               {...register('email')}
               type="email"
+              placeholder='seu@email.com'
             />
             {errors && (
               <span className="text-xs text-red-400 italic lowercase">
@@ -116,6 +118,7 @@ export default function Register() {
               className="w-full rounded-md"
               {...register('phone')}
               type="number"
+              placeholder='55 48 98765 4321'
             />
             {errors && (
               <span className="text-xs text-red-400 italic lowercase">

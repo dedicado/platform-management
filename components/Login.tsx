@@ -54,6 +54,7 @@ export default function Login(props: Props) {
         className="w-full rounded-md"
         {...register('phone')}
         type="number"
+        placeholder='55 48 98765 4321'
       />
       {errors && (
         <span className="text-xs text-red-400 italic lowercase">
@@ -67,6 +68,7 @@ export default function Login(props: Props) {
         className="w-full rounded-md"
         {...register('password')}
         type="password"
+        placeholder='s*e*n*h*a'
       />
       {errors && (
         <span className="text-xs text-red-400 italic lowercase">

@@ -66,6 +66,7 @@ export default function CreateMemberForm(props: Props) {
             className="w-full rounded-md"
             {...register('userPhone')}
             type="number"
+            placeholder='55 48 98765 4321'
           />
           {errors && (
             <span className="text-xs text-red-400 italic lowercase">

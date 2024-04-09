@@ -23,6 +23,12 @@ export default async function middleware(request: NextRequest) {
     searchParams.length > 0 ? `?${searchParams}` : ''
   }`
 
+  if (hostname == `pedido.${process.env.BASE_URL}`) {
+    return NextResponse.rewrite(
+      new URL(`/main/pedido${path === '/' ? '' : path}`, request.url),
+    )
+  }
+
   if (hostname == `www.${process.env.BASE_URL}`) {
     return NextResponse.rewrite(
       new URL(`/main${path === '/' ? '' : path}`, request.url),
