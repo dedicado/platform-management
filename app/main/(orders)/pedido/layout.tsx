@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { ReactNode } from 'react'
+import { Fragment, ReactNode } from 'react'
 
 export const metadata: Metadata = {
   title: {
@@ -13,5 +13,5 @@ export const metadata: Metadata = {
 export default async function OneOrderLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
-  return <div>{children}</div>
+  return <Fragment>{children}</Fragment>
 }

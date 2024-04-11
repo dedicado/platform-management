@@ -17,15 +17,14 @@ export const attachmentRepositoryUpdate = async (
 
   try {
     if (await UpdateAttachmentValidation.parseAsync(inputs)) {
-      const data = await fetch(`${ATTACHMENT_REPOSITORY}/${id}`, {
+      return await fetch(`${ATTACHMENT_REPOSITORY}/${id}`, {
         method: 'PATCH',
         body: JSON.stringify(inputs),
         headers: {
           'Content-Type': 'application/json',
           Authorization: authorization,
         },
-      })
-      return data && (await data.json())
+      }).then(async (data) => await data.json())
     }
   } catch (error: any) {
     return error?.message || error

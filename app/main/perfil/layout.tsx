@@ -2,7 +2,7 @@ import { nextAuthOptions } from '@/libraries/next-auth'
 import { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
-import { ReactNode } from 'react'
+import { Fragment, ReactNode } from 'react'
 
 export const metadata: Metadata = {
   title: {
@@ -19,5 +19,5 @@ export default async function ProfileLayout({
   children: ReactNode
 }>) {
   const session = await getServerSession(nextAuthOptions)
-  return session ? <div>{children}</div> : redirect('/')
+  return session ? <Fragment>{children}</Fragment> : redirect('/')
 }

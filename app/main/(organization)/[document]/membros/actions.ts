@@ -18,7 +18,9 @@ export const createMember = async (
   inputs: MemberCreateValidationType,
 ): Promise<any> => {
   return await memberRepositoryCreate(inputs).then((data: any) => {
-    revalidateTag('members')
+    revalidateTag('user')
+    revalidateTag('member')
+    revalidateTag('organization')
     revalidatePath(`/${inputs?.organizationDocument}/membros`)
     return data
   })
@@ -43,7 +45,9 @@ export const updateMember = async (
   inputs: MemberUpdateValidationType,
 ): Promise<any> => {
   return await memberRepositoryUpdate(id, inputs).then((data: any) => {
+    revalidateTag('user')
     revalidateTag('member')
+    revalidateTag('organization')
     revalidatePath(`/${inputs?.organizationDocument}/membros`)
     return data
   })

@@ -17,15 +17,14 @@ export const noteRepositoryUpdate = async (
 
   try {
     if (await UpdateNoteValidation.parseAsync(inputs)) {
-      const data = await fetch(`${NOTE_REPOSITORY}/${id}`, {
+      return await fetch(`${NOTE_REPOSITORY}/${id}`, {
         method: 'PATCH',
         body: JSON.stringify(inputs),
         headers: {
           'Content-Type': 'application/json',
           Authorization: authorization,
         },
-      })
-      return data && (await data.json())
+      }).then(async (data) => await data.json())
     }
   } catch (error: any) {
     return error?.message || error

@@ -2,10 +2,13 @@ import * as z from 'zod'
 
 export const ProfileUpdateValidation = z.object({
   available: z.boolean().optional(),
-  name: z.string(),
-  document: z.string().min(11).max(14),
-  email: z.string().email(),
-  phone: z.string().min(10).max(14),
+  name: z.string().min(5, { message: 'infomre seu nome completo' }),
+  email: z.string().email({ message: 'informe um e-mail válido' }),
+  document: z
+    .string()
+    .min(11, { message: 'o documento precisa ser o número do CPF ou CNPJ' })
+    .max(14, { message: 'o documento precisa ser o número do CPF ou CNPJ' }),
+  phone: z.string().min(10).max(14).readonly(),
 })
 export type ProfileUpdateValidationType = z.infer<
   typeof ProfileUpdateValidation
@@ -28,8 +31,14 @@ export type ProfileLocationUpdateValidationType = z.infer<
 
 export const ProfilePasswordUpdateValidation = z
   .object({
-    newPassword: z.string().min(8).max(25),
-    confirmNewPassword: z.string().min(8).max(25),
+    newPassword: z
+      .string()
+      .min(8, { message: 'a senha precisa ter no mínimo 8 caracteres' })
+      .max(25, { message: 'a senha precisa ter no máximo 25 caracteres' }),
+    confirmNewPassword: z
+      .string()
+      .min(8, { message: 'a senha precisa ter no mínimo 8 caracteres' })
+      .max(25, { message: 'a senha precisa ter no máximo 25 caracteres' }),
   })
   .refine((data) => data.newPassword === data.confirmNewPassword, {
     message: 'é diferente da nova senha',

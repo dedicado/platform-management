@@ -2,7 +2,7 @@ import { nextAuthOptions } from '@/libraries/next-auth'
 import { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
-import { ReactNode } from 'react'
+import { Fragment, ReactNode } from 'react'
 import { getOrganizationByDocument } from './actions'
 import { OrganizationType } from '@/types/organization'
 import { OrganizationProvider } from '@/contexts/OrganizationContext'
@@ -41,7 +41,7 @@ export default async function OrganizationLayout({
 
   return session ? (
     <OrganizationProvider document={document} session={session!}>
-      {children}
+      <Fragment>{children}</Fragment>
     </OrganizationProvider>
   ) : (
     redirect('/')

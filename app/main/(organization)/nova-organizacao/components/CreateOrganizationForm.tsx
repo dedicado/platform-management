@@ -12,6 +12,8 @@ import { AddressByZipCodeType } from '@/utils/handle-address/types'
 import { getAddressByZipCode } from '@/utils/handle-address'
 import { createOrganizationForUser } from '../actions'
 import { useRouter } from 'next/navigation'
+import useCountries from 'use-countries'
+import { codeCountries } from '@/helpers'
 
 export default function CreateOrganizationForm() {
   const [isPending, startTransition] = useTransition()
@@ -21,6 +23,16 @@ export default function CreateOrganizationForm() {
   }>()
 
   const router = useRouter()
+  const { countries } = useCountries()
+
+  const limitCountries = countries.filter((country) =>
+    codeCountries.includes(country.code),
+  )
+
+  const [country, setCountry] = useState(limitCountries[1].phone)
+  const handleCountry = (e: any) => {
+    setCountry(e.target?.value)
+  }
 
   const handleZipCode = (event: { target: { value: any } }) => {
     const data = event.target.value?.replace(/[^0-9]/g, '')
@@ -78,8 +90,8 @@ export default function CreateOrganizationForm() {
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex flex-col sm:flex-row gap-2">
-        <div className="relative w-full">
-          <label htmlFor="name" className="dark:text-sky-600">
+        <div className="relative w-full sm:w-2/3">
+          <label htmlFor="name" className="dark:text-slate-400 font-thin">
             nome
           </label>
           <input
@@ -95,10 +107,8 @@ export default function CreateOrganizationForm() {
             </span>
           )}
         </div>
-      </div>
-      <div className="flex flex-col sm:flex-row gap-2">
-        <div className="relative w-full">
-          <label htmlFor="document" className="dark:text-sky-600">
+        <div className="relative w-full sm:w-1/3">
+          <label htmlFor="document" className="dark:text-slate-400 font-thin">
             cnpj
           </label>
           <input
@@ -114,8 +124,54 @@ export default function CreateOrganizationForm() {
             </span>
           )}
         </div>
+      </div>
+      <div className="flex flex-col sm:flex-row gap-2">
+        <div className="flex gap-2">
+          <div className="relative sm:w-2/3">
+            <label
+              htmlFor="phoneCountry"
+              className="dark:text-slate-400 font-thin"
+            >
+              país
+            </label>
+            <select
+              {...register('phoneCountry')}
+              value={country}
+              onChange={handleCountry}
+              className="w-full rounded-md"
+            >
+              {limitCountries.map((item) => (
+                <option key={item.native} value={item.phone}>
+                  {item.emoji + ' ' + item.phone}
+                </option>
+              ))}
+            </select>
+            {errors && (
+              <span className="text-xs text-red-400 italic lowercase">
+                {errors?.phoneCountry?.message}
+              </span>
+            )}
+          </div>
+          <div className="relative w-full">
+            <label htmlFor="phone" className="dark:text-slate-400 font-thin">
+              telefone
+            </label>
+            <input
+              {...register('phone')}
+              id="phone"
+              className="w-full rounded-md"
+              type="number"
+              placeholder="48 98765 4321"
+            />
+            {errors && (
+              <span className="text-xs text-red-400 italic lowercase">
+                {errors?.phone?.message}
+              </span>
+            )}
+          </div>
+        </div>
         <div className="relative w-full">
-          <label htmlFor="email" className="dark:text-sky-600">
+          <label htmlFor="email" className="dark:text-slate-400 font-thin">
             e-mail
           </label>
           <input
@@ -131,27 +187,11 @@ export default function CreateOrganizationForm() {
             </span>
           )}
         </div>
-        <div className="relative w-full">
-          <label htmlFor="phone" className="dark:text-sky-600">
-            telefone
-          </label>
-          <input
-            id="phone"
-            className="w-full rounded-md"
-            {...register('phone')}
-            type="number"
-            placeholder="48 98765 4321"
-          />
-          {errors && (
-            <span className="text-xs text-red-400 italic lowercase">
-              {errors?.phone?.message}
-            </span>
-          )}
-        </div>
       </div>
+
       <div className="flex flex-col sm:flex-row gap-2">
         <div className="relative w-full sm:w-1/3">
-          <label htmlFor="zipCode" className="dark:text-sky-600">
+          <label htmlFor="zipCode" className="dark:text-slate-400 font-thin">
             cep
           </label>
           <input
@@ -168,7 +208,7 @@ export default function CreateOrganizationForm() {
           )}
         </div>
         <div className="relative w-full sm:w-2/3">
-          <label htmlFor="street" className="dark:text-sky-600">
+          <label htmlFor="street" className="dark:text-slate-400 font-thin">
             logradouro
           </label>
           <input
@@ -187,7 +227,7 @@ export default function CreateOrganizationForm() {
       </div>
       <div className="flex flex-col sm:flex-row gap-2">
         <div className="relative w-full">
-          <label htmlFor="complement" className="dark:text-sky-600">
+          <label htmlFor="complement" className="dark:text-slate-400 font-thin">
             complemento
           </label>
           <input

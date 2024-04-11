@@ -11,22 +11,19 @@ export const attachmentRepositoryFindMany = async (): Promise<
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  try {
-    const data = await fetch(`${ATTACHMENT_REPOSITORY}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: authorization,
-      },
-      next: {
-        tags: ['attachments'],
-        revalidate: 3600,
-      },
-    })
-    return data && (await data.json())
-  } catch (error: any) {
-    return error?.message || error
-  }
+  return await fetch(`${ATTACHMENT_REPOSITORY}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: authorization,
+    },
+    next: {
+      tags: ['attachments'],
+      revalidate: 3600,
+    },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }
 
 export const attachmentRepositoryFindById = async (
@@ -35,20 +32,17 @@ export const attachmentRepositoryFindById = async (
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  try {
-    const data = await fetch(`${ATTACHMENT_REPOSITORY}/${id}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: authorization,
-      },
-      next: {
-        tags: ['attachment'],
-        revalidate: 3600,
-      },
-    })
-    return data && (await data.json())
-  } catch (error: any) {
-    return error?.message || error
-  }
+  return await fetch(`${ATTACHMENT_REPOSITORY}/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: authorization,
+    },
+    next: {
+      tags: ['attachment'],
+      revalidate: 3600,
+    },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }

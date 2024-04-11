@@ -16,15 +16,14 @@ export const noteRepositoryCreate = async (
 
   try {
     if (await CreateNoteValidation.parseAsync(inputs)) {
-      const data = await fetch(`${NOTE_REPOSITORY}`, {
+      return await fetch(`${NOTE_REPOSITORY}`, {
         method: 'POST',
         body: JSON.stringify(inputs),
         headers: {
           'Content-Type': 'application/json',
           Authorization: authorization,
         },
-      })
-      return data && (await data.json())
+      }).then(async (data) => await data.json())
     }
   } catch (error: any) {
     return error?.message || error

@@ -9,22 +9,19 @@ export const itemRepositoryFindMany = async (): Promise<ItemType[] | any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  try {
-    const data = await fetch(`${ITEM_REPOSITORY}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: authorization,
-      },
-      next: {
-        tags: ['items'],
-        revalidate: 3600,
-      },
-    })
-    return data && (await data.json())
-  } catch (error: any) {
-    return error?.message || error
-  }
+  return await fetch(`${ITEM_REPOSITORY}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: authorization,
+    },
+    next: {
+      tags: ['items'],
+      revalidate: 3600,
+    },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }
 
 export const itemRepositoryFindById = async (
@@ -33,20 +30,17 @@ export const itemRepositoryFindById = async (
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  try {
-    const data = await fetch(`${ITEM_REPOSITORY}/${id}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: authorization,
-      },
-      next: {
-        tags: ['item'],
-        revalidate: 3600,
-      },
-    })
-    return data && (await data.json())
-  } catch (error: any) {
-    return error?.message || error
-  }
+  return await fetch(`${ITEM_REPOSITORY}/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: authorization,
+    },
+    next: {
+      tags: ['item'],
+      revalidate: 3600,
+    },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }

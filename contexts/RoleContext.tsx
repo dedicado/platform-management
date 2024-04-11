@@ -1,11 +1,11 @@
 'use client'
 
-import Unauthorized from '@/components/Unauthorized'
 import { memberAuthorized } from '@/utils/handle-authorization'
 import {
   createContext,
   Fragment,
   ReactNode,
+  Suspense,
   useCallback,
   useContext,
   useEffect,
@@ -28,11 +28,11 @@ export const RoleProvider = ({
   const data = useCallback(async () => {
     try {
       if (!document) return null
-      const authorized = await memberAuthorized({
+
+      await memberAuthorized({
         organizationDocument: document,
         roles: roles,
-      })
-      authorized && setAuthorized(authorized[0])
+      }).then((data) => setAuthorized(data[0]))
     } catch (error: any) {
       return null
     }
@@ -43,13 +43,11 @@ export const RoleProvider = ({
   }, [data, document])
 
   return (
-    <RoleContext.Provider value={document ? { authorized } : null}>
-      {authorized ? (
-        <Fragment>{children}</Fragment>
-      ) : (
-        <Unauthorized message='ops!' />
-      )}
-    </RoleContext.Provider>
+    <Suspense>
+      <RoleContext.Provider value={document ? { authorized } : null}>
+        {authorized ? <Fragment>{children}</Fragment> : null}
+      </RoleContext.Provider>
+    </Suspense>
   )
 }
 

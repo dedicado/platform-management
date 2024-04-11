@@ -31,9 +31,9 @@ export const OrganizationProvider = ({
   document: string
   session: Session
 }>) => {
-  const [members, setMembers] = useState<MemberType[] | any>()
-  const [orders, setOrders] = useState<OrderType[] | any>()
-  const [organization, setOrganization] = useState<OrganizationType | any>()
+  const [members, setMembers] = useState<MemberType[]>()
+  const [orders, setOrders] = useState<OrderType[]>()
+  const [organization, setOrganization] = useState<OrganizationType>()
 
   const data = useCallback(async () => {
     try {
@@ -44,8 +44,7 @@ export const OrganizationProvider = ({
 
       organization && setMembers(organization?.members)
 
-      const orders = await getOrdersByOrganization(document)
-      setOrders(orders)
+      await getOrdersByOrganization(document).then((data) => setOrders(data))
     } catch (error: any) {
       console.error(error)
       return null
