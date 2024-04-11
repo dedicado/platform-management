@@ -30,6 +30,8 @@ export const updateProfile = async (
 
   return await userRepositoryUpdate(userId, inputs).then((data: any) => {
     revalidateTag('user')
+    revalidateTag('member')
+    revalidateTag('organization')
     revalidatePath('/perfil')
     return data
   })
@@ -46,6 +48,8 @@ export const updateProfileAvailable = async (
   return await userRepositoryUpdate(userId, { available: available }).then(
     (data: any) => {
       revalidateTag('user')
+      revalidateTag('member')
+      revalidateTag('organization')
       revalidatePath('/')
       return data
     },
@@ -58,12 +62,16 @@ export const updateProfileAvatar = async (image: string): Promise<any> => {
 
   if (!session) return null
 
-  return await userRepositoryUpdate(userId, { image: image }).then((data: any) => {
-    revalidateTag('user')
-    revalidatePath('/profile')
+  return await userRepositoryUpdate(userId, { image: image }).then(
+    (data: any) => {
+      revalidateTag('user')
+      revalidateTag('member')
+      revalidateTag('organization')
+      revalidatePath('/profile')
 
-    return data
-  })
+      return data
+    },
+  )
 }
 
 export const updateProfileLocation = async (
@@ -76,6 +84,8 @@ export const updateProfileLocation = async (
 
   return await userRepositoryUpdate(userId, inputs).then((data: any) => {
     revalidateTag('user')
+    revalidateTag('member')
+    revalidateTag('organization')
     revalidatePath('/')
 
     return data

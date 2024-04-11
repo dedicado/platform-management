@@ -10,7 +10,7 @@ export const orderRepositoryFindMany = async (): Promise<OrderType[] | any> => {
   const authorization = session?.user?.authorization ?? ''
 
   try {
-    const data = await fetch(`${ORDER_REPOSITORY}`, {
+    return await fetch(`${ORDER_REPOSITORY}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -20,8 +20,7 @@ export const orderRepositoryFindMany = async (): Promise<OrderType[] | any> => {
         tags: ['orders'],
         revalidate: 3600,
       },
-    })
-    return data && (await data.json())
+    }).then(async (data) => await data.json())
   } catch (error: any) {
     return error?.message || error
   }
@@ -33,22 +32,19 @@ export const orderRepositoryFindByCode = async (
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  try {
-    const data = await fetch(`${ORDER_REPOSITORY}/code/${code}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: authorization,
-      },
-      next: {
-        tags: ['order'],
-        revalidate: 120,
-      },
-    })
-    return data && (await data.json())
-  } catch (error: any) {
-    return error?.message || error
-  }
+  return await fetch(`${ORDER_REPOSITORY}/code/${code}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: authorization,
+    },
+    next: {
+      tags: ['order'],
+      revalidate: 120,
+    },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }
 
 export const orderRepositoryFindByCustomer = async (
@@ -57,22 +53,19 @@ export const orderRepositoryFindByCustomer = async (
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  try {
-    const data = await fetch(`${ORDER_REPOSITORY}/customer/${customer}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: authorization,
-      },
-      next: {
-        tags: ['order'],
-        revalidate: 120,
-      },
-    })
-    return data && (await data.json())
-  } catch (error: any) {
-    return error?.message || error
-  }
+  return await fetch(`${ORDER_REPOSITORY}/customer/${customer}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: authorization,
+    },
+    next: {
+      tags: ['order'],
+      revalidate: 120,
+    },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }
 
 export const orderRepositoryFindByMember = async (
@@ -81,22 +74,19 @@ export const orderRepositoryFindByMember = async (
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  try {
-    const data = await fetch(`${ORDER_REPOSITORY}/member/${member}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: authorization,
-      },
-      next: {
-        tags: ['order'],
-        revalidate: 120,
-      },
-    })
-    return data && (await data.json())
-  } catch (error: any) {
-    return error?.message || error
-  }
+  return await fetch(`${ORDER_REPOSITORY}/member/${member}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: authorization,
+    },
+    next: {
+      tags: ['order'],
+      revalidate: 120,
+    },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }
 
 export const orderRepositoryFindByOrganization = async (
@@ -105,25 +95,19 @@ export const orderRepositoryFindByOrganization = async (
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  try {
-    const data = await fetch(
-      `${ORDER_REPOSITORY}/organization/${organization}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: authorization,
-        },
-        next: {
-          tags: ['order'],
-          revalidate: 120,
-        },
-      },
-    )
-    return data && (await data.json())
-  } catch (error: any) {
-    return error?.message || error
-  }
+  return await fetch(`${ORDER_REPOSITORY}/organization/${organization}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: authorization,
+    },
+    next: {
+      tags: ['order'],
+      revalidate: 120,
+    },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }
 
 export const orderRepositoryFindById = async (
@@ -132,20 +116,17 @@ export const orderRepositoryFindById = async (
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  try {
-    const data = await fetch(`${ORDER_REPOSITORY}/${id}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: authorization,
-      },
-      next: {
-        tags: ['order'],
-        revalidate: 120,
-      },
-    })
-    return data && (await data.json())
-  } catch (error: any) {
-    return error?.message || error
-  }
+  return await fetch(`${ORDER_REPOSITORY}/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: authorization,
+    },
+    next: {
+      tags: ['order'],
+      revalidate: 120,
+    },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }

@@ -45,22 +45,17 @@ export const PlatformProvider = ({
   const userId: string = session?.user?.id ?? ''
   const userPhone: string = session?.user?.phone ?? ''
 
-  const [user, setUser] = useState<UserType | any>()
-  const [member, setMember] = useState<MemberType[] | any>()
-  const [orders, setOrders] = useState<OrderType[] | any>()
+  const [user, setUser] = useState<UserType>()
+  const [member, setMember] = useState<MemberType[]>()
+  const [orders, setOrders] = useState<OrderType[]>()
 
   const data = useCallback(async () => {
     try {
       if (!session) return null
 
-      const user = await getUserById(userId)
-      user && setUser(user)
-
-      const orders = await getOrdersByMember(userPhone)
-      orders && setOrders(orders)
-
-      const member = await getMemberByUserPhone(userPhone)
-      member && setMember(member)
+      await getUserById(userId).then((data) => setUser(data))
+      await getOrdersByMember(userPhone).then((data) => setOrders(data))
+      await getMemberByUserPhone(userPhone).then((data) => setMember(data))
     } catch (error: any) {
       console.error(error)
       return null
@@ -76,8 +71,8 @@ export const PlatformProvider = ({
   )
 
   const lastPosition: LocationType | any = useMemo(() => {
-    let latitude: number | null = user?.latitude
-    let longitude: number | null = user?.longitude
+    let latitude = user?.latitude
+    let longitude = user?.longitude
 
     return {
       latitude: latitude,

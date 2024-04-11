@@ -11,19 +11,16 @@ export const organizationRepositoryFindMany = async (): Promise<
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  try {
-    const data = await fetch(`${ORGANIZATION_REPOSITORY}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${authorization}`,
-      },
-      next: { tags: ['organizations'], revalidate: 3600 },
-    })
-    return data && (await data.json())
-  } catch (error: any) {
-    return error?.message || error
-  }
+  return await fetch(`${ORGANIZATION_REPOSITORY}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authorization}`,
+    },
+    next: { tags: ['organizations'], revalidate: 3600 },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }
 
 export const organizationRepositoryFindByDocument = async (
@@ -32,25 +29,19 @@ export const organizationRepositoryFindByDocument = async (
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  try {
-    const data = await fetch(
-      `${ORGANIZATION_REPOSITORY}/document/${document}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${authorization}`,
-        },
-        next: {
-          tags: ['organization'],
-          revalidate: 120,
-        },
-      },
-    )
-    return data && (await data.json())
-  } catch (error: any) {
-    return error?.message || error
-  }
+  return await fetch(`${ORGANIZATION_REPOSITORY}/document/${document}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authorization}`,
+    },
+    next: {
+      tags: ['organization'],
+      revalidate: 120,
+    },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }
 
 export const organizationRepositoryFindById = async (
@@ -59,22 +50,19 @@ export const organizationRepositoryFindById = async (
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  try {
-    const data = await fetch(`${ORGANIZATION_REPOSITORY}/${id}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${authorization}`,
-      },
-      next: {
-        tags: ['organization'],
-        revalidate: 120,
-      },
-    })
-    return data && (await data.json())
-  } catch (error: any) {
-    return error?.message || error
-  }
+  return await fetch(`${ORGANIZATION_REPOSITORY}/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authorization}`,
+    },
+    next: {
+      tags: ['organization'],
+      revalidate: 120,
+    },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }
 
 export const organizationRepositoryVerifyByDocument = async (
@@ -83,20 +71,17 @@ export const organizationRepositoryVerifyByDocument = async (
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  try {
-    const data = await fetch(`${ORGANIZATION_REPOSITORY}/verify/${document}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${authorization}`,
-      },
-      next: {
-        tags: ['organization'],
-        revalidate: 120,
-      },
-    })
-    return data && (await data.json())
-  } catch (error: any) {
-    return error?.message || error
-  }
+  return await fetch(`${ORGANIZATION_REPOSITORY}/verify/${document}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authorization}`,
+    },
+    next: {
+      tags: ['organization'],
+      revalidate: 120,
+    },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }

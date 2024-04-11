@@ -6,6 +6,8 @@ export const getRoutesByCoordinates = async ({
   destination,
   origin,
 }: RoutesByCoordinatesType): Promise<any> => {
+  if (!destination || !origin) return null
+
   const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${
     origin?.longitude + ',' + origin?.latitude
   };${
@@ -14,33 +16,23 @@ export const getRoutesByCoordinates = async ({
     process.env.MAPBOX_ACCESS_TOKEN
   }`
 
-  try {
-    if (!destination || !origin) return null
-
-    const data = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    const result = await data.json()
-
-    return result
-  } catch (error: any) {
-    return error?.message || 'ocorreu um erro inesperado'
-  }
+  return await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }
 
 export const getRoutesByJson = async (url: string): Promise<any> => {
-  try {
-    const data = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    return await data.json()
-  } catch (error: any) {
-    return error?.message || 'ocorreu um erro inesperado'
-  }
+  return await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }

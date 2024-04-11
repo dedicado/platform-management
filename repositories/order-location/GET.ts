@@ -11,22 +11,19 @@ export const orderLocationRepositoryFindMany = async (): Promise<
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  try {
-    const data = await fetch(`${ORDER_LOCATION_REPOSITORY}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: authorization,
-      },
-      next: {
-        tags: ['orderLocations'],
-        revalidate: 3600,
-      },
-    })
-    return data && (await data.json())
-  } catch (error: any) {
-    return error?.message || error
-  }
+  return await fetch(`${ORDER_LOCATION_REPOSITORY}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: authorization,
+    },
+    next: {
+      tags: ['orderLocations'],
+      revalidate: 3600,
+    },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }
 
 export const orderLocationRepositoryFindByCode = async (
@@ -35,22 +32,19 @@ export const orderLocationRepositoryFindByCode = async (
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  try {
-    const data = await fetch(`${ORDER_LOCATION_REPOSITORY}/code/${code}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: authorization,
-      },
-      next: {
-        tags: ['orderLocation'],
-        revalidate: 120,
-      },
-    })
-    return data && (await data.json())
-  } catch (error: any) {
-    return error?.message || error
-  }
+  return await fetch(`${ORDER_LOCATION_REPOSITORY}/code/${code}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: authorization,
+    },
+    next: {
+      tags: ['orderLocation'],
+      revalidate: 120,
+    },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }
 
 export const orderLocationRepositoryFindById = async (
@@ -59,20 +53,17 @@ export const orderLocationRepositoryFindById = async (
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  try {
-    const data = await fetch(`${ORDER_LOCATION_REPOSITORY}/${id}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: authorization,
-      },
-      next: {
-        tags: ['orderLocation'],
-        revalidate: 120,
-      },
-    })
-    return data && (await data.json())
-  } catch (error: any) {
-    return error?.message || error
-  }
+  return await fetch(`${ORDER_LOCATION_REPOSITORY}/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: authorization,
+    },
+    next: {
+      tags: ['orderLocation'],
+      revalidate: 120,
+    },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }

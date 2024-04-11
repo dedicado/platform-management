@@ -9,19 +9,16 @@ export const userRepositoryFindMany = async (): Promise<UserType[] | any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  try {
-    const data = await fetch(`${USER_REPOSITORY}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${authorization}`,
-      },
-      next: { tags: ['users'], revalidate: 3600 },
-    })
-    return data && (await data.json())
-  } catch (error: any) {
-    return error?.message || error
-  }
+  return await fetch(`${USER_REPOSITORY}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authorization}`,
+    },
+    next: { tags: ['users'], revalidate: 3600 },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }
 
 export const userRepositoryFindByDocument = async (
@@ -30,19 +27,16 @@ export const userRepositoryFindByDocument = async (
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  try {
-    const data = await fetch(`${USER_REPOSITORY}/document/${document}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${authorization}`,
-      },
-      next: { tags: ['user', 'userDocument'], revalidate: 120 },
-    })
-    return data && (await data.json())
-  } catch (error: any) {
-    return error?.message || error
-  }
+  return await fetch(`${USER_REPOSITORY}/document/${document}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authorization}`,
+    },
+    next: { tags: ['user'], revalidate: 120 },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }
 
 export const userRepositoryFindByEmail = async (
@@ -51,19 +45,16 @@ export const userRepositoryFindByEmail = async (
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  try {
-    const data = await fetch(`${USER_REPOSITORY}/email/${email}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${authorization}`,
-      },
-      next: { tags: ['user', 'userEmail'], revalidate: 120 },
-    })
-    return data && (await data.json())
-  } catch (error: any) {
-    return error?.message || error
-  }
+  return await fetch(`${USER_REPOSITORY}/email/${email}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authorization}`,
+    },
+    next: { tags: ['user'], revalidate: 120 },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }
 
 export const userRepositoryFindById = async (
@@ -72,19 +63,16 @@ export const userRepositoryFindById = async (
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  try {
-    const data = await fetch(`${USER_REPOSITORY}/${id}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${authorization}`,
-      },
-      next: { tags: ['user', 'userId'], revalidate: 120 },
-    })
-    return data && (await data.json())
-  } catch (error: any) {
-    return error?.message || error
-  }
+  return await fetch(`${USER_REPOSITORY}/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authorization}`,
+    },
+    next: { tags: ['user'], revalidate: 120 },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }
 
 export const userRepositoryFindByPhone = async (
@@ -93,17 +81,14 @@ export const userRepositoryFindByPhone = async (
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  try {
-    const data = await fetch(`${USER_REPOSITORY}/phone/${phone}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${authorization}`,
-      },
-      next: { tags: ['user'], revalidate: 120 },
-    })
-    return data && (await data.json())
-  } catch (error: any) {
-    return error?.message || error
-  }
+  return await fetch(`${USER_REPOSITORY}/phone/${phone}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authorization}`,
+    },
+    next: { tags: ['user'], revalidate: 120 },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }

@@ -5,6 +5,8 @@ import { celularMask } from 'masks-br'
 import { MemberType } from '@/types/organization'
 import UpdateMemberView from './UpdateMemberView'
 import { useEffect, useState } from 'react'
+import { useParams } from 'next/navigation'
+import { RoleProvider } from '@/contexts/RoleContext'
 
 interface Props {
   member: MemberType
@@ -13,13 +15,16 @@ interface Props {
 export default function MemberDetailInListView(props: Props) {
   const { member } = props
 
+  const params = useParams()
+  const { document }: any = params
+
   let userAvailable: boolean = member?.user?.available
 
   const [available, setAvailable] = useState<boolean>(userAvailable)
 
   useEffect(() => {
-    userAvailable && setAvailable(userAvailable)
-  }, [userAvailable])
+    member && setAvailable(userAvailable)
+  }, [member, userAvailable])
 
   const image = member?.user?.image || '/avatar.svg'
 

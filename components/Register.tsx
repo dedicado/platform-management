@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
+import useCountries from 'use-countries'
 import { ChangeEvent, Fragment, useCallback, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
@@ -13,6 +14,7 @@ import {
 import { registerUser } from '@/app/main/registrar-se/actions'
 import Modal from './Modal'
 import TermsAndPoliciesView from '@/app/main/(legal)/termos-e-politicas/views/TermsAndPoliciesView'
+import { codeCountries } from '@/helpers'
 
 export default function Register() {
   const [openModal, setOpenModal] = useState<boolean>(false)
@@ -28,6 +30,16 @@ export default function Register() {
   }
 
   const router = useRouter()
+  const { countries } = useCountries()
+
+  const limitCountries = countries.filter((country) =>
+    codeCountries.includes(country.code),
+  )
+
+  const [country, setCountry] = useState(limitCountries[1].phone)
+  const handleCountry = (e: any) => {
+    setCountry(e.target?.value)
+  }
 
   const {
     formState: { errors },
@@ -37,7 +49,10 @@ export default function Register() {
   } = useForm<RegisterValidationType>({
     resolver: zodResolver(RegisterValidation),
   })
+
   const onSubmit: SubmitHandler<RegisterValidationType> = async (inputs) => {
+    const phone: string = inputs?.phoneCountry + inputs?.phone
+
     await registerUser({ ...inputs, password: randomCode })
       .then(async (data: any) => {
         if (data?.response?.error) {
@@ -45,7 +60,7 @@ export default function Register() {
         } else {
           return await signIn('credentials', {
             redirect: false,
-            phone: inputs?.phone,
+            phone: phone,
             password: randomCode,
           })
             .then((res: any) => {
@@ -80,7 +95,7 @@ export default function Register() {
               className="w-full rounded-md"
               {...register('name')}
               type="text"
-              placeholder='seu nome completo'
+              placeholder="seu nome completo"
             />
             {errors && (
               <span className="text-xs text-red-400 italic lowercase">
@@ -99,7 +114,7 @@ export default function Register() {
               className="w-full rounded-md"
               {...register('email')}
               type="email"
-              placeholder='seu@email.com'
+              placeholder="seu@email.com"
             />
             {errors && (
               <span className="text-xs text-red-400 italic lowercase">
@@ -108,17 +123,45 @@ export default function Register() {
             )}
           </div>
         </div>
-        <div className="flex flex-col sm:flex-row items-center gap-2">
+        <div className="flex gap-2">
+          <div className="relative sm:w-2/3">
+            <label
+              htmlFor="phoneCountry"
+              className="dark:text-slate-400 font-thin"
+            >
+              país
+            </label>
+            <select
+              {...register('phoneCountry')}
+              value={country}
+              onChange={handleCountry}
+              className="w-full rounded-md"
+            >
+              {limitCountries.map((item) => (
+                <option key={item.native} value={item.phone}>
+                  {item.emoji + ' ' + item.phone}
+                </option>
+              ))}
+            </select>
+            {errors && (
+              <span className="text-xs text-red-400 italic lowercase">
+                {errors?.phoneCountry?.message}
+              </span>
+            )}
+          </div>
           <div className="relative w-full">
-            <label htmlFor="registerPhone" className="dark:text-sky-600">
+            <label
+              htmlFor="registerPhone"
+              className="dark:text-slate-400 font-thin"
+            >
               celular
             </label>
             <input
+              {...register('phone')}
               id="registerPhone"
               className="w-full rounded-md"
-              {...register('phone')}
               type="number"
-              placeholder='55 48 98765 4321'
+              placeholder="48 98765 4321"
             />
             {errors && (
               <span className="text-xs text-red-400 italic lowercase">

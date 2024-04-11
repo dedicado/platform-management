@@ -17,15 +17,14 @@ export const userRepositoryUpdate = async (
 
   try {
     if (await UserUpdateValidation.parseAsync(inputs)) {
-      const data = await fetch(`${USER_REPOSITORY}/${id}`, {
+      return await fetch(`${USER_REPOSITORY}/${id}`, {
         method: 'PATCH',
         body: JSON.stringify(inputs),
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${authorization}`,
         },
-      })
-      return data && (await data.json())
+      }).then(async (data) => await data.json())
     }
   } catch (error: any) {
     return error?.message || error

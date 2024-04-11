@@ -16,15 +16,14 @@ export const attachmentRepositoryCreate = async (
 
   try {
     if (await CreateAttachmentValidation.parseAsync(inputs)) {
-      const data = await fetch(`${ATTACHMENT_REPOSITORY}`, {
+      return await fetch(`${ATTACHMENT_REPOSITORY}`, {
         method: 'POST',
         body: JSON.stringify(inputs),
         headers: {
           'Content-Type': 'application/json',
           Authorization: authorization,
         },
-      })
-      return data && (await data.json())
+      }).then(async (data) => await data.json())
     }
   } catch (error: any) {
     return error?.message || error

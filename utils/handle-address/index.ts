@@ -12,59 +12,47 @@ export const updateAddress = async (
   inputs: UpdateAddressType,
 ): Promise<any> => {
   const session = await getServerSession(nextAuthOptions)
-  try {
-    const { address, entity, id } = inputs
-    switch (entity) {
-      case 'organizations':
-        const organization = await fetch(
-          `${process.env.MANAGEMENT_API_URL}/organizations/${id}`,
-          {
-            method: 'PATCH',
-            body: JSON.stringify(address),
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${session?.user?.authorization}`,
-            },
-          },
-        )
-        return organization && (await organization.json())
+  const { address, entity, id } = inputs
 
-      case 'users':
-        const user = await fetch(
-          `${process.env.MANAGEMENT_API_URL}/users/${id}`,
-          {
-            method: 'PATCH',
-            body: JSON.stringify(address),
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${session?.user?.authorization}`,
-            },
+  switch (entity) {
+    case 'organizations':
+      return await fetch(
+        `${process.env.MANAGEMENT_API_URL}/organizations/${id}`,
+        {
+          method: 'PATCH',
+          body: JSON.stringify(address),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${session?.user?.authorization}`,
           },
-        )
+        },
+      ).then(async (data) => await data.json())
+    case 'users':
+      return await fetch(`${process.env.MANAGEMENT_API_URL}/users/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(address),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${session?.user?.authorization}`,
+        },
+      }).then(async (data) => await data.json())
 
-        return user && (await user.json())
-      default:
-        return null
-    }
-  } catch (error: any) {
-    return error?.message || 'ocorreu um erro inesperado'
+    default:
+      return null
   }
 }
 
 export const getAddressByZipCode = async (
   zipCode: string,
 ): Promise<AddressByZipCodeType | any> => {
-  try {
-    const address = await fetch(`${process.env.ZIPCODE_API_URL}/${zipCode}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    return await address.json()
-  } catch (error: any) {
-    return error?.message || 'ocorreu um erro inesperado'
-  }
+  return await fetch(`${process.env.ZIPCODE_API_URL}/${zipCode}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(async (data) => await data.json())
+    .catch((error: any) => error?.message)
 }
 
 export const getAddressByGeolocationType = async (
@@ -72,25 +60,23 @@ export const getAddressByGeolocationType = async (
   longitude: number,
 ): Promise<AddressByGeolocationType | any> => {
   const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${process.env.MAPBOX_ACCESS_TOKEN}&autocomplete=true`
-  try {
-    const data = await fetch(url, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    })
-    const result = await data.json()
-    const address: AddressByGeolocationType = {
-      place: result?.features[0]?.place_name,
-      street: result?.features[0]?.text,
-      number: result?.features[0]?.address,
-      district: result?.features[0]?.context[0]?.text,
-      zipCode: result?.features[0]?.context[1]?.text,
-      city: result?.features[0]?.context[3]?.text,
-      state: result?.features[0]?.context[4]?.text,
-      country: result?.features[0]?.context[5]?.text,
-    }
 
-    return address
-  } catch (error: any) {
-    return error?.message || 'ocorreu um erro inesperado'
-  }
+  return await fetch(url, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  })
+    .then(async (data: any) => {
+      const result = await data.json()
+      return {
+        place: result?.features[0]?.place_name,
+        street: result?.features[0]?.text,
+        number: result?.features[0]?.address,
+        district: result?.features[0]?.context[0]?.text,
+        zipCode: result?.features[0]?.context[1]?.text,
+        city: result?.features[0]?.context[3]?.text,
+        state: result?.features[0]?.context[4]?.text,
+        country: result?.features[0]?.context[5]?.text,
+      }
+    })
+    .catch((error: any) => error?.message)
 }

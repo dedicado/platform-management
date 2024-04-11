@@ -17,15 +17,14 @@ export const orderRepositoryUpdate = async (
 
   try {
     if (await OrderUpdateValidation.parseAsync(inputs)) {
-      const data = await fetch(`${ORDER_REPOSITORY}/${id}`, {
+      return await fetch(`${ORDER_REPOSITORY}/${id}`, {
         method: 'PATCH',
         body: JSON.stringify(inputs),
         headers: {
           'Content-Type': 'application/json',
           Authorization: authorization,
         },
-      })
-      return data && (await data.json())
+      }).then(async (data) => await data.json())
     }
   } catch (error: any) {
     return error?.message || error

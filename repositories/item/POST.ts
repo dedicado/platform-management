@@ -16,15 +16,14 @@ export const itemRepositoryCreate = async (
 
   try {
     if (await CreateItemValidation.parseAsync(inputs)) {
-      const data = await fetch(`${ITEM_REPOSITORY}`, {
+      return await fetch(`${ITEM_REPOSITORY}`, {
         method: 'POST',
         body: JSON.stringify(inputs),
         headers: {
           'Content-Type': 'application/json',
           Authorization: authorization,
         },
-      })
-      return data && (await data.json())
+      }).then(async (data) => await data.json())
     }
   } catch (error: any) {
     return error?.message || error

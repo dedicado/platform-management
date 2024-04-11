@@ -56,10 +56,7 @@ export const uploadFileToS3 = async ({
       .then(() => {
         return { url: url }
       })
-      .catch((error: any) => {
-        console.log(error?.message || error)
-        return error?.message || 'ocorreu um erro inesperado'
-      })
+      .catch((error: any) => error?.message)
   } catch (error: any) {
     return error?.message || 'ocorreu um erro inesperado'
   }

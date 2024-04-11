@@ -26,10 +26,9 @@ export const ProfileProvider = ({
   const data = useCallback(async () => {
     try {
       if (!profiles) return null
-      const authorized = await userAuthorized({
+      await userAuthorized({
         profiles: profiles,
-      })
-      authorized && setAuthorized(authorized)
+      }).then((data) => setAuthorized(data))
     } catch (error: any) {
       return null
     }

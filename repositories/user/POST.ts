@@ -16,15 +16,17 @@ export const userRepositoryCreate = async (
 
   try {
     if (await UserCreateValidation.parseAsync(inputs)) {
-      const data = await fetch(`${USER_REPOSITORY}`, {
+      const phone: string = inputs?.phoneCountry + inputs?.phone
+      delete inputs?.phoneCountry
+
+      return await fetch(`${USER_REPOSITORY}`, {
         method: 'POST',
-        body: JSON.stringify(inputs),
+        body: JSON.stringify({ ...inputs, phone: phone }),
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${authorization}`,
         },
-      })
-      return data && (await data.json())
+      }).then(async (data) => await data.json())
     }
   } catch (error: any) {
     return error?.message || error
