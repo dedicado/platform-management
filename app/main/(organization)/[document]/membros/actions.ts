@@ -1,13 +1,7 @@
 'use server'
 
-import {
-  memberRepositoryFindById,
-  memberRepositoryFindByPhone,
-  memberRepositoryFindMany,
-} from '@/repositories/member/GET'
 import { memberRepositoryUpdate } from '@/repositories/member/PATCH'
 import { memberRepositoryCreate } from '@/repositories/member/POST'
-import { MemberType } from '@/types/organization'
 import {
   MemberCreateValidationType,
   MemberUpdateValidationType,
@@ -24,20 +18,6 @@ export const createMember = async (
     revalidatePath(`/${inputs?.organizationDocument}/membros`)
     return data
   })
-}
-
-export const getMemberById = async (id: string): Promise<MemberType | any> => {
-  return await memberRepositoryFindById(id)
-}
-
-export const getMemberByUserPhone = async (
-  phone: string,
-): Promise<MemberType[] | any> => {
-  return await memberRepositoryFindByPhone(phone)
-}
-
-export const getMembers = async (): Promise<MemberType[] | any> => {
-  return await memberRepositoryFindMany()
 }
 
 export const updateMember = async (

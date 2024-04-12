@@ -1,18 +1,9 @@
 'use server'
 
-import {
-  orderRepositoryFindByCode,
-  orderRepositoryFindByCustomer,
-  orderRepositoryFindById,
-  orderRepositoryFindByMember,
-  orderRepositoryFindByOrganization,
-  orderRepositoryFindMany,
-} from '@/repositories/order/GET'
 import { orderRepositoryUpdate } from '@/repositories/order/PATCH'
 import { orderRepositoryCreate } from '@/repositories/order/POST'
 import { organizationRepositoryFindByDocument } from '@/repositories/organization/GET'
 import { userRepositoryFindByDocument } from '@/repositories/user/GET'
-import { OrderType } from '@/types/order'
 import { OrganizationType } from '@/types/organization'
 import { UserType } from '@/types/user'
 import { getAddressByZipCode } from '@/utils/handle-address'
@@ -81,38 +72,6 @@ export const createOrder = async (
   } catch (error: any) {
     return error?.message || 'ocorreu um erro inesperado'
   }
-}
-
-export const getOrderByCode = async (
-  code: string,
-): Promise<OrderType | any> => {
-  return await orderRepositoryFindByCode(code)
-}
-
-export const getOrderById = async (id: string): Promise<OrderType | any> => {
-  return await orderRepositoryFindById(id)
-}
-
-export const getOrders = async (): Promise<OrderType[] | any> => {
-  return await orderRepositoryFindMany()
-}
-
-export const getOrdersByCustomer = async (
-  customer: string,
-): Promise<OrderType[] | any> => {
-  return await orderRepositoryFindByCustomer(customer)
-}
-
-export const getOrdersByOrganization = async (
-  document: string,
-): Promise<OrderType[] | any> => {
-  return await orderRepositoryFindByOrganization(document)
-}
-
-export const getOrdersByMember = async (
-  phone: string,
-): Promise<OrderType[] | any> => {
-  return await orderRepositoryFindByMember(phone)
 }
 
 export const updateOrder = async (

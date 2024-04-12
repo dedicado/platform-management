@@ -1,6 +1,5 @@
 'use client'
 
-import { getUserByDocument, getUserByPhone } from '@/app/main/users/actions'
 import MapBoxMarker from '@/components/MapBoxMarker'
 import { OrderType } from '@/types/order'
 import { UserType } from '@/types/user'
@@ -11,6 +10,10 @@ import OrderStartButton from './OrderStartButton'
 import AssignOrderButton from './AssignOrderButton'
 import CompleteOrderButton from './CompleteOrderButton'
 import CancelOrderButton from './CancelOrderButton'
+import {
+  userRepositoryFindByDocument,
+  userRepositoryFindByPhone,
+} from '@/repositories/user/GET'
 
 interface Props {
   order: OrderType | any
@@ -25,10 +28,10 @@ export default function OrderMapMarker(props: Props) {
 
   const data = useCallback(async () => {
     try {
-      const member = await getUserByPhone(order?.member)
+      const member = await userRepositoryFindByPhone(order?.member)
       member && setMember(member)
 
-      const customer = await getUserByDocument(order?.customer)
+      const customer = await userRepositoryFindByDocument(order?.customer)
       customer && setCustomer(customer)
 
       const address = await getAddressByZipCode(customer?.zipCode)

@@ -1,13 +1,15 @@
 'use client'
 
-import { getOrderByCode } from '@/app/main/(organization)/[document]/pedidos/actions'
 import MapBox from '@/components/MapBox'
 import MapBoxMarker from '@/components/MapBoxMarker'
+import { useOrganization } from '@/contexts/OrganizationContext'
+import { orderRepositoryFindByCode } from '@/repositories/order/GET'
 import { OrderType } from '@/types/order'
 import { useParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 
 export default function OneOrderDetailView() {
+  const { authorizationKey }: any = useOrganization()
   const params = useParams()
   const { code }: any = params
 
@@ -15,10 +17,10 @@ export default function OneOrderDetailView() {
 
   const data = useCallback(async () => {
     if (!code) return null
-    await getOrderByCode(code)
+    await orderRepositoryFindByCode(code, authorizationKey)
       .then((data) => setOrder(data))
       .catch((error: any) => console.log(error))
-  }, [code])
+  }, [authorizationKey, code])
 
   useEffect(() => {
     code && data()

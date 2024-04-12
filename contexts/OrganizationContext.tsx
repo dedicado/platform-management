@@ -1,7 +1,7 @@
 'use client'
 
-import { getOrganizationByDocument } from '@/app/main/(organization)/[document]/actions'
-import { getOrdersByOrganization } from '@/app/main/(organization)/[document]/pedidos/actions'
+import { orderRepositoryFindByOrganization } from '@/repositories/order/GET'
+import { organizationRepositoryFindByDocument } from '@/repositories/organization/GET'
 import { OrderType } from '@/types/order'
 import {
   MemberType,
@@ -40,31 +40,41 @@ export const OrganizationProvider = ({
   const [orders, setOrders] = useState<OrderType[]>()
   const [organization, setOrganization] = useState<OrganizationType>()
   const [subscription, setSubscription] = useState<SubscriptionType>()
+  const [authorizationKey, setAuthorizationKey] = useState<string>('')
 
-  const data = useCallback(async () => {
-    try {
-      if (!session) return null
+  const getOrganziation = useCallback(async () => {
+    if (!session) return null
 
-      const organization = await getOrganizationByDocument(document)
-      setOrganization(organization)
+    const organization = await organizationRepositoryFindByDocument(document)
+    setOrganization(organization)
 
-      organization && setMembers(organization?.members)
-      organization && setSubscription(organization?.subscription)
-
-      await getOrdersByOrganization(document).then((data) => setOrders(data))
-    } catch (error: any) {
-      console.error(error)
-      return null
+    if (organization) {
+      setMembers(organization?.members)
+      setSubscription(organization?.subscription)
+      setAuthorizationKey(organization?.authorizationKey)
     }
   }, [document, session])
 
+  const getOrders = useCallback(async () => {
+    if (!organization) return null
+
+    await orderRepositoryFindByOrganization(document, authorizationKey).then(
+      (data) => setOrders(data),
+    )
+  }, [authorizationKey, document, organization])
+
   useEffect(() => {
-    if (session) data()
-  }, [data, session])
+    if (session) getOrganziation()
+    if (organization) getOrders()
+  }, [getOrders, getOrganziation, organization, session])
 
   return (
     <OrganizationContext.Provider
-      value={session ? { members, orders, organization, subscription } : null}
+      value={
+        session
+          ? { authorizationKey, members, orders, organization, subscription }
+          : null
+      }
     >
       {children}
     </OrganizationContext.Provider>

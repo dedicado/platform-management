@@ -16,9 +16,9 @@ import {
 import { ProfileLocationUpdateValidationType } from '@/validations/profile'
 import { Session } from 'next-auth'
 import { updateProfileLocation } from '@/app/main/perfil/actions'
-import { getUserById } from '@/app/main/users/actions'
-import { getOrdersByMember } from '@/app/main/(organization)/[document]/pedidos/actions'
-import { getMemberByUserPhone } from '@/app/main/(organization)/[document]/membros/actions'
+import { orderRepositoryFindByMember } from '@/repositories/order/GET'
+import { userRepositoryFindById } from '@/repositories/user/GET'
+import { memberRepositoryFindByPhone } from '@/repositories/member/GET'
 
 export type LocationType = {
   latitude: number
@@ -27,7 +27,7 @@ export type LocationType = {
 
 interface Props {
   location: LocationType
-  user: UserType | any
+  user: UserType
   member: MemberType[]
   organizations: OrganizationType[]
   orders: OrderType[]
@@ -53,9 +53,13 @@ export const PlatformProvider = ({
     try {
       if (!session) return null
 
-      await getUserById(userId).then((data) => setUser(data))
-      await getOrdersByMember(userPhone).then((data) => setOrders(data))
-      await getMemberByUserPhone(userPhone).then((data) => setMember(data))
+      await userRepositoryFindById(userId).then((data) => setUser(data))
+      await orderRepositoryFindByMember(userPhone).then((data) =>
+        setOrders(data),
+      )
+      await memberRepositoryFindByPhone(userPhone).then((data) =>
+        setMember(data),
+      )
     } catch (error: any) {
       console.error(error)
       return null

@@ -11,8 +11,8 @@ import CompleteOrderButton from '@/app/main/(organization)/[document]/pedidos/co
 import CancelOrderButton from '@/app/main/(organization)/[document]/pedidos/components/CancelOrderButton'
 import OrderStartButton from '@/app/main/(organization)/[document]/pedidos/components/OrderStartButton'
 import { AddressByZipCodeType } from '@/utils/handle-address/types'
-import { getUserByDocument } from '@/app/main/users/actions'
 import { getAddressByZipCode } from '@/utils/handle-address'
+import { userRepositoryFindByDocument } from '@/repositories/user/GET'
 
 interface Props {
   location: LocationType
@@ -28,7 +28,7 @@ export default function UserMapBoxMarker(props: Props) {
   const [address, setAddress] = useState<AddressByZipCodeType | any>()
 
   const data = useCallback(async () => {
-    const customer = await getUserByDocument(order?.customer)
+    const customer = await userRepositoryFindByDocument(order?.customer)
     customer && setCustomer(customer)
 
     const address = await getAddressByZipCode(customer?.zipCode)
