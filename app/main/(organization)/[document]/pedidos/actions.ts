@@ -1,6 +1,5 @@
 'use server'
 
-import { orderLocationRepositoryCreate } from '@/repositories/order-location/POST'
 import {
   orderRepositoryFindByCode,
   orderRepositoryFindByCustomer,
@@ -22,7 +21,6 @@ import { AddressByZipCodeType } from '@/utils/handle-address/types'
 import {
   OrderCreateValidation,
   OrderCreateValidationType,
-  OrderLocationValidationType,
   OrderUpdateValidationType,
 } from '@/validations/order'
 import { revalidatePath, revalidateTag } from 'next/cache'
@@ -115,16 +113,6 @@ export const getOrdersByMember = async (
   phone: string,
 ): Promise<OrderType[] | any> => {
   return await orderRepositoryFindByMember(phone)
-}
-
-export const registerOrderLocation = async (
-  inputs: OrderLocationValidationType,
-): Promise<any> => {
-  return await orderLocationRepositoryCreate(inputs).then((data: any) => {
-    revalidateTag('order')
-
-    return data
-  })
 }
 
 export const updateOrder = async (

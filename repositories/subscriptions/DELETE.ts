@@ -3,7 +3,7 @@
 import { nextAuthOptions } from '@/libraries/next-auth'
 import { getServerSession } from 'next-auth'
 
-export const apiSpendRepositoryRemove = async (id: string): Promise<any> => {
+export const subscriptionRepositoryRemove = async (id: string): Promise<any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization
 

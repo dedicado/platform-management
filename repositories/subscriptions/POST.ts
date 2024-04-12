@@ -2,21 +2,21 @@
 
 import { nextAuthOptions } from '@/libraries/next-auth'
 import { getServerSession } from 'next-auth'
-import { ORDER_LOCATION_REPOSITORY } from '..'
+import { SUBSCRIPTION_REPOSITORY } from '..'
 import {
-  OrderLocationValidation,
-  OrderLocationValidationType,
-} from '@/validations/order'
+  CreateSubscriptionValidation,
+  CreateSubscriptionValidationType,
+} from '@/validations/subscription'
 
-export const orderLocationRepositoryCreate = async (
-  inputs: OrderLocationValidationType,
+export const subscriptionRepositoryCreate = async (
+  inputs: CreateSubscriptionValidationType,
 ): Promise<any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
   try {
-    if (await OrderLocationValidation.parseAsync(inputs)) {
-      return await fetch(`${ORDER_LOCATION_REPOSITORY}`, {
+    if (await CreateSubscriptionValidation.parseAsync(inputs)) {
+      return await fetch(`${SUBSCRIPTION_REPOSITORY}`, {
         method: 'POST',
         body: JSON.stringify(inputs),
         headers: {

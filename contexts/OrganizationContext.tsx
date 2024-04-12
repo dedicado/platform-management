@@ -3,7 +3,11 @@
 import { getOrganizationByDocument } from '@/app/main/(organization)/[document]/actions'
 import { getOrdersByOrganization } from '@/app/main/(organization)/[document]/pedidos/actions'
 import { OrderType } from '@/types/order'
-import { MemberType, OrganizationType } from '@/types/organization'
+import {
+  MemberType,
+  OrganizationType,
+  SubscriptionType,
+} from '@/types/organization'
 import { Session } from 'next-auth'
 import {
   ReactNode,
@@ -16,6 +20,7 @@ import {
 
 interface Props {
   organization: OrganizationType
+  subscription: SubscriptionType
   members: MemberType[]
   orders: OrderType[]
 }
@@ -34,6 +39,7 @@ export const OrganizationProvider = ({
   const [members, setMembers] = useState<MemberType[]>()
   const [orders, setOrders] = useState<OrderType[]>()
   const [organization, setOrganization] = useState<OrganizationType>()
+  const [subscription, setSubscription] = useState<SubscriptionType>()
 
   const data = useCallback(async () => {
     try {
@@ -43,6 +49,7 @@ export const OrganizationProvider = ({
       setOrganization(organization)
 
       organization && setMembers(organization?.members)
+      organization && setSubscription(organization?.subscription)
 
       await getOrdersByOrganization(document).then((data) => setOrders(data))
     } catch (error: any) {
@@ -57,7 +64,7 @@ export const OrganizationProvider = ({
 
   return (
     <OrganizationContext.Provider
-      value={session ? { members, orders, organization } : null}
+      value={session ? { members, orders, organization, subscription } : null}
     >
       {children}
     </OrganizationContext.Provider>

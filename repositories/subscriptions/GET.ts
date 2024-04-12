@@ -2,23 +2,23 @@
 
 import { nextAuthOptions } from '@/libraries/next-auth'
 import { getServerSession } from 'next-auth'
-import { ORDER_LOCATION_REPOSITORY } from '..'
-import { OrderLocationType } from '@/types/order'
+import { SUBSCRIPTION_REPOSITORY } from '..'
+import { SubscriptionType } from '@/types/organization'
 
-export const orderLocationRepositoryFindMany = async (): Promise<
-  OrderLocationType[] | any
+export const subscriptionRepositoryFindMany = async (): Promise<
+  SubscriptionType[] | any
 > => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  return await fetch(`${ORDER_LOCATION_REPOSITORY}`, {
+  return await fetch(`${SUBSCRIPTION_REPOSITORY}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: authorization,
+      Authorization: `Bearer ${authorization}`,
     },
     next: {
-      tags: ['orderLocations'],
+      tags: ['subscriptions'],
       revalidate: 3600,
     },
   })
@@ -26,20 +26,20 @@ export const orderLocationRepositoryFindMany = async (): Promise<
     .catch((error: any) => error?.message)
 }
 
-export const orderLocationRepositoryFindByCode = async (
-  code: string,
-): Promise<OrderLocationType | any> => {
+export const subscriptionRepositoryFindById = async (
+  id: string,
+): Promise<SubscriptionType | any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  return await fetch(`${ORDER_LOCATION_REPOSITORY}/code/${code}`, {
+  return await fetch(`${SUBSCRIPTION_REPOSITORY}/${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: authorization,
+      Authorization: `Bearer ${authorization}`,
     },
     next: {
-      tags: ['orderLocation'],
+      tags: ['subscription'],
       revalidate: 120,
     },
   })
@@ -47,20 +47,20 @@ export const orderLocationRepositoryFindByCode = async (
     .catch((error: any) => error?.message)
 }
 
-export const orderLocationRepositoryFindById = async (
-  id: string,
-): Promise<OrderLocationType | any> => {
+export const subscriptionRepositoryFindByOrganization = async (
+  document: string,
+): Promise<SubscriptionType | any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
 
-  return await fetch(`${ORDER_LOCATION_REPOSITORY}/${id}`, {
+  return await fetch(`${SUBSCRIPTION_REPOSITORY}/organization/${document}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: authorization,
+      Authorization: `Bearer ${authorization}`,
     },
     next: {
-      tags: ['orderLocation'],
+      tags: ['subscription'],
       revalidate: 120,
     },
   })

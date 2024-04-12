@@ -19,6 +19,7 @@ export type OrganizationType = {
   latitude: number
   longitude: number
   members: MemberType[]
+  subscription: SubscriptionType
 }
 
 export type MemberType = {
@@ -33,4 +34,20 @@ export type MemberType = {
   userId: string
   organization: OrganizationType
   organizationId: string
+}
+
+export type SubscriptionType = {
+  id: string
+  createdAt: Date
+  updatedAt: Date
+  deletedAt: Date
+  organizationId: string
+  organization: OrganizationType
+  softDeleted: boolean
+  active: boolean
+  stripeCustomerId: string
+  stripeSubscriptionId: string
+  stripePriceId: string
+  credit: number
+  unlimited: boolean
 }

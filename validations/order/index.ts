@@ -9,15 +9,6 @@ const REQUIREMENT = [
   'suporte',
 ] as const
 
-export const OrderLocationValidation = z.object({
-  order: z.string(),
-  latitude: z.coerce.number(),
-  longitude: z.coerce.number(),
-})
-export type OrderLocationValidationType = z.infer<
-  typeof OrderLocationValidation
->
-
 export const OrderCreateValidation = z.object({
   code: z.string().optional(),
   requirement: z.enum(REQUIREMENT).default('serviço').optional(),
