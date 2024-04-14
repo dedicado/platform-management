@@ -1,16 +1,15 @@
 'use client'
 
 import { OrderType } from '@/types/order'
-import { useOrganization } from '../../../../../../contexts/OrganizationContext'
-import CreateOrderButton from '../components/CreateOrderButton'
 import Unauthorized from '@/components/Unauthorized'
 import moment from 'moment'
 import 'moment/locale/pt-br'
 import UpdateOrderView from './UpdateOrderView'
 import { Suspense } from 'react'
+import { useOrder } from '@/contexts/OrderContext'
 
 export default function OrderListView() {
-  const { orders }: OrderType[] | any = useOrganization()
+  const { orders }: OrderType[] | any = useOrder()
 
   return (
     <div className="relative">

@@ -17,10 +17,6 @@ export const subscriptionRepositoryFindMany = async (): Promise<
       'Content-Type': 'application/json',
       Authorization: `Bearer ${authorization}`,
     },
-    next: {
-      tags: ['subscriptions'],
-      revalidate: 3600,
-    },
   })
     .then(async (data) => await data.json())
     .catch((error: any) => error?.message)
@@ -38,10 +34,6 @@ export const subscriptionRepositoryFindById = async (
       'Content-Type': 'application/json',
       Authorization: `Bearer ${authorization}`,
     },
-    next: {
-      tags: ['subscription'],
-      revalidate: 120,
-    },
   })
     .then(async (data) => await data.json())
     .catch((error: any) => error?.message)
@@ -58,10 +50,6 @@ export const subscriptionRepositoryFindByOrganization = async (
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${authorization}`,
-    },
-    next: {
-      tags: ['subscription'],
-      revalidate: 120,
     },
   })
     .then(async (data) => await data.json())

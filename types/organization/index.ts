@@ -45,9 +45,9 @@ export type SubscriptionType = {
   organization: OrganizationType
   softDeleted: boolean
   active: boolean
-  stripeCustomerId: string
-  stripeSubscriptionId: string
-  stripePriceId: string
+  paymentCustomerId: string
+  paymentSubscriptionId: string
+  paymentPriceId: string
   credit: number
   unlimited: boolean
 }

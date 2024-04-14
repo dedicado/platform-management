@@ -5,9 +5,9 @@ export const CreateSubscriptionValidation = z.object({
     .string()
     .length(14, { message: 'o documento precisa ser o número do CNPJ' })
     .optional(),
-  stripeCustomerId: z.string().optional(),
-  stripeSubscriptionId: z.string().optional(),
-  stripePriceId: z.string().optional(),
+  paymentCustomerId: z.string().optional(),
+  paymentSubscriptionId: z.string().optional(),
+  paymentPriceId: z.string().optional(),
   credit: z.coerce.number().optional(),
   unlimited: z.boolean(),
 })
@@ -20,9 +20,9 @@ export const UpdateSubscriptionValidation = z.object({
     .string()
     .length(14, { message: 'o documento precisa ser o número do CNPJ' })
     .optional(),
-  stripeCustomerId: z.string().optional(),
-  stripeSubscriptionId: z.string().optional(),
-  stripePriceId: z.string().optional(),
+  paymentCustomerId: z.string().optional(),
+  paymentSubscriptionId: z.string().optional(),
+  paymentPriceId: z.string().optional(),
   credit: z.coerce.number().optional(),
   unlimited: z.boolean(),
 })

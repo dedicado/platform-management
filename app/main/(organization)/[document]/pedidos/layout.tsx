@@ -4,8 +4,8 @@ import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import { Fragment, ReactNode } from 'react'
 import { OrganizationType } from '@/types/organization'
-import { OrganizationProvider } from '@/contexts/OrganizationContext'
 import { organizationRepositoryFindByDocument } from '@/repositories/organization/GET'
+import { OrderProvider } from '@/contexts/OrderContext'
 
 export async function generateMetadata({
   params,
@@ -18,7 +18,7 @@ export async function generateMetadata({
 
   return {
     title: {
-      default: `a melhor plataforma de serviços da ${
+      default: `gestão de pedidos da ${
         organization?.name || 'sua organização'
       }`,
       template: `%s | dedicado`,
@@ -28,7 +28,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function OrganizationLayout({
+export default async function OrderLayout({
   children,
   params,
 }: Readonly<{
@@ -39,9 +39,9 @@ export default async function OrganizationLayout({
   const { document } = params
 
   return session ? (
-    <OrganizationProvider document={document} session={session!}>
+    <OrderProvider document={document} session={session!}>
       <Fragment>{children}</Fragment>
-    </OrganizationProvider>
+    </OrderProvider>
   ) : (
     redirect('/')
   )

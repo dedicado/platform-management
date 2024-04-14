@@ -1,16 +1,17 @@
 'use client'
 
 import { OrderType } from '@/types/order'
-import { useOrganization } from '../../../../../../contexts/OrganizationContext'
 import { OrganizationType } from '@/types/organization'
 import { Suspense } from 'react'
 import { usePlatform, LocationType } from '@/contexts/PlatformContext'
 import OrderMapMarker from '../components/OrderMapMarker'
 import MapBox from '@/components/MapBox'
 import MapBoxMarker from '@/components/MapBoxMarker'
+import { useOrder } from '@/contexts/OrderContext'
+import { useOrganization } from '@/contexts/OrganizationContext'
 
 export default function OrderMapView() {
-  const { orders }: OrderType[] | any = useOrganization()
+  const { orders }: OrderType[] | any = useOrder()
   const { organization }: OrganizationType | any = useOrganization()
   const { location }: LocationType | any = usePlatform()
 

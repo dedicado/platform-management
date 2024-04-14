@@ -54,16 +54,16 @@ export const orderRepositoryFindByCode = async (
 
 export const orderRepositoryFindByCustomer = async (
   customer: string,
-  authorizationKey: string,
 ): Promise<OrderType[] | any> => {
   const session = await getServerSession(nextAuthOptions)
+  const authorization = session?.user?.authorization ?? ''
 
   if (session)
     return await fetch(`${ORDER_REPOSITORY}/customer/${customer}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: authorizationKey,
+        Authorization: authorization,
       },
       next: {
         tags: ['order'],

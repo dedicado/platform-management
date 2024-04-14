@@ -4,7 +4,7 @@ import { nextAuthOptions } from '@/libraries/next-auth'
 import { MemberType, OrganizationType } from '@/types/organization'
 import { getServerSession } from 'next-auth'
 import { MemberAuthorizedType, UserAuthorizedType } from './types'
-import { getOrganizationByDocument } from '@/app/main/(organization)/[document]/actions'
+import { organizationRepositoryFindByDocument } from '@/repositories/organization/GET'
 
 export const memberAuthorized = async ({
   organizationDocument,
@@ -16,7 +16,7 @@ export const memberAuthorized = async ({
   try {
     if (!organizationDocument) return false
     const organization: OrganizationType | any =
-      await getOrganizationByDocument(organizationDocument)
+      await organizationRepositoryFindByDocument(organizationDocument)
 
     if (!organization) return false
     return organization?.members.map((member: MemberType) =>

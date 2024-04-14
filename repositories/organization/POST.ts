@@ -9,18 +9,18 @@ import { getServerSession } from 'next-auth'
 import { ORGANIZATION_REPOSITORY } from '..'
 
 export const organizationRepositoryCreateForUser = async (
-  phone: string,
   inputs: CreateOrganizationValidationType,
 ): Promise<any> => {
   const session = await getServerSession(nextAuthOptions)
   const authorization = session?.user?.authorization ?? ''
+  const userPhone = session?.user?.phone ?? ''
 
   try {
     if (await CreateOrganizationValidation.parseAsync(inputs)) {
       const phone: string = inputs?.phoneCountry + inputs?.phone
       delete inputs?.phoneCountry
 
-      return await fetch(`${ORGANIZATION_REPOSITORY}/phone/${phone}`, {
+      return await fetch(`${ORGANIZATION_REPOSITORY}/phone/${userPhone}`, {
         method: 'POST',
         body: JSON.stringify({ ...inputs, phone: phone }),
         headers: {

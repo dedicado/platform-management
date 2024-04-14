@@ -7,19 +7,17 @@ import OrderTabsView from './views/OrderTabsView'
 import { useOrganization } from '@/contexts/OrganizationContext'
 
 const OrderPage = () => {
-  const { organization, orders }: any = useOrganization()
+  const { organization }: any = useOrganization()
 
   return (
     <PageDisplay
       title={`pedidos da organização ${organization?.name ?? ''}`}
       subtitle={`a melhor plataforma de serviços`}
     >
-      {orders ? (
-        <Suspense>
-          <OrganizationMenu />
-          <OrderTabsView />
-        </Suspense>
-      ) : null}
+      <Suspense>
+        <OrganizationMenu />
+        <OrderTabsView />
+      </Suspense>
     </PageDisplay>
   )
 }

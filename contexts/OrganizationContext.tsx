@@ -1,8 +1,6 @@
 'use client'
 
-import { orderRepositoryFindByOrganization } from '@/repositories/order/GET'
 import { organizationRepositoryFindByDocument } from '@/repositories/organization/GET'
-import { OrderType } from '@/types/order'
 import {
   MemberType,
   OrganizationType,
@@ -15,6 +13,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from 'react'
 
@@ -22,7 +21,6 @@ interface Props {
   organization: OrganizationType
   subscription: SubscriptionType
   members: MemberType[]
-  orders: OrderType[]
 }
 
 const OrganizationContext = createContext<Props | any>({})
@@ -37,10 +35,9 @@ export const OrganizationProvider = ({
   session: Session
 }>) => {
   const [members, setMembers] = useState<MemberType[]>()
-  const [orders, setOrders] = useState<OrderType[]>()
   const [organization, setOrganization] = useState<OrganizationType>()
   const [subscription, setSubscription] = useState<SubscriptionType>()
-  const [authorizationKey, setAuthorizationKey] = useState<string>('')
+  const [authorization, setAuthorization] = useState<string>('')
 
   const getOrganziation = useCallback(async () => {
     if (!session) return null
@@ -51,28 +48,23 @@ export const OrganizationProvider = ({
     if (organization) {
       setMembers(organization?.members)
       setSubscription(organization?.subscription)
-      setAuthorizationKey(organization?.authorizationKey)
+      setAuthorization(organization?.authorizationKey)
     }
   }, [document, session])
 
-  const getOrders = useCallback(async () => {
-    if (!organization) return null
-
-    await orderRepositoryFindByOrganization(document, authorizationKey).then(
-      (data) => setOrders(data),
-    )
-  }, [authorizationKey, document, organization])
+  const authorizationKey: string = useMemo(() => {
+    return authorization
+  }, [authorization])
 
   useEffect(() => {
     if (session) getOrganziation()
-    if (organization) getOrders()
-  }, [getOrders, getOrganziation, organization, session])
+  }, [getOrganziation, session])
 
   return (
     <OrganizationContext.Provider
       value={
         session
-          ? { authorizationKey, members, orders, organization, subscription }
+          ? { authorizationKey, members, organization, subscription }
           : null
       }
     >
