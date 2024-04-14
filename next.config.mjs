@@ -20,6 +20,8 @@ const nextConfig = {
     MAPBOX_STYLES: process.env.MAPBOX_STYLES ?? '',
     PLATFORM_AWS_ACCESS_KEY: process.env.PLATFORM_AWS_ACCESS_KEY ?? '',
     PLATFORM_AWS_PRIVATE_KEY: process.env.PLATFORM_AWS_PRIVATE_KEY ?? '',
+    STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY ?? '',
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY ?? '',
   },
   images: {
     dangerouslyAllowSVG: true,
