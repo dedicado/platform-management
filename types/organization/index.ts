@@ -45,6 +45,7 @@ export type SubscriptionType = {
   organization: OrganizationType
   softDeleted: boolean
   active: boolean
+  paymentGateway: 'stripe'
   paymentCustomerId: string
   paymentSubscriptionId: string
   paymentPriceId: string

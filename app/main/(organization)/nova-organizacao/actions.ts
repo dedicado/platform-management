@@ -9,8 +9,9 @@ export const createOrganizationForUser = async (
   inputs: CreateOrganizationValidationType,
 ): Promise<OrganizationType | any> => {
   return await organizationRepositoryCreateForUser(inputs)
-    .then((data: any) => {
+    .then(async (data: any) => {
       revalidateTag('organizations')
+      revalidateTag('subscriptions')
       revalidatePath('/')
 
       return data
