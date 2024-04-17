@@ -8,7 +8,12 @@ export const ProfileUpdateValidation = z.object({
     .string()
     .min(11, { message: 'o documento precisa ser o número do CPF ou CNPJ' })
     .max(14, { message: 'o documento precisa ser o número do CPF ou CNPJ' }),
-  phone: z.string().min(10).max(14).readonly(),
+  phone: z
+    .string()
+    .min(10, { message: 'o telefone precisa ter no mínimo 10 números' })
+    .max(14, {
+      message: 'o telefone precisa ter no máximo 14 números com o prefixo',
+    }).optional(),
 })
 export type ProfileUpdateValidationType = z.infer<
   typeof ProfileUpdateValidation

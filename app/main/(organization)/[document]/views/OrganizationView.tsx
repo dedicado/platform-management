@@ -13,14 +13,13 @@ export default function OrganizationView() {
   const { subscription }: SubscriptionType | any = useOrganization()
   const { members }: MemberType[] | any = useOrganization()
   const params = useParams()
-  const { document } = params
+  const { document }: any = params
 
   let creditCount: number = subscription?.credit
   let unlimitedCredit: boolean = subscription?.unlimited
 
   const [credit, setCredit] = useState<number>(creditCount)
   const [unlimited, setUnlimited] = useState<boolean>(unlimitedCredit)
-  
 
   let memberCount: number = members?.length
   const [member, setMember] = useState<number>(memberCount)

@@ -44,10 +44,9 @@ export const UserUpdateValidation = z.object({
   phone: z
     .string()
     .min(10, { message: 'o telefone precisa ter no mínimo 10 números' })
-    .max(12, {
-      message: 'o telefone precisa ter no máximo 12 números com o prefixo',
+    .max(14, {
+      message: 'o telefone precisa ter no máximo 14 números com o prefixo',
     })
-    .readonly()
     .optional(),
   password: z
     .string()

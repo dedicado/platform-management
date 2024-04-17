@@ -32,7 +32,7 @@ export const subscriptionRepositoryCreate = async (
   }
 }
 
-export const ssubscriptionRepositoryCheckout = async (
+export const subscriptionRepositoryCheckout = async (
   inputs: CheckoutSubscriptionValidationType,
 ) => {
   const session = await getServerSession(nextAuthOptions)
