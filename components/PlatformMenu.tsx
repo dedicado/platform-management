@@ -1,16 +1,17 @@
 'use client'
 
-import { useParams, usePathname } from 'next/navigation'
-import { MdGroups, MdOutlineHome, MdOutlineHomeWork } from 'react-icons/md'
-import UpdateOrganizationButton from './UpdateOrganizationButton'
-import CreateOrderButton from '../pedidos/components/CreateOrderButton'
-import CreateMemberButton from '../membros/components/CreateMemberButton'
-import UploadDataButton from '@/components/UploadDataButton'
-import { Fragment } from 'react'
+import { usePathname } from 'next/navigation'
+import {
+  MdDiscount,
+  MdOutlineEditCalendar,
+  MdOutlineHome,
+} from 'react-icons/md'
+import UploadDataButton from './UploadDataButton'
+import { UserType } from '@/types/user'
+import { usePlatform } from '@/contexts/PlatformContext'
 
-export default function OrganizationMenu() {
-  const params = useParams()
-  const { document } = params
+export default function PlatformMenu() {
+  const { user }: UserType | any = usePlatform()
   const pathname = usePathname()
 
   return (
@@ -23,12 +24,12 @@ export default function OrganizationMenu() {
         </li>
         <li className="p-2 rounded-md bg-sky-600/50 hover:bg-sky-400">
           <a
-            href={`/${document}`}
+            href={`/pedidos`}
             className="flex justify-center item-center space-x-2"
           >
-            <MdOutlineHomeWork
+            <MdDiscount
               className={
-                pathname == `/${document}`
+                pathname == `/pedidos`
                   ? 'text-white animate-pulse'
                   : 'font-thin'
               }
@@ -38,12 +39,12 @@ export default function OrganizationMenu() {
         </li>
         <li className="p-2 rounded-md bg-sky-600/50 hover:bg-sky-400">
           <a
-            href={`/${document}/membros`}
+            href={`/tarefas`}
             className="flex justify-center item-center space-x-2"
           >
-            <MdGroups
+            <MdOutlineEditCalendar
               className={
-                pathname == `/${document}/membros`
+                pathname == `/tarefas`
                   ? 'text-white animate-pulse'
                   : 'font-thin'
               }
@@ -53,19 +54,9 @@ export default function OrganizationMenu() {
         </li>
       </ul>
       <div className="flex flex-1 item-center justify-end space-x-2">
-        {pathname == `/${document}/membros` && (
-          <Fragment>
-            <CreateMemberButton />
-            <UploadDataButton dataType="users" document={`${document}`} />
-          </Fragment>
+        {pathname == '/tarefas' && (
+          <UploadDataButton dataType="tasks" document={user?.document} />
         )}
-        {pathname == `/${document}/pedidos` && (
-          <Fragment>
-            <CreateOrderButton />
-            <UploadDataButton dataType="orders" document={`${document}`} />
-          </Fragment>
-        )}
-        {pathname == `/${document}` && <UpdateOrganizationButton />}
       </div>
     </div>
   )

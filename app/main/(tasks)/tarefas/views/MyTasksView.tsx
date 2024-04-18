@@ -1,3 +1,3 @@
-export default function ManView() {
+export default function MyTasksView() {
   return <div className="relative"></div>
 }

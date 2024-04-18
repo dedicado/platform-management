@@ -1,3 +1,3 @@
-export default function ManView() {
+export default function MyOrdersView() {
   return <div className="relative"></div>
 }

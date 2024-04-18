@@ -1,39 +1,31 @@
 import PageDisplay from '@/components/PageDisplay'
 import { Metadata } from 'next'
 import { memo, Suspense } from 'react'
-import LandingView from './views/LandingView'
-import { getServerSession } from 'next-auth'
-import { nextAuthOptions } from '@/libraries/next-auth'
-import ManView from './views/MainView'
+import MyTasksView from './views/MyTasksView'
 import PlatformMenu from '@/components/PlatformMenu'
 
 export const metadata: Metadata = {
   title: {
-    default: 'você está na melhor plataforma de serviços',
+    default: 'tarefas pessoais',
     template: `%s | dedicado`,
   },
   description:
     'Soluções personalizadas de sistemas de alta performance que aumentam a produtividade de pessoas e organizações',
 }
 
-const MainPage = async () => {
-  const session = await getServerSession(nextAuthOptions)
-
-  return session ? (
+const OneOrderPage = () => {
+  return (
     <PageDisplay
-      title="este é o seu espaço dedicado"
-      subtitle="a melhor plataforma de serviços"
+      title={`minhas tarefas pessoais`}
+      subtitle={`a melhor plataforma de serviços`}
     >
       <div className="w-full">
         <Suspense>
           <PlatformMenu />
-          <ManView />
+          <MyTasksView />
         </Suspense>
       </div>
     </PageDisplay>
-  ) : (
-    <LandingView />
   )
 }
-
-export default memo(MainPage)
+export default memo(OneOrderPage)
