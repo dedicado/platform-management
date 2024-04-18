@@ -19,7 +19,12 @@ export default function PlatformMenu() {
       <ul className="flex items-center space-x-2">
         <li className="p-2 rounded-md bg-sky-600/50 hover:bg-sky-400 hover:text-white">
           <a href={`/`} className="flex justify-center item-center space-x-2">
-            <MdOutlineHome className={'font-thin'} size={24} />
+            <MdOutlineHome
+              className={
+                pathname == `/` ? 'text-white animate-pulse' : 'font-thin'
+              }
+              size={24}
+            />
           </a>
         </li>
         <li className="p-2 rounded-md bg-sky-600/50 hover:bg-sky-400">
