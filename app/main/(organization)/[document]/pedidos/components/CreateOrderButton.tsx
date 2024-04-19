@@ -14,7 +14,7 @@ export default function CreateOrderButton() {
   return (
     <div>
       <span
-        className="flex rounded-md bg-sky-600/50 hover:bg-sky-400 mx-auto p-1 cursor-pointer"
+        className="flex rounded-md bg-sky-600/50 hover:bg-sky-400 mx-auto p-2 cursor-pointer"
         onClick={handleModal}
       >
         <MdLibraryAdd className="hover:text-white animate-pulse" size={24} />

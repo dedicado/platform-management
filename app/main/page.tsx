@@ -6,6 +6,7 @@ import { getServerSession } from 'next-auth'
 import { nextAuthOptions } from '@/libraries/next-auth'
 import ManView from './views/MainView'
 import PlatformMenu from '@/components/PlatformMenu'
+import LandingPage from '@/components/LandingPage'
 
 export const metadata: Metadata = {
   title: {
@@ -32,7 +33,9 @@ const MainPage = async () => {
       </div>
     </PageDisplay>
   ) : (
-    <LandingView />
+    <LandingPage>
+      <LandingView />
+    </LandingPage>
   )
 }
 

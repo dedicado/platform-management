@@ -5,7 +5,6 @@ import { Comfortaa } from 'next/font/google'
 import { ReactNode } from 'react'
 import Providers from './providers'
 import Footer from '@/components/Footer'
-import Topbar from '@/components/Topbar'
 import { getServerSession } from 'next-auth'
 import { nextAuthOptions } from '@/libraries/next-auth'
 import { PlatformProvider } from '@/contexts/PlatformContext'
@@ -41,7 +40,6 @@ export default async function RootLayout({
       <body className="text-base text-sky-800 bg-slate-200 dark:bg-slate-800">
         <Providers>
           <PlatformProvider session={session!}>
-            <Topbar session={session!} />
             <main>{children}</main>
             <Footer />
           </PlatformProvider>

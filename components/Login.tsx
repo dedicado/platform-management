@@ -11,7 +11,7 @@ import useCountries from 'use-countries'
 import { codeCountries } from '@/helpers'
 
 interface Props {
-  onClose: () => void
+  onClose?: () => void
 }
 
 export default function Login(props: Props) {
@@ -50,7 +50,7 @@ export default function Login(props: Props) {
           toast.error(res?.error)
         } else {
           toast.success('boas vindas a sua melhor plataforma de serviços')
-          onClose()
+          onClose && onClose()
           router.refresh()
         }
       })
@@ -108,7 +108,9 @@ export default function Login(props: Props) {
         </div>
       </div>
       <div className="relative w-full">
-        <label htmlFor="password">senha</label>
+        <label htmlFor="password" className="dark:text-slate-400 font-thin">
+          senha
+        </label>
         <input
           id="password"
           className="w-full rounded-md"
@@ -131,7 +133,9 @@ export default function Login(props: Props) {
       </button>
 
       <div className="w-full flex justify-center">
-        <span className="text-center text-xs font-thin">ou</span>
+        <span className="text-center text-xs dark:text-slate-400 font-thin">
+          ou
+        </span>
       </div>
 
       <a
