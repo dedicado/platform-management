@@ -7,35 +7,37 @@ import {
   UpdateAddressType,
 } from './types'
 import { nextAuthOptions } from '@/libraries/next-auth'
+import { organizationRepositoryUpdate } from '@/repositories/organization/PATCH'
+import { revalidatePath, revalidateTag } from 'next/cache'
+import { userRepositoryUpdate } from '@/repositories/user/PATCH'
 
 export const updateAddress = async (
   inputs: UpdateAddressType,
 ): Promise<any> => {
   const session = await getServerSession(nextAuthOptions)
-  const { address, entity, id } = inputs
+  const userId = session?.user?.id ?? ''
+  const { address, param, paramId } = inputs
 
-  switch (entity) {
-    case 'organizations':
-      return await fetch(
-        `${process.env.MANAGEMENT_API_URL}/organizations/${id}`,
-        {
-          method: 'PATCH',
-          body: JSON.stringify(address),
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${session?.user?.authorization}`,
-          },
-        },
-      ).then(async (data) => await data.json())
-    case 'users':
-      return await fetch(`${process.env.MANAGEMENT_API_URL}/users/${id}`, {
-        method: 'PATCH',
-        body: JSON.stringify(address),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${session?.user?.authorization}`,
-        },
-      }).then(async (data) => await data.json())
+  switch (param) {
+    case 'organization':
+      return await organizationRepositoryUpdate(paramId!, address)
+        .then((data) => {
+          revalidatePath('/')
+          revalidateTag('organization')
+
+          return data
+        })
+        .catch((error) => error?.message)
+
+    case 'user':
+      return await userRepositoryUpdate(userId, address)
+        .then((data) => {
+          revalidatePath('/profile')
+          revalidateTag('users')
+
+          return data
+        })
+        .catch((error) => error?.message)
 
     default:
       return null

@@ -1,6 +1,10 @@
 'use client'
 
+import AddressForm from '@/components/AddressForm'
 import Modal from '@/components/Modal'
+import { useOrganization } from '@/contexts/OrganizationContext'
+import { AddressType } from '@/types/address'
+import { OrganizationType } from '@/types/organization'
 import { useState, useCallback } from 'react'
 import { MdEditSquare } from 'react-icons/md'
 
@@ -8,6 +12,15 @@ interface Props {}
 
 export default function UpdateOrganizationButton(props: Props) {
   const {} = props
+  const { organization }: OrganizationType | any = useOrganization()
+
+  const address: AddressType = {
+    zipCode: organization?.zipCode,
+    street: organization?.street,
+    complement: organization?.complement,
+    latitude: organization?.latitude,
+    longitude: organization?.longitude,
+  }
 
   const [openModal, setOpenModal] = useState<boolean>(false)
   const handleModal = useCallback(() => {
@@ -27,7 +40,11 @@ export default function UpdateOrganizationButton(props: Props) {
         onClose={handleModal}
         subtitle={`atualizar informações da organização`}
       >
-        atualizar organização
+        <AddressForm
+          address={address}
+          param={'organization'}
+          paramId={organization?.id}
+        />
       </Modal>
     </div>
   )

@@ -12,7 +12,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
 export default function AddressForm(data: UpdateAddressType) {
-  const { address, entity, id } = data
+  const { address, param, paramId } = data
   const [isPending, startTransition] = useTransition()
 
   const handleZipCode = (event: { target: { value: any } }) => {
@@ -54,8 +54,8 @@ export default function AddressForm(data: UpdateAddressType) {
   const onSubmit: SubmitHandler<AddressValidationType> = async (inputs) => {
     await updateAddress({
       address: inputs,
-      entity: entity,
-      id: id,
+      param: param,
+      paramId: paramId,
     })
       .then((data: any) => {
         if (data?.response?.error) {

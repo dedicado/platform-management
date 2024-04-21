@@ -56,13 +56,13 @@ export default function OrganizationMenu() {
         {pathname == `/${document}/membros` && (
           <Fragment>
             <CreateMemberButton />
-            <UploadDataButton dataType="users" document={`${document}`} />
+            <UploadDataButton param="users" document={`${document}`} />
           </Fragment>
         )}
         {pathname == `/${document}/pedidos` && (
           <Fragment>
             <CreateOrderButton />
-            <UploadDataButton dataType="orders" document={`${document}`} />
+            <UploadDataButton param="orders" document={`${document}`} />
           </Fragment>
         )}
         {pathname == `/${document}` && <UpdateOrganizationButton />}

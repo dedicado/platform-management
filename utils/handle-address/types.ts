@@ -16,8 +16,8 @@ export type AddressByZipCodeType = {
 
 export type UpdateAddressType = {
   address: AddressValidationType
-  id: string
-  entity: 'users' | 'organizations'
+  param: 'user' | 'organization'
+  paramId?: string
 }
 
 export type AddressByGeolocationType = {

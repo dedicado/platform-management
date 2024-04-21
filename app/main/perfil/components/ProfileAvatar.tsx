@@ -2,8 +2,8 @@
 
 import Image from 'next/image'
 import { Suspense, useCallback, useState } from 'react'
-import ProfileAvatarPreview from './ProfileAvatarPreview'
 import Modal from '@/components/Modal'
+import ImageUpload from '@/components/ImageUpload'
 
 export default function ProfileAvatar({ image }: { image: string }) {
   const avatar = image || '/avatar.svg'
@@ -36,7 +36,13 @@ export default function ProfileAvatar({ image }: { image: string }) {
           onClose={handleModal}
           subtitle="atualizar imagem do perfil"
         >
-          <ProfileAvatarPreview image={avatar} onClose={handleModal} />
+          <ImageUpload
+            onClose={handleModal}
+            inputs={{
+              imageUrl: avatar,
+              param: 'user',
+            }}
+          />
         </Modal>
       </div>
     </div>

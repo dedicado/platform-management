@@ -3,14 +3,15 @@
 import Modal from '@/components/Modal'
 import { useState, useCallback } from 'react'
 import { MdCloudUpload } from 'react-icons/md'
+import CsvUpload from './CsvUpload'
 
 interface Props {
-  dataType: 'orders' | 'tasks' | 'users'
+  param: 'orders' | 'tasks' | 'users'
   document: string
 }
 
 export default function UploadDataButton(props: Props) {
-  const { dataType, document } = props
+  const { param, document } = props
 
   const [openModal, setOpenModal] = useState<boolean>(false)
   const handleModal = useCallback(() => {
@@ -30,7 +31,7 @@ export default function UploadDataButton(props: Props) {
         onClose={handleModal}
         subtitle={`carregar planilha para integrar o conteúdo com a plataforma`}
       >
-        {dataType} {document}
+        <CsvUpload document={document} onClose={handleModal} param={param} />
       </Modal>
     </div>
   )

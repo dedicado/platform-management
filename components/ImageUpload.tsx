@@ -1,7 +1,10 @@
 'use client'
 
-import { uploadFileToS3 } from '@/utils/handle-upload-objects'
 import Image from 'next/image'
+import {
+  handleUploadFileToS3,
+  handleUploadImage,
+} from '@/utils/handle-upload-objects'
 import {
   ChangeEvent,
   Suspense,
@@ -10,19 +13,19 @@ import {
   useTransition,
 } from 'react'
 import toast from 'react-hot-toast'
-import { updateProfileAvatar } from '../actions'
+import { HandleUploadImageType } from '@/utils/handle-upload-objects/types'
 
 interface Props {
-  image: string
   onClose: () => void
+  inputs: HandleUploadImageType
 }
-export default function ProfileAvatarPreview(props: Props) {
-  const { image, onClose } = props
 
+export default function ImageUpload(props: Props) {
+  const { inputs, onClose } = props
   const [isPending, startTransition] = useTransition()
 
-  const [uploadFile, setUploadFile] = useState<File | null>(null)
-  const [previewUrl, setPreviewUrl] = useState<string | null>(image)
+  const [uploadFile, setUploadFile] = useState<File>()
+  const [previewUrl, setPreviewUrl] = useState<string | null>(inputs?.imageUrl)
   const [loaded, setLoaded] = useState<boolean>(false)
 
   const handleUploadFile = useCallback(
@@ -52,21 +55,19 @@ export default function ProfileAvatarPreview(props: Props) {
     const data = new FormData()
     uploadFile && data.append('file', uploadFile)
 
-    await uploadFileToS3({ data: data, pathname: 'profile' })
-      .then(async (data: any) => {
-        if (!data?.url) {
-          toast.error(data)
-        } else {
-          await updateProfileAvatar(data?.url)
-            .then(() => {
-              toast.success('sua imagem foi atualizada')
-              onClose()
-            })
-            .catch((error: any) => toast.error(error?.message))
-        }
+    return await handleUploadFileToS3({ data: data, pathname: inputs?.param })
+      .then(async (data) => {
+        await handleUploadImage({
+          imageUrl: data?.url,
+          param: inputs?.param,
+          paramId: inputs?.paramId,
+        }).then(() => {
+          toast.success('sua imagem foi atualizada')
+          onClose()
+        })
       })
       .catch((error: any) => toast.error(error?.message))
-  }, [onClose, uploadFile])
+  }, [inputs, onClose, uploadFile])
 
   return (
     <div className="relative flex flex-col justify-center gap-4">
@@ -75,7 +76,7 @@ export default function ProfileAvatarPreview(props: Props) {
           <Suspense fallback={'...carregando'}>
             <Image
               className="rounded-md"
-              src={previewUrl || image}
+              src={previewUrl || inputs?.imageUrl}
               loading="lazy"
               alt="user"
               width={218}

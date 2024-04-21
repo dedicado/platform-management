@@ -42,7 +42,7 @@ export default function ProfileView() {
           </Suspense>
           <hr className="m-8 border-1 border-slate-400 dark:border-slate-600" />
           <Suspense>
-            <AddressForm address={address} entity={'users'} id={user?.id} />
+            <AddressForm address={address} param={'user'} />
           </Suspense>
           <hr className="m-8 border-1 border-slate-400 dark:border-slate-600" />
           <Suspense>

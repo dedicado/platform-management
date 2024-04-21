@@ -40,7 +40,7 @@ export default function AddCreditForOrganizationForm(props: Props) {
     <div className="relative flex flex-col max-w-lg gap-2">
       <div className="h-60 w-full flex flex-col justify-center items-center">
         <div className="mx-auto p-2">
-          <span className="text-8xl text-slate-200">{credit}</span>
+          <span className="text-8xl dark:text-slate-200">{credit}</span>
         </div>
         <span className="text-xl text-green-400">R$ {payment.toFixed(2)}</span>
         <Slider

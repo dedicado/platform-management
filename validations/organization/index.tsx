@@ -38,11 +38,13 @@ export const UpdateOrganizationValidation = z.object({
     .max(12, {
       message: 'o telefone precisa ter no máximo 12 números com o prefixo',
     })
-    .readonly(),
+    .readonly()
+    .optional(),
   document: z
     .string()
     .length(14, { message: 'o documento precisa ser o número do CNPJ' })
-    .readonly().optional(),
+    .readonly()
+    .optional(),
   zipCode: z
     .string()
     .length(8, { message: 'o cep precisa ser de 8 números' })

@@ -60,7 +60,7 @@ export default function PlatformMenu() {
       </ul>
       <div className="flex item-center justify-end space-x-2">
         {pathname == '/tarefas' && (
-          <UploadDataButton dataType="tasks" document={user?.document} />
+          <UploadDataButton param="tasks" document={user?.document} />
         )}
       </div>
     </div>
