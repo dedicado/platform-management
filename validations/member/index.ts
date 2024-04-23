@@ -25,3 +25,6 @@ export const MemberUpdateValidation = z.object({
   organizationDocument: z.string().length(14).optional(),
 })
 export type MemberUpdateValidationType = z.infer<typeof MemberUpdateValidation>
+
+export const MemberImportValidation = z.object({})
+export type MemberImportValidationType = z.infer<typeof MemberImportValidation>

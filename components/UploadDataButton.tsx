@@ -6,7 +6,7 @@ import { MdCloudUpload } from 'react-icons/md'
 import CsvUpload from './CsvUpload'
 
 interface Props {
-  param: 'orders' | 'tasks' | 'users'
+  param: 'members' | 'orders' | 'tasks'
   document: string
 }
 

@@ -1,13 +1,14 @@
 'use client'
 
 import { csvToJsonConverter } from '@/utils/handle-converter'
-import { ChangeEvent, useCallback, useState } from 'react'
+import { handleImpot } from '@/utils/handle-imports'
+import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
 interface Props {
   document: string
   onClose: () => void
-  param: 'orders' | 'tasks' | 'users'
+  param: 'members' | 'orders' | 'tasks'
 }
 
 export default function CsvUpload(props: Props) {
@@ -43,16 +44,44 @@ export default function CsvUpload(props: Props) {
     csvFile && data.append('file', csvFile)
 
     await csvToJsonConverter(data)
-      .then((data: any) => {
+      .then(async (data: any) => {
         setDataJson(data)
         onClose()
       })
       .catch((error) => toast.error(error?.message))
   }, [csvFile, onClose])
 
+  const handleImportData = useCallback(async () => {
+    if (!dataJson) return null
+    return await handleImpot({
+      data: dataJson,
+      document: document,
+      param: param,
+    })
+      .then((data) => {
+        if (data?.message) {
+          toast.error(data?.message)
+        } else {
+          toast.success(data)
+        }
+      })
+      .catch((error) => toast.error(error?.message))
+  }, [dataJson, document, param])
+
+  useEffect(() => {
+    dataJson && handleImportData()
+  }, [dataJson, handleImportData])
+
   return (
-    <div className="relative flex flex-col justify-center gap-4">
-      <div className="relative flex flex-col">
+    <div className="relative max-w-md flex flex-col justify-center gap-4">
+      <div className="relative flex flex-col gap-4">
+        <h4 className="text-lg text-center font-thin dark:text-slate-200">
+          certifique-se de que a planilha de dados que está importando seja do{' '}
+          <a href="#" target="_blank" className="underline font-extrabold">
+            modelo adequado
+          </a>{' '}
+          para esta importação.
+        </h4>
         <input
           className="block p-1 rounded-md bg-slate-200 text-sm font-thin"
           type="file"

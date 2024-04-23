@@ -56,7 +56,7 @@ export default function OrganizationMenu() {
         {pathname == `/${document}/membros` && (
           <Fragment>
             <CreateMemberButton />
-            <UploadDataButton param="users" document={`${document}`} />
+            <UploadDataButton param="members" document={`${document}`} />
           </Fragment>
         )}
         {pathname == `/${document}/pedidos` && (
