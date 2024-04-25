@@ -19,6 +19,7 @@ import { updateProfileLocation } from '@/app/main/perfil/actions'
 import { orderRepositoryFindByMember } from '@/repositories/order/GET'
 import { userRepositoryFindById } from '@/repositories/user/GET'
 import { memberRepositoryFindByPhone } from '@/repositories/member/GET'
+import { TaskType } from '@/types/task'
 
 export type LocationType = {
   latitude: number
@@ -31,6 +32,7 @@ interface Props {
   member: MemberType[]
   organizations: OrganizationType[]
   orders: OrderType[]
+  tasks: TaskType[]
 }
 
 const PlatformContext = createContext<Props | any>({})
@@ -48,12 +50,16 @@ export const PlatformProvider = ({
   const [user, setUser] = useState<UserType>()
   const [member, setMember] = useState<MemberType[]>()
   const [orders, setOrders] = useState<OrderType[]>()
+  const [tasks, setTasks] = useState<TaskType[]>()
 
   const data = useCallback(async () => {
     try {
       if (!session) return null
 
-      await userRepositoryFindById(userId).then((data) => setUser(data))
+      await userRepositoryFindById(userId).then((data) => {
+        setUser(data)
+        setTasks(data?.tasks)
+      })
       await orderRepositoryFindByMember(userPhone).then((data) =>
         setOrders(data),
       )
@@ -122,7 +128,11 @@ export const PlatformProvider = ({
 
   return (
     <PlatformContext.Provider
-      value={session ? { location, user, member, organizations, orders } : null}
+      value={
+        session
+          ? { location, user, member, organizations, orders, tasks }
+          : null
+      }
     >
       {children}
     </PlatformContext.Provider>
