@@ -1,7 +1,7 @@
 import { Bedrock } from '@langchain/community/llms/bedrock'
 
 const bedrock = new Bedrock({
-  model: process.env.BEDROCK_MODEL,
+  model: process.env.BEDROCK_AWS_MODEL,
   region: 'us-east-1',
   temperature: 0.6,
   maxTokens: 1024,

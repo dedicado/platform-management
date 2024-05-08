@@ -20,7 +20,7 @@ const nextConfig = {
     MAPBOX_STYLES: process.env.MAPBOX_STYLES ?? '',
     PLATFORM_AWS_ACCESS_KEY: process.env.PLATFORM_AWS_ACCESS_KEY ?? '',
     PLATFORM_AWS_PRIVATE_KEY: process.env.PLATFORM_AWS_PRIVATE_KEY ?? '',
-    BEDROCK_MODEL: process.env.BEDROCK_MODEL ?? '',
+    BEDROCK_AWS_MODEL: process.env.BEDROCK_AWS_MODEL ?? '',
   },
   images: {
     dangerouslyAllowSVG: true,
