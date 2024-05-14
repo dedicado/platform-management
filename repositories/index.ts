@@ -18,4 +18,7 @@ export const SUBSCRIPTION_REPOSITORY: string =
 
 export const TASK_REPOSITORY: string = process.env.MANAGEMENT_API_URL + '/tasks'
 
+export const UPLOAD_REPOSITORY: string =
+  process.env.MANAGEMENT_API_URL + 'uploads'
+
 export const USER_REPOSITORY: string = process.env.MANAGEMENT_API_URL + '/users'

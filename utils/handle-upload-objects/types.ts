@@ -1,7 +1,6 @@
 export type HandleUploadFileType = {
   data: FormData
   name?: string
-  pathname: string
 }
 
 export type HandleUploadImageType = {

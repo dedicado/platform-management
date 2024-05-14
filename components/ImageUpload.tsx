@@ -55,7 +55,7 @@ export default function ImageUpload(props: Props) {
     const data = new FormData()
     uploadFile && data.append('file', uploadFile)
 
-    return await handleUploadFileToS3({ data: data, pathname: inputs?.param })
+    return await handleUploadFileToS3({ data: data })
       .then(async (data) => {
         await handleUploadImage({
           imageUrl: data?.url,
