@@ -4,8 +4,8 @@ export const content = ['./src/**/*.{html,ts}']
 export const theme = {
   extend: {
     fontFamily: {
-      sans: ['Comfortaa'],
-      serif: ['Comforter'],
+      sans: ['Montserrat'],
+      serif: ['Comfortaa'],
     },
   },
 }
