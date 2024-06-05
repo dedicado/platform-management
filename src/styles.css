@@ -12,6 +12,10 @@
   }
 }
 
+html {
+  @apply bg-slate-200 dark:bg-slate-800
+}
+
 @layer base {
   h1 {
     @apply text-5xl sm:text-6xl
