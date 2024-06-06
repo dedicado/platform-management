@@ -1,16 +1,30 @@
 import { Metadata } from 'next'
 import Image from 'next/image'
 
-export const metadata: Metadata = {
-  title: {
-    default: 'painel de controle da plataforma',
-    template: `%s | dedicado`,
-  },
-  description:
-    'soluções personalizadas de sistemas de alta performance que aumentam a produtividade de pessoas e organizações',
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string }
+}): Promise<Metadata | null> {
+  const { id } = params
+
+  return {
+    title: {
+      default: `painel de controle de detalhes do usuário ${id || ''}`,
+      template: `%s | dedicado`,
+    },
+    description:
+      'soluções personalizadas de sistemas de alta performance que aumentam a produtividade de pessoas e organizações',
+  }
 }
 
-export default function MemberPage() {
+export default function UserDetailControlPage({
+  params,
+}: {
+  params: { id: string }
+}) {
+  const { id } = params
+
   const logotipo = '/logotipo.svg'
 
   return (

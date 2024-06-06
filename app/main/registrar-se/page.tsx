@@ -3,18 +3,18 @@ import Image from 'next/image'
 
 export const metadata: Metadata = {
   title: {
-    default: 'painel de controle da plataforma',
+    default: 'registrar-se na melhor plataforma de serviços',
     template: `%s | dedicado`,
   },
   description:
-    'soluções personalizadas de sistemas de alta performance que aumentam a produtividade de pessoas e organizações',
+    'a dedicado oferece soluções personalizadas de sistemas de alta performance que aumentam a produtividade de pessoas e organizações',
 }
 
-export default function MemberPage() {
+export default function RegisterPage() {
   const logotipo = '/logotipo.svg'
 
   return (
-    <main className="min-h-full h-screen w-full flex justify-center items-center bg-slate-800">
+    <main className="min-h-full h-screen w-full flex justify-center items-center">
       <section className="w-full flex flex-col justify-center items-center gap-2 animate-in">
         <figure className="mx-auto animate-bounce">
           <Image

@@ -3,14 +3,14 @@ import Image from 'next/image'
 
 export const metadata: Metadata = {
   title: {
-    default: 'painel de controle da plataforma',
+    default: 'painel de controle de organizações',
     template: `%s | dedicado`,
   },
   description:
     'soluções personalizadas de sistemas de alta performance que aumentam a produtividade de pessoas e organizações',
 }
 
-export default function MemberPage() {
+export default function OrganizationControlPage() {
   const logotipo = '/logotipo.svg'
 
   return (

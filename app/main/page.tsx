@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     template: `%s | dedicado`,
   },
   description:
-    'soluções personalizadas de sistemas de alta performance que aumentam a produtividade de pessoas e organizações',
+    'a dedicado oferece soluções personalizadas de sistemas de alta performance que aumentam a produtividade de pessoas e organizações',
 }
 
 export default function MainPage() {
