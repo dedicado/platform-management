@@ -2,18 +2,40 @@ import { Routes } from '@angular/router'
 
 export const routes: Routes = [
   {
-    path: 'auth',
-    title: 'Autenticar-se na Plataforma',
-    pathMatch: 'full',
+    path: 'usuarios',
+    title: 'Usuarios da Plataforma',
     loadChildren: () =>
-      import('@/app/pages/auth-page/auth-page.routes').then(
-        (load) => load.AUTH_PAGE_ROUTES,
+      import('@/app/pages/user-page/user-page.routes').then(
+        (load) => load.USER_PAGE_ROUTERS,
+      ),
+  },
+  {
+    path: 'minha-conta',
+    title: 'Minha Conta na Plataforma',
+    loadChildren: () =>
+      import('@/app/pages/account-page/account-page.routes').then(
+        (load) => load.ACCOUNT_PAGE_ROUTES,
+      ),
+  },
+  {
+    path: 'autenticar-se',
+    title: 'Autenticar-se para acessar a Melhor Plataforma de Serviços',
+    loadComponent: () =>
+      import('@/app/pages/auth-page/auth-page.component').then(
+        (load) => load.AuthPageComponent,
+      ),
+  },
+  {
+    path: 'registrar-se',
+    title: 'Registrar-se na Melhor Plataforma de Serviços',
+    loadComponent: () =>
+      import('@/app/pages/register-page/register-page.component').then(
+        (load) => load.RegisterPageComponent,
       ),
   },
   {
     path: 'termos-e-politicas',
     title: 'Termos e Políticas de Utilização da Plataforma',
-    pathMatch: 'full',
     loadChildren: () =>
       import('@/app/pages/polices-page/polices-page.routes').then(
         (load) => load.POLICES_PAGE_ROUTES,
@@ -26,10 +48,5 @@ export const routes: Routes = [
       import('@/app/pages/landing-page/landing-page.component').then(
         (load) => load.LandingPageComponent,
       ),
-  },
-  {
-    path: '**',
-    pathMatch: 'full',
-    redirectTo: '',
   },
 ]

@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable, signal } from '@angular/core'
 import { Router } from '@angular/router'
-import { AuthPayloadInterface } from '../interfaces/auth.interface'
+import {
+  AuthPayloadInterface,
+  LoginInterface,
+  RecoverPasswordInterface,
+} from '../interfaces/auth.interface'
 
 @Injectable({
   providedIn: 'root',
@@ -22,14 +26,13 @@ export class AuthService {
     }
   }
 
-  login(): void {}
+  login({ inputs }: { inputs: LoginInterface }) {}
 
   logout(): void {
     localStorage.removeItem('AUTH_TOKEN')
     this.payload.set(null)
+    this.router.navigateByUrl('/autenticar-se')
   }
 
-  recoverPassword(): void {}
-
-  register(): void {}
+  recoverPassword({ inputs }: { inputs: RecoverPasswordInterface }) {}
 }

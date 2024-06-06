@@ -1,4 +1,4 @@
-import { AuthService } from '@/services/auth.service'
+import { AuthService } from '@/app/services/auth.service'
 import { CommonModule } from '@angular/common'
 import { Component } from '@angular/core'
 import {
@@ -10,26 +10,39 @@ import {
 } from '@angular/forms'
 
 @Component({
-  selector: 'app-recover-password-form',
+  selector: 'app-auth-form',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './recover-password-form.component.html',
-  styleUrl: './recover-password-form.component.css',
+  templateUrl: './auth-form.component.html',
+  styleUrl: './auth-form.component.css',
 })
-export class RecoverPasswordFormComponent {
+export class AuthFormComponent {
+  loginForm!: FormGroup
   recoverPasswordForm!: FormGroup
 
   constructor(
     private formBuilder: FormBuilder,
-    private readonly authService: AuthService,
+    private authService: AuthService,
   ) {
+    this.loginForm = this.formBuilder.group({
+      phone: new FormControl('', [Validators.required]),
+    })
+
     this.recoverPasswordForm = this.formBuilder.group({
       phone: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
     })
   }
 
-  onSubmit(): void {
+  loginOnSubmit(): void {
+    if (this.loginForm.valid) {
+      console.log(this.loginForm.getRawValue())
+    } else {
+      return this.loginForm.markAllAsTouched()
+    }
+  }
+
+  recoverPasswordOnSubmit(): void {
     if (this.recoverPasswordForm.valid) {
       console.log(this.recoverPasswordForm.getRawValue())
     } else {

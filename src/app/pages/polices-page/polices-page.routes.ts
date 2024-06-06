@@ -1,11 +1,9 @@
 import { Routes } from '@angular/router'
+import { PolicesPageComponent } from './polices-page.component'
 
 export const POLICES_PAGE_ROUTES: Routes = [
   {
     path: '',
-    loadComponent: () =>
-      import('./polices-page.component').then(
-        (load) => load.PolicesPageComponent,
-      ),
+    component: PolicesPageComponent,
   },
 ]

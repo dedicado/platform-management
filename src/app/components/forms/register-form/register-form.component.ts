@@ -1,4 +1,4 @@
-import { AuthService } from '@/app/services/auth.service'
+import { UserService } from '@/app/services/user.service'
 import { CommonModule } from '@angular/common'
 import { Component } from '@angular/core'
 import {
@@ -21,7 +21,7 @@ export class RegisterFormComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private readonly authService: AuthService,
+    private useService: UserService,
   ) {
     this.registerForm = this.formBuilder.group({
       name: new FormControl('', [Validators.required]),
@@ -30,7 +30,7 @@ export class RegisterFormComponent {
     })
   }
 
-  onSubmit(): void {
+  registerOnSubmit(): void {
     if (this.registerForm.valid) {
       console.log(this.registerForm.getRawValue())
     } else {
