@@ -3,18 +3,18 @@ import Image from 'next/image'
 
 export const metadata: Metadata = {
   title: {
-    default: 'sua melhor plataforma de serviços',
+    default: 'painel de controle de usuários',
     template: `%s | dedicado`,
   },
   description:
     'soluções personalizadas de sistemas de alta performance que aumentam a produtividade de pessoas e organizações',
 }
 
-export default function LandingPage() {
+export default function UserControlPage() {
   const logotipo = '/logotipo.svg'
 
   return (
-    <main className="min-h-full h-screen w-full flex justify-center items-center">
+    <main className="min-h-full h-screen w-full flex justify-center items-center bg-slate-800">
       <section className="w-full flex flex-col justify-center items-center gap-2 animate-in">
         <figure className="mx-auto animate-bounce">
           <Image

@@ -23,6 +23,12 @@ export default async function middleware(request: NextRequest) {
     searchParams.length > 0 ? `?${searchParams}` : ''
   }`
 
+  if (hostname == `blog.${process.env.BASE_URL}`) {
+    return NextResponse.rewrite(
+      new URL(`/blog${path === '/' ? '' : path}`, request.url),
+    )
+  }
+
   if (hostname == `controle.${process.env.BASE_URL}`) {
     return NextResponse.rewrite(
       new URL(`/controle${path === '/' ? '' : path}`, request.url),
@@ -31,13 +37,13 @@ export default async function middleware(request: NextRequest) {
 
   if (hostname == `www.${process.env.BASE_URL}`) {
     return NextResponse.rewrite(
-      new URL(`/${path === '/' ? '' : path}`, request.url),
+      new URL(`/main${path === '/' ? '' : path}`, request.url),
     )
   }
 
   if (hostname == `${process.env.BASE_URL}`) {
     return NextResponse.rewrite(
-      new URL(`/${path === '/' ? '' : path}`, request.url),
+      new URL(`/main${path === '/' ? '' : path}`, request.url),
     )
   }
 

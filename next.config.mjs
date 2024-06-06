@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  env: {},
+  env: {
+    BASE_URL: process.env.BASE_URL ?? '',
+  },
 }
 
 export default nextConfig
