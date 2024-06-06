@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 export const metadata: Metadata = {
   title: {
-    default: 'painel de controle da plataforma',
+    default: 'sua melhor plataforma de serviços',
     template: `%s | dedicado`,
   },
   description:
