@@ -3,14 +3,14 @@ import Image from 'next/image'
 
 export const metadata: Metadata = {
   title: {
-    default: 'sua melhor plataforma de serviços',
+    default: 'painel de controle da plataforma',
     template: `%s | dedicado`,
   },
   description:
     'soluções personalizadas de sistemas de alta performance que aumentam a produtividade de pessoas e organizações',
 }
 
-export default function LandingPage() {
+export default function MainPage() {
   const logotipo = '/logotipo.svg'
 
   return (

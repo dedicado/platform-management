@@ -31,13 +31,13 @@ export default async function middleware(request: NextRequest) {
 
   if (hostname == `www.${process.env.BASE_URL}`) {
     return NextResponse.rewrite(
-      new URL(`/${path === '/' ? '' : path}`, request.url),
+      new URL(`/main${path === '/' ? '' : path}`, request.url),
     )
   }
 
   if (hostname == `${process.env.BASE_URL}`) {
     return NextResponse.rewrite(
-      new URL(`/${path === '/' ? '' : path}`, request.url),
+      new URL(`/main${path === '/' ? '' : path}`, request.url),
     )
   }
 
