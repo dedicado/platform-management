@@ -11,6 +11,12 @@ import {
 
 import { routes } from './app.routes'
 import { provideClientHydration, Title } from '@angular/platform-browser'
+import {
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+} from '@angular/common/http'
+import { authInterceptor } from './interceptors/auth.interceptor'
 
 @Injectable()
 export class TemplatePageTitleStrategy extends TitleStrategy {
@@ -31,6 +37,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideClientHydration(),
+    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     {
       provide: TitleStrategy,
       useClass: TemplatePageTitleStrategy,

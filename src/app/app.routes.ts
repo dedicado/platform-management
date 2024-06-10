@@ -5,6 +5,8 @@ export const routes: Routes = [
     path: '',
     title: 'sua melhor plataforma de serviços',
     loadComponent: () =>
-      import('@/app/app.component').then((load) => load.AppComponent),
+      import('@/app/pages/landing-page/landing-page.component').then(
+        (load) => load.LandingPageComponent,
+      ),
   },
 ]
