@@ -1,0 +1,19 @@
+<p>verificar número de telefone</p>
+<form [formGroup]="phoneVerifyForm" (ngSubmit)="phoneVerifyOnSubmit()">
+  <div>
+    <label for="phone">celular</label>
+    <input id="phone" type="text" formControlName="phone" />
+    <span></span>
+  </div>
+  <button type="submit">autenticar-se</button>
+</form>
+
+<p>autenticar-se</p>
+<form [formGroup]="loginForm" (ngSubmit)="loginOnSubmit()">
+  <div>
+    <label for="code">código</label>
+    <input id="code" type="text" formControlName="code" />
+    <span></span>
+  </div>
+  <button type="submit">autenticar-se</button>
+</form>
