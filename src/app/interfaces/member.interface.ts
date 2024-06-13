@@ -1,6 +1,6 @@
 import { MemberRole } from '../enum/role.enum'
 import { Account } from './account.interface'
-import { Company } from './company.interface'
+import { Organization } from './organization.interface'
 
 export interface Member {
   readonly id?: string
@@ -10,6 +10,6 @@ export interface Member {
   active: boolean
   accountId: string
   account: Account
-  companyId: string
-  company: Company
+  organizationId: string
+  organization: Organization
 }

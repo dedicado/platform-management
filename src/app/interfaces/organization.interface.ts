@@ -1,6 +1,6 @@
 import { Address } from "./address.interface"
 
-export interface Company extends Address {
+export interface Organization extends Address {
   readonly id?: string
   readonly createdAt?: Date
   updatedAt?: Date
