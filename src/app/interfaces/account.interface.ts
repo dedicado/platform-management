@@ -1,4 +1,4 @@
-import { Role } from '../enum/role.enum'
+import { AccountRole } from '../enum/role.enum'
 import { Address } from './address.interface'
 
 export interface Account extends Address {
@@ -8,7 +8,7 @@ export interface Account extends Address {
   deletedAt?: Date
   softDeleted?: boolean
   active?: boolean
-  role?: Role
+  role?: AccountRole
   name: string
   image?: string
   email: string
