@@ -38,7 +38,7 @@ export class AuthFormComponent {
     }
   }
 
-  phoneVerifyOnSubmit() {
+  phoneVerifyOnSubmit(): void {
     if (this.phoneVerifyForm.valid) {
       const phone = this.phoneVerifyForm.getRawValue().phone
 

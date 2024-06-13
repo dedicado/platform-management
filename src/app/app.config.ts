@@ -16,6 +16,7 @@ import {
   withFetch,
   withInterceptors,
 } from '@angular/common/http'
+import { authInterceptor } from './interceptors/auth.interceptor'
 
 @Injectable()
 export class TemplatePageTitleStrategy extends TitleStrategy {
@@ -26,7 +27,7 @@ export class TemplatePageTitleStrategy extends TitleStrategy {
   override updateTitle(routerState: RouterStateSnapshot) {
     const title = this.buildTitle(routerState)
     if (title !== undefined) {
-      this.title.setTitle(`${title} | dedicado`)
+      this.title.setTitle(`${title} | Dedicado`)
     }
   }
 }
@@ -36,7 +37,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideClientHydration(),
-    provideHttpClient(withFetch(), withInterceptors([])),
+    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     {
       provide: TitleStrategy,
       useClass: TemplatePageTitleStrategy,

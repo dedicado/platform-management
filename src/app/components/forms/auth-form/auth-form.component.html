@@ -1,13 +1,4 @@
-<p>verificar número de telefone</p>
-<form [formGroup]="phoneVerifyForm" (ngSubmit)="phoneVerifyOnSubmit()">
-  <div>
-    <label for="phone">celular</label>
-    <input id="phone" type="text" formControlName="phone" />
-    <span></span>
-  </div>
-  <button type="submit">autenticar-se</button>
-</form>
-
+@if( phone){
 <p>autenticar-se</p>
 <form [formGroup]="loginForm" (ngSubmit)="loginOnSubmit()">
   <div>
@@ -17,3 +8,14 @@
   </div>
   <button type="submit">autenticar-se</button>
 </form>
+} @else {
+<p>verificar número de telefone</p>
+<form [formGroup]="phoneVerifyForm" (ngSubmit)="phoneVerifyOnSubmit()">
+  <div>
+    <label for="phone">celular</label>
+    <input id="phone" type="text" formControlName="phone" />
+    <span></span>
+  </div>
+  <button type="submit">autenticar-se</button>
+</form>
+}
