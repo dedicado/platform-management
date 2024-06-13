@@ -1,9 +1,9 @@
 export enum Role {
-  master,
-  owner,
-  administrator,
-  member,
-  technician,
-  costumer,
-  guest,
+  master = 'master',
+  owner = 'owner',
+  administrator = 'administrator',
+  member = 'member',
+  technician = 'technician',
+  costumer = 'costumer',
+  guest = 'guest',
 }
