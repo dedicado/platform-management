@@ -1,9 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import {
-  AuthCallbackInterface,
-  AuthLoginInterface,
-} from '../interfaces/auth.interfaces'
+import { AuthCallback, AuthLogin } from './auth.interfaces'
 import { environment } from '@/environments/environment'
 import { Router } from '@angular/router'
 
@@ -14,7 +11,7 @@ export class AuthService {
   private endpoint: string = environment.platformApiUrl + '/auth/login'
   private AUTH_TOKEN: any
 
-  callback!: AuthCallbackInterface | undefined
+  callback!: AuthCallback | undefined
 
   constructor(private httpClient: HttpClient, private router: Router) {
     this.getToken()
@@ -28,9 +25,9 @@ export class AuthService {
     }
   }
 
-  public login(inputs: AuthLoginInterface) {
+  public login(inputs: AuthLogin) {
     return this.httpClient
-      .post<AuthCallbackInterface>(this.endpoint, inputs)
+      .post<AuthCallback>(this.endpoint, inputs)
       .subscribe(
         (data) =>
           typeof localStorage !== 'undefined' &&

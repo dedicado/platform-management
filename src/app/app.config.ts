@@ -16,7 +16,7 @@ import {
   withFetch,
   withInterceptors,
 } from '@angular/common/http'
-import { authInterceptor } from './interceptors/auth.interceptor'
+import { authInterceptor } from './auth/auth.interceptor'
 
 @Injectable()
 export class TemplatePageTitleStrategy extends TitleStrategy {
