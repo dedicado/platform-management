@@ -21,6 +21,10 @@ body {
     src: url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
   }
 
+  main {
+    @apply w-full h-full py-16 sm:p-20 flex justify-center items-center
+  }
+
   h1 {
     @apply text-5xl sm:text-6xl
   }

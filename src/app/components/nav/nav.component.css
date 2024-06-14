@@ -1,3 +1,15 @@
 nav {
   @apply fixed z-40 w-full min-h-16 sm:min-h-20 bg-white/40 backdrop-blur-sm flex justify-center items-center
 }
+
+figure {
+  @apply relative w-6 h-8 sm:h-10 cursor-pointer
+}
+
+.container {
+  @apply w-full max-w-6xl p-2 flex gap-2
+}
+
+.navbar {
+  @apply w-full flex justify-end
+}

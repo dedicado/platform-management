@@ -1,1 +1,17 @@
-<footer>footer works!</footer>
+<footer>
+  <div class="container">
+    <figure>
+      <img [ngSrc]="logotipo" fill priority alt="Dedicado" />
+    </figure>
+    <div class="copyright">
+      <h6>Dedicado Digital</h6>
+      <small>© 2023 - {{currentYear | date: 'y' }} | 52.378.516/0001-78</small>
+      <small>Todos os direitos reservados</small>
+    </div>
+    <ul>
+      <li>
+        <a href="https://dedicado.digital/termos-e-politicas" target="_blank">Termos e Políticas</a>
+      </li>
+    </ul>
+  </div>
+</footer>

@@ -3,12 +3,21 @@ import { authGuard } from './guards/auth.guard'
 
 export const routes: Routes = [
   {
+    path: 'auth',
+    pathMatch: 'full',
+    title: 'Acesso ao Controle da Plataforma',
+    loadComponent: () =>
+      import('@/app/pages/auth-page/auth-page.component').then(
+        (load) => load.AuthPageComponent,
+      ),
+  },
+  {
     path: 'accounts',
     loadChildren: () =>
       import('@/app/pages/accounts-page/accounts-page.routes').then(
         (load) => load.ACCOUNTS_PAGE_ROUTES,
       ),
-    canActivateChild: [authGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'members',
@@ -16,7 +25,7 @@ export const routes: Routes = [
       import('@/app/pages/members-page/members-page.routes').then(
         (load) => load.MEMBERS_PAGE_ROUTES,
       ),
-    canActivateChild: [authGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'organizations',
@@ -24,16 +33,15 @@ export const routes: Routes = [
       import('@/app/pages/organizations-page/organizations-page.routes').then(
         (load) => load.ORGANIZATIONS_PAGE_ROUTES,
       ),
-    canActivateChild: [authGuard],
+    canActivate: [authGuard],
   },
   {
     path: '',
-    pathMatch: 'full',
-    title: 'Sua Melhor Plataforma de Serviços',
-    loadComponent: () =>
-      import('@/app/pages/main-page/main-page.component').then(
-        (load) => load.MainPageComponent,
+    loadChildren: () =>
+      import('@/app/pages/main-page/main-page.routes').then(
+        (load) => load.MAIN_PAGE_ROUTES,
       ),
+    canActivate: [authGuard],
   },
-  { path: '**', redirectTo: '' },
+  { path: '**', pathMatch: 'full', redirectTo: '' },
 ]
