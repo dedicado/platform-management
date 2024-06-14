@@ -1,6 +1,9 @@
 {
   "name": "web-platform",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "author": "Izequias Narcizo dos Santos da Silva",
+  "private": true,
+  "license": "LGPL-3.0-or-later",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,7 +12,6 @@
     "test": "ng test",
     "serve:ssr:platform-management": "node dist/platform-management/server/server.mjs"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^18.0.0",
     "@angular/common": "^18.0.0",
