@@ -1,0 +1,17 @@
+<div>
+  @if(token == undefined){
+  <button mat-icon-button (click)="openDialog('300ms', '150ms')">
+    <mat-icon>login</mat-icon>
+  </button>
+  }@else{
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>account_box</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logoutOnClick()">
+      <mat-icon>logout</mat-icon>
+      <span>Sair</span>
+    </button>
+  </mat-menu>
+  }
+</div>

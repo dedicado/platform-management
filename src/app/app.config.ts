@@ -7,6 +7,7 @@ import {
   provideRouter,
   RouterStateSnapshot,
   TitleStrategy,
+  withComponentInputBinding,
 } from '@angular/router'
 
 import { routes } from './app.routes'
@@ -16,7 +17,8 @@ import {
   withFetch,
   withInterceptors,
 } from '@angular/common/http'
-import { authInterceptor } from './interceptors/auth.interceptor'
+import { authInterceptor } from './interceptors/auth.interceptor';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
 
 @Injectable()
 export class TemplatePageTitleStrategy extends TitleStrategy {
@@ -35,12 +37,12 @@ export class TemplatePageTitleStrategy extends TitleStrategy {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
+    provideRouter(routes, withComponentInputBinding()),
     provideClientHydration(),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     {
       provide: TitleStrategy,
       useClass: TemplatePageTitleStrategy,
-    },
+    }, provideAnimationsAsync(),
   ],
 }

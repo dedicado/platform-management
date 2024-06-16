@@ -2,14 +2,6 @@
   @apply relative w-full max-w-6xl p-2
 }
 
-figure {
-  @apply relative w-full h-40 flex justify-center items-center p-4
-}
-
-h1 {
-  @apply text-lg text-center p-4
-}
-
 p {
   @apply text-center text-sm font-light
 }
@@ -19,7 +11,7 @@ span {
 }
 
 form {
-  @apply w-full max-w-sm bg-slate-200/40 p-4 rounded-md shadow-md flex flex-col gap-2
+  @apply w-full max-w-sm p-4 flex flex-col gap-2
 }
 
 label {
@@ -27,7 +19,7 @@ label {
 }
 
 input {
-  @apply w-full rounded-md border-none
+  @apply w-full rounded-md border-none bg-slate-200
 }
 
 button {

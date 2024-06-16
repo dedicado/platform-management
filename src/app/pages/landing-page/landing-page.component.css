@@ -3,7 +3,7 @@ header {
 }
 
 h1 {
-  @apply font-bold text-sky-800 text-center sm:text-left
+  @apply font-bold text-sky-800 text-center sm:text-left uppercase
 }
 
 h4 {
@@ -19,7 +19,7 @@ span {
 }
 
 .box {
-  @apply w-full py-4 flex flex-col justify-center items-center gap-2
+  @apply w-full py-4 sm:px-0 flex flex-col justify-center items-center gap-2
 }
 
 figure {
@@ -48,4 +48,8 @@ dd {
 
 p {
   @apply text-center
+}
+
+.mat-icon {
+  @apply size-16 text-6xl
 }

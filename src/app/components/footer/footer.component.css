@@ -14,11 +14,7 @@ figure {
   @apply w-full flex flex-col justify-center sm:justify-start items-center sm:items-start
 }
 
-.copyright h6 {
-  @apply text-lg
-}
-
-.copyright small {
+small {
   @apply text-xs opacity-40 font-medium
 }
 

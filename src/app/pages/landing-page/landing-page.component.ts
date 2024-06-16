@@ -1,11 +1,12 @@
 import { NgOptimizedImage } from '@angular/common'
 import { Component, OnInit } from '@angular/core'
 import { Meta, Title } from '@angular/platform-browser'
+import { MatIconModule } from '@angular/material/icon'
 
 @Component({
   selector: 'app-landing-page',
   standalone: true,
-  imports: [NgOptimizedImage],
+  imports: [MatIconModule, NgOptimizedImage],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.css',
 })

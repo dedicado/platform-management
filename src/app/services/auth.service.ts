@@ -28,6 +28,7 @@ export class AuthService {
         tap((data) => {
           localStorage.setItem('AUTH_TOKEN', data.token)
           this.token = data.token
+          this.router.navigate(['/'])
         }),
       )
   }
@@ -45,5 +46,12 @@ export class AuthService {
       return this.token
     }
     return this.token
+  }
+
+  logout() {
+    localStorage.removeItem('AUTH_TOKEN')
+    this.router.ngOnDestroy()
+    this.token = ''
+    return this.router.initialNavigation()
   }
 }

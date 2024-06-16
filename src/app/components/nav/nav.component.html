@@ -1,8 +1,33 @@
 <nav>
-  <div class="container">
+  <mat-toolbar>
     <figure>
       <img [ngSrc]="logotipo" fill priority alt="Dedicado" />
     </figure>
-    <div class="navbar"></div>
-  </div>
+    <div class="divider"></div>
+    <div class="navbar">
+      <ul>
+        <li>
+          <a href="/">Início</a>
+        </li>
+        <li>
+          <a href="contato">Contato</a>
+        </li>
+      </ul>
+    </div>
+
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="">
+        <mat-icon>home</mat-icon>
+        <span>Início</span>
+      </button>
+      <button mat-menu-item routerLink="contato">
+        <mat-icon>mail</mat-icon>
+        <span>Contato</span>
+      </button>
+    </mat-menu>
+    <app-user-menu />
+  </mat-toolbar>
 </nav>

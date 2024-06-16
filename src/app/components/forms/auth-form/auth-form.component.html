@@ -1,9 +1,5 @@
 <div class="container">
-  <figure>
-    <img [ngSrc]="logotipo" fill priority alt="Dedicado" />
-  </figure>
   @if( phone){
-  <h1>Acesso ao Painel de Controle da Plataforma</h1>
   <form [formGroup]="loginForm" (ngSubmit)="loginOnSubmit()">
     <div>
       <label for="code">código</label>
@@ -14,7 +10,6 @@
     <button type="submit">autenticar</button>
   </form>
   } @else {
-  <h1>Acesso ao Painel de Controle da Plataforma</h1>
   <form [formGroup]="phoneVerifyForm" (ngSubmit)="phoneVerifyOnSubmit()">
     <div>
       <label for="phone">celular</label>
