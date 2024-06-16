@@ -1,21 +1,24 @@
+import { NgOptimizedImage } from '@angular/common'
 import { Component, OnInit } from '@angular/core'
 import { Meta, Title } from '@angular/platform-browser'
 
 @Component({
-  selector: 'app-members-page',
+  selector: 'app-landing-page',
   standalone: true,
-  imports: [],
-  templateUrl: './members-page.component.html',
-  styleUrl: './members-page.component.css',
+  imports: [NgOptimizedImage],
+  templateUrl: './landing-page.component.html',
+  styleUrl: './landing-page.component.css',
 })
-export class MembersPageComponent implements OnInit {
+export class LandingPageComponent implements OnInit {
+  logotipo: string = '/logotipo.svg'
+
   constructor(
     private readonly browserMeta: Meta,
     private readonly browserTitle: Title,
   ) {}
 
   ngOnInit(): void {
-    this.browserTitle.setTitle('Membros da Plataforma')
+    this.browserTitle.setTitle('Sua Melhor Plataforma de Serviços')
     this.browserMeta.updateTag({
       name: 'description',
       content:

@@ -2,20 +2,20 @@ import { Component, OnInit } from '@angular/core'
 import { Meta, Title } from '@angular/platform-browser'
 
 @Component({
-  selector: 'app-members-page',
+  selector: 'app-policy-page',
   standalone: true,
   imports: [],
-  templateUrl: './members-page.component.html',
-  styleUrl: './members-page.component.css',
+  templateUrl: './policy-page.component.html',
+  styleUrl: './policy-page.component.css',
 })
-export class MembersPageComponent implements OnInit {
+export class PolicyPageComponent implements OnInit {
   constructor(
     private readonly browserMeta: Meta,
     private readonly browserTitle: Title,
   ) {}
 
   ngOnInit(): void {
-    this.browserTitle.setTitle('Membros da Plataforma')
+    this.browserTitle.setTitle('Termos e Políticas de Utilização da Plataforma')
     this.browserMeta.updateTag({
       name: 'description',
       content:

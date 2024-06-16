@@ -1,5 +1,5 @@
 footer {
-  @apply w-full min-h-16 sm:min-h-20 bg-white flex justify-center items-center
+  @apply w-full min-h-16 sm:min-h-20 mt-2 bg-white flex justify-center items-center
 }
 
 figure {

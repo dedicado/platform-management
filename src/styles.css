@@ -22,7 +22,7 @@ body {
   }
 
   main {
-    @apply w-full h-full py-16 sm:p-20 flex justify-center items-center
+    @apply w-full h-full flex justify-center items-center
   }
 
   h1 {
