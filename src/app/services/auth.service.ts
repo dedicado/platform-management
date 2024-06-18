@@ -9,7 +9,7 @@ import { Router } from '@angular/router'
   providedIn: 'root',
 })
 export class AuthService {
-  endpoint: string = environment.platformApiUrl + '/auth'
+  private endpoint: string = environment.platformApiUrl + '/auth'
 
   callback!: AuthCallback
   token!: string
