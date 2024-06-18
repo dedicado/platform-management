@@ -7,6 +7,5 @@ export interface SenderEmail {
   to: string
   bcc?: string
   subject: string
-  from: string
   message: string
 }

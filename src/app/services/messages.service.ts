@@ -11,7 +11,7 @@ export class MessagesService {
     return `
     <div>
     <p><i>${data.message}</i></p>
-    <p><b>${data.name}</b></p>
+    <b>${data.name}</b>
     <br />${data.email}<br />${data.phone}
     </div>
     `

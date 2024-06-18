@@ -11,7 +11,6 @@ import { SenderEmail } from '../interfaces/sender.interface'
 })
 export class SendersService {
   private endpoint: string = environment.platformApiUrl + '/senders'
-  private sendEmailFrom: string = environment.sendEmailFrom
   private sendEmailTo: string = environment.sendEmailTo
 
   constructor(
@@ -22,7 +21,7 @@ export class SendersService {
   sendContactForm(inputs: Contact): Observable<any> {
     const data: SenderEmail = {
       to: this.sendEmailTo,
-      from: this.sendEmailFrom,
+      bcc: inputs?.email,
       subject: 'Mensagem do Formulário de Contatos da Plataforma',
       message: this.messagesServide.contactFormMessage(inputs),
     }
