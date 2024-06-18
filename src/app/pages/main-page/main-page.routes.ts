@@ -17,6 +17,13 @@ export const MAIN_PAGE_ROUTES: Routes = [
         canActivate: [authGuard],
       },
       {
+        path: 'contato',
+        loadComponent: () =>
+          import('@/app/pages/contact-page/contact-page.component').then(
+            (load) => load.ContactPageComponent,
+          ),
+      },
+      {
         path: 'members',
         loadChildren: () =>
           import('@/app/pages/members-page/members-page.routes').then(

@@ -1,18 +1,16 @@
 import { AuthService } from '@/app/services/auth.service'
-import { NgOptimizedImage } from '@angular/common'
 import { Component } from '@angular/core'
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
 
 @Component({
   selector: 'app-auth-form',
   standalone: true,
-  imports: [NgOptimizedImage, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './auth-form.component.html',
   styleUrl: './auth-form.component.css',
 })
 export class AuthFormComponent {
   phone!: string
-  logotipo: string = '/logotipo.svg'
 
   constructor(
     private readonly authService: AuthService,

@@ -1,28 +1,32 @@
 import { environment } from '@/environments/environment'
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { Authenticate } from '../interfaces/auth.interface'
 import { MessagesService } from './messages.service'
 import { Observable, tap } from 'rxjs'
+import { Contact } from '../interfaces/contact.interface'
+import { SenderEmail } from '../interfaces/sender.interface'
 
 @Injectable({
   providedIn: 'root',
 })
 export class SendersService {
-  endpoint: string = environment.platformApiUrl + '/senders'
+  private endpoint: string = environment.platformApiUrl + '/senders'
+  private sendEmailFrom: string = environment.sendEmailFrom
+  private sendEmailTo: string = environment.sendEmailTo
 
   constructor(
     private readonly httpClient: HttpClient,
     private readonly messagesServide: MessagesService,
   ) {}
 
-  sendSecretAuthCode(inputs: Authenticate): Observable<any> {
-    const { code, phone } = inputs
-    const data = {
-      to: phone,
-      message: this.messagesServide.authCodeMessage(code),
+  sendContactForm(inputs: Contact): Observable<any> {
+    const data: SenderEmail = {
+      to: this.sendEmailTo,
+      from: this.sendEmailFrom,
+      subject: 'Mensagem do Formulário de Contatos da Plataforma',
+      message: this.messagesServide.contactFormMessage(inputs),
     }
 
-    return this.httpClient.post<any>(`${this.endpoint}/sms`, data)
+    return this.httpClient.post<SenderEmail>(`${this.endpoint}/email`, data)
   }
 }
