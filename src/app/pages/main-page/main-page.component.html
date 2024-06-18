@@ -1,5 +1,7 @@
-@if(token == undefined){
-<app-landing-page />
-}@else{
-<p>main-page works!</p>
-}
+<div class="relative w-full h-full mx-auto">
+  <app-nav />
+  <div class="relative w-full h-full min-h-svh py-16 sm:py-20">
+    <router-outlet />
+  </div>
+  <app-footer />
+</div>

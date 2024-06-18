@@ -26,9 +26,10 @@ export class AuthService {
       .post<AuthCallback>(this.endpoint + '/login', inputs)
       .pipe(
         tap((data) => {
-          localStorage.setItem('AUTH_TOKEN', data.token)
+          if (!data.token) return
+          localStorage.setItem('AUTH_TOKEN', btoa(JSON.stringify(data.token)))
           this.token = data.token
-          this.router.navigate(['/'])
+          this.router.initialNavigation()
         }),
       )
   }
@@ -39,7 +40,7 @@ export class AuthService {
     return this.httpClient.post<unknown>(this.endpoint + '/code', data)
   }
 
-  getToken() {
+  getToken(): string {
     if (typeof localStorage !== 'undefined') {
       const token: string | any = localStorage.getItem('AUTH_TOKEN')
       if (token) this.token = token
@@ -48,10 +49,14 @@ export class AuthService {
     return this.token
   }
 
+  isAuthenticated(): boolean {
+    return this.token ? true : false
+  }
+
   logout() {
     localStorage.removeItem('AUTH_TOKEN')
     this.router.ngOnDestroy()
     this.token = ''
-    return this.router.initialNavigation()
+    this.router.initialNavigation()
   }
 }

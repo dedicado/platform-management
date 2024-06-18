@@ -4,11 +4,19 @@ import { LandingPageComponent } from '../landing-page/landing-page.component'
 import { AuthService } from '@/app/services/auth.service'
 import { CommonModule } from '@angular/common'
 import { Meta, Title } from '@angular/platform-browser'
+import { FooterComponent } from '@/app/components/footer/footer.component'
+import { RouterOutlet } from '@angular/router'
 
 @Component({
   selector: 'app-main-page',
   standalone: true,
-  imports: [CommonModule, LandingPageComponent, NavComponent],
+  imports: [
+    CommonModule,
+    FooterComponent,
+    LandingPageComponent,
+    NavComponent,
+    RouterOutlet,
+  ],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.css',
 })
