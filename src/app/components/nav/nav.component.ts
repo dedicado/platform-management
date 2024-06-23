@@ -5,6 +5,7 @@ import { MatMenuModule } from '@angular/material/menu'
 import { MatButtonModule } from '@angular/material/button'
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { UserMenuComponent } from '../user-menu/user-menu.component'
+import { RouterLink } from '@angular/router'
 
 @Component({
   selector: 'app-nav',
@@ -16,6 +17,7 @@ import { UserMenuComponent } from '../user-menu/user-menu.component'
     MatIconModule,
     NgOptimizedImage,
     UserMenuComponent,
+    RouterLink
   ],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css',

@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatMenuModule } from '@angular/material/menu'
 import { MatDialog } from '@angular/material/dialog'
 import { AuthFormComponent } from '../forms/auth-form/auth-form.component'
+import { RouterLink } from '@angular/router'
 
 @Component({
   selector: 'app-user-menu',
@@ -16,6 +17,7 @@ import { AuthFormComponent } from '../forms/auth-form/auth-form.component'
     MatMenuModule,
     MatButtonModule,
     MatIconModule,
+    RouterLink
   ],
   templateUrl: './user-menu.component.html',
   styleUrl: './user-menu.component.css',

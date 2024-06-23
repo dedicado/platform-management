@@ -7,10 +7,10 @@
     <div class="navbar">
       <ul>
         <li>
-          <a href="/">Início</a>
+          <a routerLink="/">Início</a>
         </li>
         <li>
-          <a href="contato">Contato</a>
+          <a routerLink="contato">Contato</a>
         </li>
       </ul>
     </div>
@@ -21,11 +21,11 @@
     <mat-menu #menu="matMenu">
       <button mat-menu-item routerLink="">
         <mat-icon>home</mat-icon>
-        <span>Início</span>
+        <a routerLink="/">Início</a>
       </button>
       <button mat-menu-item routerLink="contato">
         <mat-icon>mail</mat-icon>
-        <span>Contato</span>
+        <a routerLink="contato">Contato</a>
       </button>
     </mat-menu>
     <app-user-menu />
