@@ -18,7 +18,6 @@ import {
   withInterceptors,
 } from '@angular/common/http'
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
-import { authInterceptor } from './services/interceptors/auth.interceptor'
 
 @Injectable()
 export class TemplatePageTitleStrategy extends TitleStrategy {
@@ -29,9 +28,7 @@ export class TemplatePageTitleStrategy extends TitleStrategy {
   override updateTitle(routerState: RouterStateSnapshot) {
     const title = this.buildTitle(routerState)
     if (title !== undefined) {
-      this.title.setTitle(
-        `${title ?? 'Sua Melhor Plataforma de Serviços'} | Dedicado`,
-      )
+      this.title.setTitle(`${title} | Dedicado`)
     }
   }
 }
@@ -41,7 +38,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding()),
     provideClientHydration(),
-    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
+    provideHttpClient(withFetch(), withInterceptors([])),
     {
       provide: TitleStrategy,
       useClass: TemplatePageTitleStrategy,
