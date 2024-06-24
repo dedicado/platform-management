@@ -1,0 +1,9 @@
+<p>accounts-page works!</p>
+<ul *ngFor="let account of accounts$ | async">
+  <li>
+    <a>Nome: {{account.name}}</a>
+  </li>
+  <li>
+    <a>E-mail: {{account.email}}</a>
+  </li>
+</ul>

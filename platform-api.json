@@ -1,0 +1,22 @@
+{
+  "accounts": [
+    {
+      "id": "1",
+      "name": "Izequias Silva",
+      "image": null,
+      "email": "master@dedicado.digital",
+      "phone": "5548988258060",
+      "secret": null,
+      "document": null
+    },
+    {
+      "id": "2",
+      "name": "Maria das Graças",
+      "image": null,
+      "email": "magracinha.f@gmail.com",
+      "phone": "5548988258060",
+      "secret": null,
+      "document": null
+    }
+  ]
+}
