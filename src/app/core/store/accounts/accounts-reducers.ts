@@ -11,6 +11,12 @@ const initialState: AccountState = {
 
 export const accountsReducer = createReducer(
   initialState,
+  on(accountsActions.findAll, (state, action) => {
+    return {
+      ...state,
+      status: Status.loading,
+    }
+  }),
   on(accountsActions.findAllSucceeded, (state, action) => {
     return {
       ...state,

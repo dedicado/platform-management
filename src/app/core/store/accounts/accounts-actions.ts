@@ -1,11 +1,8 @@
 import { createAction, props } from '@ngrx/store'
 import { Account } from '../../interfaces/account.interface'
 
-const create = createAction('[ACCOUNT] Create Account')
-const createSucceeded = createAction(
-  '[ACCOUNT] Create Account Succeeded',
-  props<{ data: Account }>(),
-)
+const create = createAction('[ACCOUNT] Create Account', props<{ data: Account }>())
+const createSucceeded = createAction('[ACCOUNT] Create Account Succeeded')
 
 const findAll = createAction('[ACCOUNTS] Find All Accounts')
 const findAllSucceeded = createAction(
@@ -13,7 +10,10 @@ const findAllSucceeded = createAction(
   props<{ data: Account[] }>(),
 )
 
-const findOne = createAction('[ACCOUNT] Find One Account', props<{id: string}>())
+const findOne = createAction(
+  '[ACCOUNT] Find One Account',
+  props<{ id: string }>(),
+)
 const findOneSucceeded = createAction(
   '[ACCOUNT] Find One Account Succeeded',
   props<{ data: Account }>(),

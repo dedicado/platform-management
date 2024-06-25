@@ -3,6 +3,10 @@ import { AccountState } from '../../interfaces/state.interface'
 
 const accountState = createFeatureSelector<AccountState>('accounts')
 
-export const accountsListSelector = createSelector(accountState, (state) => {
+const selectAllAccounts = createSelector(accountState, (state) => {
   return state.accounts
 })
+
+export const accountsSelectors = {
+  selectAllAccounts,
+}

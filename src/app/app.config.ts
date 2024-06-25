@@ -49,6 +49,6 @@ export const appConfig: ApplicationConfig = {
     },
     provideAnimationsAsync(),
     provideStore(actionReducer),
-    provideEffects(accountsEffects),
+    provideEffects([accountsEffects]),
   ],
 }

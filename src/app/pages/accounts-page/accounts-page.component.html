@@ -1,9 +1,17 @@
 <p>accounts-page works!</p>
-<ul *ngFor="let account of accounts$ | async">
-  <li>
-    <a>Nome: {{account.name}}</a>
-  </li>
-  <li>
-    <a>E-mail: {{account.email}}</a>
-  </li>
-</ul>
+
+<form [formGroup]="createAccountForm" (submit)="onSubmit()">
+  <div>
+    <label for="name">Nome</label>
+    <input id="name" type="text" formControlName="name" />
+  </div>
+  <button type="submit">Criar Conta</button>
+</form>
+<br />
+<div>
+  <ul *ngFor="let account of accounts$ | async">
+    <li>
+      <a>Nome: {{account.name}}</a>
+    </li>
+  </ul>
+</div>
