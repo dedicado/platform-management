@@ -25,6 +25,8 @@ import { usersReducers } from './core/store/reducers/users-reducers'
 import { usersEffects } from './core/store/effects/users-effects'
 import { organizationsReducers } from './core/store/reducers/organizations-reducers'
 import { organizationsEffects } from './core/store/effects/organizations-effects'
+import { membersReducers } from './core/store/reducers/members-reducers'
+import { membersEffects } from './core/store/effects/members-effects'
 
 @Injectable()
 export class TemplatePageTitleStrategy extends TitleStrategy {
@@ -51,7 +53,7 @@ export const appConfig: ApplicationConfig = {
       useClass: TemplatePageTitleStrategy,
     },
     provideAnimationsAsync(),
-    provideStore([organizationsReducers, usersReducers]),
-    provideEffects([organizationsEffects, usersEffects]),
+    provideStore([organizationsReducers, membersReducers, usersReducers]),
+    provideEffects([organizationsEffects, membersEffects, usersEffects]),
   ],
 }

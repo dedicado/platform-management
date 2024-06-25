@@ -9,6 +9,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'members',
+    loadChildren: () =>
+      import('@/app/pages/members-page/members-page.routes').then(
+        (load) => load.MEMBERS_PAGE_ROUTES,
+      ),
+  },
+  {
     path: 'users',
     loadChildren: () =>
       import('@/app/pages/users-page/users-page.routes').then(
