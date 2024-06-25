@@ -1,13 +1,13 @@
 import { createAction, props } from '@ngrx/store'
 import { User } from '../../interfaces/user.interface'
 
-const create = createAction('[USERS] Create', props<{ inputs: User }>())
+const create = createAction('[USER] Create', props<{ inputs: User }>())
 const createSucceeded = createAction(
   '[USER] Create Succeeded',
   props<{ payload: User }>(),
 )
 
-const findAll = createAction('[USERS] Find All')
+const findAll = createAction('[USER] Find All')
 const findAllSucceeded = createAction(
   '[USER] Find All Succeeded',
   props<{ payload: User[] }>(),
