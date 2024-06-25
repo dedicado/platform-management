@@ -20,8 +20,9 @@ import {
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
 import { provideStore } from '@ngrx/store'
 import { provideEffects } from '@ngrx/effects'
-import { actionReducer } from './core/store/action-reducer'
-import { accountsEffects } from './core/store/accounts/accounts-effects'
+import { authInterceptor } from './core/interceptors/auth.interceptor'
+import { usersReducers } from './core/store/reducers/users-reducers'
+import { usersEffects } from './core/store/effects/users-effects'
 
 @Injectable()
 export class TemplatePageTitleStrategy extends TitleStrategy {
@@ -42,13 +43,13 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding()),
     provideClientHydration(),
-    provideHttpClient(withFetch(), withInterceptors([])),
+    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     {
       provide: TitleStrategy,
       useClass: TemplatePageTitleStrategy,
     },
     provideAnimationsAsync(),
-    provideStore(actionReducer),
-    provideEffects([accountsEffects]),
+    provideStore([usersReducers]),
+    provideEffects([usersEffects]),
   ],
 }

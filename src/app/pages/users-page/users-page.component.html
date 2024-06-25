@@ -1,0 +1,8 @@
+<p>users-page works!</p>
+<div>
+  <ul *ngFor="let user of users$ | async">
+    <li>
+      <a>Celular: {{user.phone}}</a>
+    </li>
+  </ul>
+</div>
