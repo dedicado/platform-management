@@ -1,0 +1,8 @@
+<p>organizations-page works!</p>
+<div>
+  <ul *ngFor="let organization of organizations$ | async">
+    <li>
+      <a>Documento: {{organization.document}}</a>
+    </li>
+  </ul>
+</div>

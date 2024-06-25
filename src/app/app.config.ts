@@ -23,6 +23,8 @@ import { provideEffects } from '@ngrx/effects'
 import { authInterceptor } from './core/interceptors/auth.interceptor'
 import { usersReducers } from './core/store/reducers/users-reducers'
 import { usersEffects } from './core/store/effects/users-effects'
+import { organizationsReducers } from './core/store/reducers/organizations-reducers'
+import { organizationsEffects } from './core/store/effects/organizations-effects'
 
 @Injectable()
 export class TemplatePageTitleStrategy extends TitleStrategy {
@@ -49,7 +51,7 @@ export const appConfig: ApplicationConfig = {
       useClass: TemplatePageTitleStrategy,
     },
     provideAnimationsAsync(),
-    provideStore([usersReducers]),
-    provideEffects([usersEffects]),
+    provideStore([organizationsReducers, usersReducers]),
+    provideEffects([organizationsEffects, usersEffects]),
   ],
 }
