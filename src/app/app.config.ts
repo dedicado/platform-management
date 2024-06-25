@@ -20,8 +20,8 @@ import {
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
 import { provideStore } from '@ngrx/store'
 import { provideEffects } from '@ngrx/effects'
-import { actionReducer } from './core/states/action-reducer.state'
-import { accountEffects } from './core/states/accounts/account-effects.state'
+import { actionReducer } from './core/store/action-reducer'
+import { accountsEffects } from './core/store/accounts/accounts-effects'
 
 @Injectable()
 export class TemplatePageTitleStrategy extends TitleStrategy {
@@ -49,6 +49,6 @@ export const appConfig: ApplicationConfig = {
     },
     provideAnimationsAsync(),
     provideStore(actionReducer),
-    provideEffects(accountEffects),
+    provideEffects(accountsEffects),
   ],
 }

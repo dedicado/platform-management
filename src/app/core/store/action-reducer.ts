@@ -1,7 +1,7 @@
 import { ActionReducerMap } from '@ngrx/store'
 import { ActionReducerState } from '../interfaces/state.interface'
-import { accountReducer } from './accounts/account-reducers.state'
+import { accountsReducer } from './accounts/accounts-reducers'
 
 export const actionReducer: ActionReducerMap<ActionReducerState> = {
-  accounts: accountReducer,
+  accounts: accountsReducer,
 }

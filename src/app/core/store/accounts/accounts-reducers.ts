@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store'
 import { Status } from '../../enums/status.enum'
 import { AccountState } from '../../interfaces/state.interface'
-import { accountActions } from './account-actions.state'
+import { accountsActions } from './accounts-actions'
 
 const initialState: AccountState = {
   error: null,
@@ -9,19 +9,18 @@ const initialState: AccountState = {
   accounts: [],
 }
 
-export const accountReducer = createReducer(
+export const accountsReducer = createReducer(
   initialState,
-  on(accountActions.findAllSucceeded, (state, action) => {
+  on(accountsActions.findAllSucceeded, (state, action) => {
     return {
       ...state,
       accounts: action.data,
       status: Status.success,
     }
   }),
-  on(accountActions.findOneSucceeded, (state, action) => {
+  on(accountsActions.findOneSucceeded, (state, action) => {
     return {
       ...state,
-      //accounts: action.data,
       status: Status.success,
     }
   }),

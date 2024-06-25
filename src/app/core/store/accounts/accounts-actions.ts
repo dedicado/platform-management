@@ -31,7 +31,7 @@ const removeSucceeded = createAction(
   props<{ data: Account }>(),
 )
 
-export const accountActions = {
+export const accountsActions = {
   create,
   createSucceeded,
   findAll,
