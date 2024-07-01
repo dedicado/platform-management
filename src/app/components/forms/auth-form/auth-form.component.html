@@ -1,0 +1,6 @@
+<p>auth-form works!</p>
+@if(validatedPhone){
+<form novalidate [formGroup]="authenticationForm" (ngSubmit)="authenticationOnSubmit()"></form>
+}@else{
+<form novalidate [formGroup]="validationForm" (ngSubmit)="validationOnSubmit()"></form>
+}

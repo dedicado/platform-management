@@ -1,12 +1,11 @@
 import { HttpInterceptorFn } from '@angular/common/http'
 import { inject } from '@angular/core'
-import { AuthService } from '../services/auth.service'
+import { PersistanceService } from '../services/persistance.service'
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const isAuthenticated = inject(AuthService).isAuthenticated()
-  const token = inject(AuthService).token
+  const token = inject(PersistanceService).getToken('AUTH_TOKEN')
 
-  if (isAuthenticated) {
+  if (token) {
     req.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`,

@@ -1,3 +1,4 @@
+import { MemberState } from '@/app/core/interfaces/state.interface'
 import { membersActions } from '@/app/core/store/actions/members-actions'
 import { membersSelectors } from '@/app/core/store/selectors/members-selectors'
 import { CommonModule } from '@angular/common'
@@ -12,7 +13,7 @@ import { Store } from '@ngrx/store'
   styleUrl: './members-page.component.css',
 })
 export class MembersPageComponent implements OnInit {
-  constructor(private store: Store) {}
+  constructor(private store: Store<MemberState>) {}
 
   members$ = this.store.select(membersSelectors.findAll)
 

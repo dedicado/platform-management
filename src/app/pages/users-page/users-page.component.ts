@@ -1,3 +1,4 @@
+import { UserState } from '@/app/core/interfaces/state.interface'
 import { usersActions } from '@/app/core/store/actions/users-actions'
 import { usersSelectors } from '@/app/core/store/selectors/users-selectors'
 import { CommonModule } from '@angular/common'
@@ -12,7 +13,7 @@ import { Store } from '@ngrx/store'
   styleUrl: './users-page.component.css',
 })
 export class UsersPageComponent implements OnInit {
-  constructor(private store: Store) {}
+  constructor(private store: Store<UserState>) {}
 
   users$ = this.store.select(usersSelectors.findAll)
 

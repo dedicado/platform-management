@@ -1,6 +1,7 @@
 import {
   ApplicationConfig,
   Injectable,
+  isDevMode,
   provideZoneChangeDetection,
 } from '@angular/core'
 import {
@@ -19,16 +20,14 @@ import {
 } from '@angular/common/http'
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
 import { provideStore } from '@ngrx/store'
+import { provideStoreDevtools } from '@ngrx/store-devtools'
 import { provideEffects } from '@ngrx/effects'
 import { authInterceptor } from './core/interceptors/auth.interceptor'
-import { usersReducers } from './core/store/reducers/users-reducers'
 import { usersEffects } from './core/store/effects/users-effects'
-import { organizationsReducers } from './core/store/reducers/organizations-reducers'
 import { organizationsEffects } from './core/store/effects/organizations-effects'
-import { membersReducers } from './core/store/reducers/members-reducers'
 import { membersEffects } from './core/store/effects/members-effects'
 import { articlesEffects } from './core/store/effects/articles-effects'
-import { articlesReducers } from './core/store/reducers/articles-reducers'
+import { appReducers } from './core/store/reducers/app-reducers'
 
 @Injectable()
 export class TemplatePageTitleStrategy extends TitleStrategy {
@@ -55,12 +54,14 @@ export const appConfig: ApplicationConfig = {
       useClass: TemplatePageTitleStrategy,
     },
     provideAnimationsAsync(),
-    provideStore([
-      articlesReducers,
-      membersReducers,
-      organizationsReducers,
-      usersReducers,
-    ]),
+    provideStore(appReducers),
+    provideStoreDevtools({
+      maxAge: 25,
+      logOnly: !isDevMode(),
+      autoPause: true,
+      trace: false,
+      traceLimit: 75,
+    }),
     provideEffects([
       articlesEffects,
       membersEffects,
