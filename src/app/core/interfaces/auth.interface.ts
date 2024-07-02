@@ -3,6 +3,10 @@ export interface AuthLogin {
   code: string
 }
 
+export interface AuthCode {
+  phone: string
+}
+
 export interface AuthPayload {
   expiredIn: number
   token: string

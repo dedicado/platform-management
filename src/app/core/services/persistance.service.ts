@@ -18,15 +18,7 @@ export class PersistanceService {
       if (typeof localStorage !== 'undefined') {
         const token = localStorage.getItem(key)
         if (!token) return null
-
-        const { exp }: any = JSON.parse(atob(token.split('.')[1] ?? '') || '')
-        if (!exp) {
-          localStorage.removeItem(key)
-          return null
-        }
-
-        const dateTime = new Date().getTime()
-        if (exp < dateTime) return token
+        return token
       }
       return undefined
     } catch (error) {
@@ -35,10 +27,11 @@ export class PersistanceService {
     }
   }
 
-  setToken(key: string, data: unknown): void {
+  setToken(key: string, payload: any): void {
+    console.log(payload)
     try {
       if (typeof localStorage !== 'undefined')
-        return localStorage.setItem(key, btoa(JSON.stringify(data)))
+        return localStorage.setItem(key, btoa(JSON.stringify(payload.token)))
     } catch (error) {
       console.error(error)
     }

@@ -1,6 +1,21 @@
-<p>auth-form works!</p>
-@if(validatedPhone){
-<form novalidate [formGroup]="authenticationForm" (ngSubmit)="authenticationOnSubmit()"></form>
+@if(!!phone){
+<form novalidate [formGroup]="authenticationForm" (ngSubmit)="authenticationOnSubmit()">
+  <div class="box">
+    <label for="code">Código de Autenticação</label>
+    <input id="code" type="text" formControlName="code" />
+    <span></span>
+  </div>
+  <p>Informe o código de 6 dígitos recebido por SMS.</p>
+  <button type="submit">Autenticar</button>
+</form>
 }@else{
-<form novalidate [formGroup]="validationForm" (ngSubmit)="validationOnSubmit()"></form>
+<form novalidate [formGroup]="validationForm" (ngSubmit)="validationOnSubmit()">
+  <div class="box">
+    <label for="phone">Seu Celular</label>
+    <input id="phone" type="tel" formControlName="phone" placeholder="55 48 98765 4321" />
+    <span></span>
+  </div>
+  <p>Você receberá um SMS com um código de 6 dígitos para autenticar-se.</p>
+  <button type="submit">Validar</button>
+</form>
 }

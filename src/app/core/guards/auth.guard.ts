@@ -7,9 +7,10 @@ export const authGuard: CanActivateFn = (route, state) => {
   const token = inject(PersistanceService).getToken('AUTH_TOKEN')
 
   if (token) {
+    router.navigateByUrl('')
     return true
   } else {
-    router.navigateByUrl('')
+    router.navigateByUrl('auth')
     return false
   }
 }

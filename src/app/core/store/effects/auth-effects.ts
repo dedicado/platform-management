@@ -11,13 +11,15 @@ const authentication = createEffect(
     actions$ = inject(Actions),
     authService = inject(AuthService),
     persistanceServe = inject(PersistanceService),
+    router = inject(Router),
   ) => {
     return actions$.pipe(
       ofType(authActions.authentication),
       switchMap((action) => {
         return authService.authentication(action.inputs).pipe(
           map((payload) => {
-            persistanceServe.setToken('AUTH_TOKEN', payload.payload.token)
+            persistanceServe.setToken('AUTH_TOKEN', payload)
+            router.navigateByUrl('/')
             return authActions.authenticationSucceeded(payload)
           }),
         )
@@ -44,9 +46,11 @@ const validation = createEffect(
     return actions$.pipe(
       ofType(authActions.validation),
       switchMap((action) => {
-        return authService
-          .validation(action)
-          .pipe(map((payload) => authActions.validationSucceeded({ payload })))
+        return authService.validation(action.inputs).pipe(
+          map((payload) => {
+            return authActions.validationSucceeded({ payload })
+          }),
+        )
       }),
     )
   },

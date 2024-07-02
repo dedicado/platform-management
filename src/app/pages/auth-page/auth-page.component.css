@@ -1,0 +1,35 @@
+main {
+  @apply w-full h-screen min-h-full flex flex-col sm:flex-row justify-center items-center
+}
+
+header {
+  @apply relative w-full sm:min-h-full p-4 bg-sky-800 flex flex-col justify-center items-center sm:items-end gap-2
+}
+
+figure {
+  @apply w-full mx-auto flex justify-center sm:justify-end items-center sm:items-end
+}
+
+img {
+  @apply relative mx-auto w-24 h-28 sm:w-40 sm:h-48
+}
+
+h2 {
+  @apply text-slate-200 text-center font-medium
+}
+
+section {
+  @apply relative w-full h-full p-4 flex flex-col justify-start sm:justify-center items-center sm:items-start gap-2
+}
+
+h4 {
+  @apply text-sky-600 text-center font-light
+}
+
+p {
+  @apply text-center
+}
+
+.box {
+  @apply relative w-full max-w-sm flex flex-col justify-center items-center
+}

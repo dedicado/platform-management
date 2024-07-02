@@ -1,20 +1,25 @@
+import { AuthLogin } from '@/app/core/interfaces/auth.interface'
 import { AuthState } from '@/app/core/interfaces/state.interface'
 import { authActions } from '@/app/core/store/actions/auth-actions'
 import { CommonModule } from '@angular/common'
 import { Component } from '@angular/core'
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
+import {
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms'
 import { Store } from '@ngrx/store'
 
 @Component({
   selector: 'app-auth-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './auth-form.component.html',
   styleUrl: './auth-form.component.css',
 })
 export class AuthFormComponent {
   phone!: string
-  validatedPhone: boolean = false
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,18 +31,15 @@ export class AuthFormComponent {
   })
 
   authenticationForm = this.formBuilder.nonNullable.group({
-    phone: [this.phone],
     code: ['', Validators.required],
   })
 
-  validationOnSubmit() {
+  validationOnSubmit(): void {
     if (this.validationForm.valid) {
-      console.log('validation: ', this.validationForm.getRawValue())
-      this.validationForm.getRawValue().phone = this.phone
+      this.phone = this.validationForm.getRawValue().phone
       this.store.dispatch(
-        authActions.validation(this.validationForm.getRawValue()),
+        authActions.validation({ inputs: this.validationForm.getRawValue() }),
       )
-      this.validatedPhone = true
     } else {
       this.validationForm.markAllAsTouched()
     }
@@ -45,10 +47,13 @@ export class AuthFormComponent {
 
   authenticationOnSubmit() {
     if (this.authenticationForm.valid) {
-      console.log('authentication: ', this.authenticationForm.getRawValue())
+      const inputs: AuthLogin = {
+        phone: this.phone,
+        code: this.authenticationForm.getRawValue().code,
+      }
       this.store.dispatch(
         authActions.authentication({
-          inputs: this.authenticationForm.getRawValue(),
+          inputs: inputs,
         }),
       )
     } else {

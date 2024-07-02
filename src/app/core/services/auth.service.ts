@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { environment } from '@/environments/environment'
 import { Observable, tap } from 'rxjs'
-import { AuthCallback, AuthLogin } from '../interfaces/auth.interface'
+import { AuthCallback, AuthCode, AuthLogin } from '../interfaces/auth.interface'
 import { PersistanceService } from './persistance.service'
 
 @Injectable({
@@ -16,8 +16,8 @@ export class AuthService {
     private readonly persistanceService: PersistanceService,
   ) {}
 
-  validation(data: { phone: string }): Observable<string> {
-    return this.httpClient.post<string>(this.endpoint + '/code', data)
+  validation(data: AuthCode): Observable<AuthCode> {
+    return this.httpClient.post<AuthCode>(this.endpoint + '/code', data)
   }
 
   authentication(data: AuthLogin): Observable<AuthCallback> {

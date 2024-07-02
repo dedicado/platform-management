@@ -20,10 +20,6 @@ body {
 }
 
 @layer base {
-  main {
-    @apply h-full w-full flex flex-col justify-center items-center
-  }
-
   h1 {
     @apply text-5xl sm:text-6xl
   }

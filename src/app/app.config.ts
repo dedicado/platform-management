@@ -28,6 +28,7 @@ import { organizationsEffects } from './core/store/effects/organizations-effects
 import { membersEffects } from './core/store/effects/members-effects'
 import { articlesEffects } from './core/store/effects/articles-effects'
 import { appReducers } from './core/store/reducers/app-reducers'
+import { authEffects } from './core/store/effects/auth-effects'
 
 @Injectable()
 export class TemplatePageTitleStrategy extends TitleStrategy {
@@ -64,6 +65,7 @@ export const appConfig: ApplicationConfig = {
     }),
     provideEffects([
       articlesEffects,
+      authEffects,
       membersEffects,
       organizationsEffects,
       usersEffects,
