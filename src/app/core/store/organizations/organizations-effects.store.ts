@@ -4,6 +4,46 @@ import { inject } from '@angular/core'
 import { organizationsActions } from './organizations-actions.store'
 import { map, switchMap } from 'rxjs'
 
+const create = createEffect(
+  (
+    actions$ = inject(Actions),
+    organizationsService = inject(OrganizationsService),
+  ) => {
+    return actions$.pipe(
+      ofType(organizationsActions.create),
+      switchMap((action) =>
+        organizationsService
+          .create(action.createOrganization)
+          .pipe(
+            map((message) => organizationsActions.createSucceeded({ message })),
+          ),
+      ),
+    )
+  },
+  { functional: true },
+)
+
+const createForUser = createEffect(
+  (
+    actions$ = inject(Actions),
+    organizationsService = inject(OrganizationsService),
+  ) => {
+    return actions$.pipe(
+      ofType(organizationsActions.createForUser),
+      switchMap((action) =>
+        organizationsService
+          .createForUser(action.phone, action.createOrganization)
+          .pipe(
+            map((message) =>
+              organizationsActions.createForUserSucceeded({ message }),
+            ),
+          ),
+      ),
+    )
+  },
+  { functional: true },
+)
+
 const findByDocument = createEffect(
   (
     actions$ = inject(Actions),
@@ -67,4 +107,50 @@ const findOne = createEffect(
   { functional: true },
 )
 
-export const organizationsEffects = { findByDocument, findMany, findOne }
+const remove = createEffect(
+  (
+    actions$ = inject(Actions),
+    organizationsService = inject(OrganizationsService),
+  ) => {
+    return actions$.pipe(
+      ofType(organizationsActions.remove),
+      switchMap((action) =>
+        organizationsService
+          .remove(action.id, action.removeData)
+          .pipe(
+            map((message) => organizationsActions.removeSucceeded({ message })),
+          ),
+      ),
+    )
+  },
+  { functional: true },
+)
+
+const update = createEffect(
+  (
+    actions$ = inject(Actions),
+    organizationsService = inject(OrganizationsService),
+  ) => {
+    return actions$.pipe(
+      ofType(organizationsActions.update),
+      switchMap((action) =>
+        organizationsService
+          .update(action.id, action.updateOrganization)
+          .pipe(
+            map((message) => organizationsActions.updateSucceeded({ message })),
+          ),
+      ),
+    )
+  },
+  { functional: true },
+)
+
+export const organizationsEffects = {
+  create,
+  createForUser,
+  findByDocument,
+  findMany,
+  findOne,
+  remove,
+  update,
+}

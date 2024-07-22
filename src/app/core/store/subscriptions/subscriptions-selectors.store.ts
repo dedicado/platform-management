@@ -16,4 +16,8 @@ const findOne = createSelector(featureSelector, (state) => {
   return state.one
 })
 
-export const subscriptionsSelectors = { count, findMany, findOne }
+const message = createSelector(featureSelector, (state) => {
+  return state.message
+})
+
+export const subscriptionsSelectors = { count, findMany, findOne, message }

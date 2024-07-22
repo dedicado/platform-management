@@ -1,5 +1,15 @@
 import { createAction, props } from '@ngrx/store'
-import { User } from '../../interfaces/user.interface'
+import { CreateUser, UpdateUser, User } from '../../interfaces/user.interface'
+import { RemoveData } from '../../interfaces/core.interface'
+
+const create = createAction(
+  '[USER] Create',
+  props<{ createUser: CreateUser }>(),
+)
+const createSucceeded = createAction(
+  '[USER] Create Succeeded',
+  props<{ message: string }>(),
+)
 
 const findMany = createAction('[USER] Find Many')
 const findManySucceeded = createAction(
@@ -19,11 +29,35 @@ const findOneSucceeded = createAction(
   props<{ payload: User }>(),
 )
 
+const remove = createAction(
+  '[USER] Remove',
+  props<{ id: string; removeData: RemoveData }>(),
+)
+const removeSucceeded = createAction(
+  '[USER] Remove Succeeded',
+  props<{ message: string }>(),
+)
+
+const update = createAction(
+  '[USER] Update',
+  props<{ id: string; updateUser: UpdateUser }>(),
+)
+const updateSucceeded = createAction(
+  '[USER] Update Succeeded',
+  props<{ message: string }>(),
+)
+
 export const usersActions = {
+  create,
+  createSucceeded,
   findMany,
   findManySucceeded,
   findMe,
   findMeSucceeded,
   findOne,
   findOneSucceeded,
+  remove,
+  removeSucceeded,
+  update,
+  updateSucceeded,
 }

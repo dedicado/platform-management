@@ -15,6 +15,7 @@ export interface MembershipsState {
   count?: number
   error?: string | undefined
   many?: Membership[] | []
+  message?: string | undefined
   one?: Membership | undefined
   success: boolean
 }

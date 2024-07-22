@@ -8,6 +8,22 @@ const initialState: UsersState = {
 
 export const usersReducers = createReducer(
   initialState,
+
+  //create
+  on(usersActions.create, (state, action) => {
+    return {
+      ...state,
+    }
+  }),
+  on(usersActions.createSucceeded, (state, action) => {
+    return {
+      ...state,
+      message: action.message,
+      success: true,
+    }
+  }),
+
+  //findMany
   on(usersActions.findMany, (state, action) => {
     return {
       ...state,
@@ -22,6 +38,7 @@ export const usersReducers = createReducer(
     }
   }),
 
+  //findMe
   on(usersActions.findMe, (state, action) => {
     return {
       ...state,
@@ -35,6 +52,7 @@ export const usersReducers = createReducer(
     }
   }),
 
+  //findOne
   on(usersActions.findOne, (state, action) => {
     return {
       ...state,
@@ -44,6 +62,34 @@ export const usersReducers = createReducer(
     return {
       ...state,
       one: action.payload,
+      success: true,
+    }
+  }),
+
+  //remove
+  on(usersActions.remove, (state, action) => {
+    return {
+      ...state,
+    }
+  }),
+  on(usersActions.removeSucceeded, (state, action) => {
+    return {
+      ...state,
+      message: action.message,
+      success: true,
+    }
+  }),
+
+  //update
+  on(usersActions.update, (state, action) => {
+    return {
+      ...state,
+    }
+  }),
+  on(usersActions.updateSucceeded, (state, action) => {
+    return {
+      ...state,
+      message: action.message,
       success: true,
     }
   }),

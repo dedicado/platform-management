@@ -4,6 +4,19 @@ import { UsersService } from '../../services/users.service'
 import { usersActions } from './users-actions.store'
 import { map, switchMap } from 'rxjs'
 
+const create = createEffect(
+  (actions$ = inject(Actions), usersService = inject(UsersService)) => {
+    return actions$.pipe(
+      ofType(usersActions.create),
+      switchMap((action) =>
+        usersService
+          .create(action.createUser)
+          .pipe(map((message) => usersActions.createSucceeded({ message }))),
+      ),
+    )
+  },
+)
+
 const findMany = createEffect(
   (actions$ = inject(Actions), usersService = inject(UsersService)) => {
     return actions$.pipe(
@@ -46,4 +59,37 @@ const findOne = createEffect(
   { functional: true },
 )
 
-export const usersEffects = { findMany, findMe, findOne }
+const remove = createEffect(
+  (actions$ = inject(Actions), usersService = inject(UsersService)) => {
+    return actions$.pipe(
+      ofType(usersActions.remove),
+      switchMap((action) =>
+        usersService
+          .remove(action.id, action.removeData)
+          .pipe(map((message) => usersActions.removeSucceeded({ message }))),
+      ),
+    )
+  },
+)
+
+const update = createEffect(
+  (actions$ = inject(Actions), usersService = inject(UsersService)) => {
+    return actions$.pipe(
+      ofType(usersActions.update),
+      switchMap((action) =>
+        usersService
+          .update(action.id, action.updateUser)
+          .pipe(map((message) => usersActions.updateSucceeded({ message }))),
+      ),
+    )
+  },
+)
+
+export const usersEffects = {
+  create,
+  findMany,
+  findMe,
+  findOne,
+  remove,
+  update,
+}

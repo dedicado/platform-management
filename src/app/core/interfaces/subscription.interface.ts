@@ -17,6 +17,7 @@ export interface SubscriptionsState {
   count?: number
   error?: string | undefined
   many?: Subscription[] | []
+  message?: string | undefined
   one?: Subscription | undefined
   success: boolean
 }

@@ -1,8 +1,12 @@
 export interface MainInterface {
-  readonly id: string
-  readonlycreatedAt: Date
+  id: string
+  createdAt: Date
   updatedAt?: Date
   deletedAt?: Date
-  readonly softDeleted: boolean
-  readonly active: boolean
+  softDeleted: boolean
+  active: boolean
+}
+
+export interface RemoveData {
+  definitely: boolean
 }

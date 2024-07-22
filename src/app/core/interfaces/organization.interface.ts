@@ -11,6 +11,17 @@ export interface OrganizationsState {
   count?: number
   error?: string | undefined
   many?: Organization[] | []
+  message?: string | undefined
   one?: Organization | undefined
   success: boolean
 }
+
+export interface CreateOrganization
+  extends Partial<
+    Omit<
+      Organization,
+      'id, updatedAt, updatedAt, deletedAt, softDeleted, active'
+    >
+  > {}
+
+export interface UpdateOrganization extends Partial<CreateOrganization> {}

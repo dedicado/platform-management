@@ -8,6 +8,36 @@ const initialState: OrganizationsState = {
 
 export const organizationsReducers = createReducer(
   initialState,
+
+  //create
+  on(organizationsActions.create, (state, action) => {
+    return {
+      ...state,
+    }
+  }),
+  on(organizationsActions.createSucceeded, (state, action) => {
+    return {
+      ...state,
+      message: action.message,
+      success: true,
+    }
+  }),
+
+  //createForUser
+  on(organizationsActions.createForUser, (state, action) => {
+    return {
+      ...state,
+    }
+  }),
+  on(organizationsActions.createForUserSucceeded, (state, action) => {
+    return {
+      ...state,
+      message: action.message,
+      success: true,
+    }
+  }),
+
+  //findByDocument
   on(organizationsActions.findByDocument, (state, action) => {
     return {
       ...state,
@@ -21,6 +51,7 @@ export const organizationsReducers = createReducer(
     }
   }),
 
+  //findMany
   on(organizationsActions.findMany, (state, action) => {
     return {
       ...state,
@@ -35,6 +66,7 @@ export const organizationsReducers = createReducer(
     }
   }),
 
+  //findOne
   on(organizationsActions.findOne, (state, action) => {
     return {
       ...state,
@@ -44,6 +76,34 @@ export const organizationsReducers = createReducer(
     return {
       ...state,
       one: action.payload,
+      success: true,
+    }
+  }),
+
+  //remove
+  on(organizationsActions.remove, (state, action) => {
+    return {
+      ...state,
+    }
+  }),
+  on(organizationsActions.removeSucceeded, (state, action) => {
+    return {
+      ...state,
+      message: action.message,
+      success: true,
+    }
+  }),
+
+  //update
+  on(organizationsActions.update, (state, action) => {
+    return {
+      ...state,
+    }
+  }),
+  on(organizationsActions.updateSucceeded, (state, action) => {
+    return {
+      ...state,
+      message: action.message,
       success: true,
     }
   }),

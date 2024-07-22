@@ -12,6 +12,14 @@ export interface UsersState {
   count?: number
   error?: string | undefined
   many?: User[] | []
+  message?: string | undefined
   one?: User | undefined
   success: boolean
 }
+
+export interface CreateUser
+  extends Partial<
+    Omit<User, 'id, updatedAt, updatedAt, deletedAt, softDeleted, active'>
+  > {}
+
+export interface UpdateUser extends Partial<CreateUser> {}
