@@ -3,15 +3,16 @@ export interface AuthLogin {
   code: string
 }
 
-export interface AuthCode {
-  phone: string
-}
-
 export interface AuthPayload {
-  expiredIn: number
+  expiresIn: number
+  id: string
   token: string
 }
 
-export interface AuthCallback {
-  readonly payload: AuthPayload
+export interface AuthState {
+  error?: string | undefined
+  isAuthenticated: boolean
+  message?: string | undefined
+  payload?: AuthPayload
+  success: boolean
 }

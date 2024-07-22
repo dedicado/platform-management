@@ -23,12 +23,7 @@ import { provideStore } from '@ngrx/store'
 import { provideStoreDevtools } from '@ngrx/store-devtools'
 import { provideEffects } from '@ngrx/effects'
 import { authInterceptor } from './core/interceptors/auth.interceptor'
-import { usersEffects } from './core/store/effects/users-effects'
-import { organizationsEffects } from './core/store/effects/organizations-effects'
-import { membersEffects } from './core/store/effects/members-effects'
-import { articlesEffects } from './core/store/effects/articles-effects'
-import { appReducers } from './core/store/reducers/app-reducers'
-import { authEffects } from './core/store/effects/auth-effects'
+import { platformEffects, platformStore } from './core/store/platform.store'
 
 @Injectable()
 export class TemplatePageTitleStrategy extends TitleStrategy {
@@ -39,7 +34,9 @@ export class TemplatePageTitleStrategy extends TitleStrategy {
   override updateTitle(routerState: RouterStateSnapshot) {
     const title = this.buildTitle(routerState)
     if (title !== undefined) {
-      this.title.setTitle(`${title} | Dedicado`)
+      this.title.setTitle(
+        `${title ? title + ' :: Dedicado' : 'Plataforma Dedicado'}`,
+      )
     }
   }
 }
@@ -55,7 +52,7 @@ export const appConfig: ApplicationConfig = {
       useClass: TemplatePageTitleStrategy,
     },
     provideAnimationsAsync(),
-    provideStore(appReducers),
+    provideStore(platformStore),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),
@@ -63,12 +60,6 @@ export const appConfig: ApplicationConfig = {
       trace: false,
       traceLimit: 75,
     }),
-    provideEffects([
-      articlesEffects,
-      authEffects,
-      membersEffects,
-      organizationsEffects,
-      usersEffects,
-    ]),
+    provideEffects(platformEffects),
   ],
 }

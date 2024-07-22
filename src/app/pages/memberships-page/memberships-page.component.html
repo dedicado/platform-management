@@ -1,0 +1,8 @@
+<p>memberships-page works!</p>
+<div>
+  <ul *ngFor="let membership of memberships$ | async">
+    <li>
+      <a>Membro: {{membership.user.name}}</a>
+    </li>
+  </ul>
+</div>

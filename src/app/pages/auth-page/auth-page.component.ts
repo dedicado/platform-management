@@ -1,22 +1,21 @@
-import { Component, OnInit } from '@angular/core'
-import { Meta, Title } from '@angular/platform-browser'
 import { AuthFormComponent } from '@/app/components/forms/auth-form/auth-form.component'
 import { NgOptimizedImage } from '@angular/common'
+import { Component, OnInit } from '@angular/core'
+import { Meta } from '@angular/platform-browser'
 
 @Component({
   selector: 'app-auth-page',
   standalone: true,
-  imports: [AuthFormComponent, NgOptimizedImage],
+  imports: [NgOptimizedImage, AuthFormComponent],
   templateUrl: './auth-page.component.html',
   styleUrl: './auth-page.component.css',
 })
 export class AuthPageComponent implements OnInit {
   logotipo: string = '/logotipo.svg'
 
-  constructor(private readonly meta: Meta, private readonly title: Title) {}
+  constructor(private readonly meta: Meta) {}
 
   ngOnInit(): void {
-    this.title.setTitle('Acessar o Painel de Controle da Plataforma')
     this.meta.addTags([
       {
         name: 'description',

@@ -1,33 +1,26 @@
 import { environment } from '@/environments/environment'
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
+import { Observable } from 'rxjs'
 import { Organization } from '../interfaces/organization.interface'
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrganizationsService {
-  private endpoint = environment.platformApiUrl + '/organizations'
+  constructor(private readonly httpClient: HttpClient) {}
 
-  constructor(private readonly http: HttpClient) {}
+  endpoint: string = environment.platformApiUrl + '/organizations'
 
-  create(data: Organization) {
-    return this.http.post<Organization>(`${this.endpoint}`, data)
+  findByDocument(document: string): Observable<Organization> {
+    return this.httpClient.get<Organization>(this.endpoint + `/document/${document}`)
   }
 
-  findAll() {
-    return this.http.get<Organization[]>(`${this.endpoint}`)
+  findMany(): Observable<Organization[]> {
+    return this.httpClient.get<Organization[]>(this.endpoint)
   }
 
-  findOne(id: string) {
-    return this.http.get<Organization>(`${this.endpoint}/${id}`)
-  }
-
-  update(id: string, data: Organization) {
-    return this.http.patch<Organization>(`${this.endpoint}/${id}`, data)
-  }
-
-  remove(id: string) {
-    return this.http.delete<string>(`${this.endpoint}/${id}`)
+  findOne(id: string): Observable<Organization> {
+    return this.httpClient.get<Organization>(this.endpoint + `/${id}`)
   }
 }

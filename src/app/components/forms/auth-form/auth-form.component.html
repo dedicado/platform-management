@@ -1,5 +1,5 @@
 @if(!!phone){
-<form novalidate [formGroup]="authenticationForm" (ngSubmit)="authenticationOnSubmit()">
+<form novalidate [formGroup]="loginForm" (ngSubmit)="loginOnSubmit()">
   <div class="box">
     <label for="code">Código de Autenticação</label>
     <input id="code" type="text" formControlName="code" />
@@ -9,7 +9,7 @@
   <button type="submit">Autenticar</button>
 </form>
 }@else{
-<form novalidate [formGroup]="validationForm" (ngSubmit)="validationOnSubmit()">
+<form novalidate [formGroup]="validateForm" (ngSubmit)="validateOnSubmit()">
   <div class="box">
     <label for="phone">Seu Celular</label>
     <input id="phone" type="tel" formControlName="phone" placeholder="55 48 98765 4321" />

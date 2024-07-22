@@ -1,0 +1,8 @@
+<p>subscriptions-page works!</p>
+<div>
+  <ul *ngFor="let subscription of subscriptions$ | async">
+    <li>
+      <a>Código: {{subscription.code}}</a>
+    </li>
+  </ul>
+</div>

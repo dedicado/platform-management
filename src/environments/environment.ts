@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  platformApiUrl: '',
-  sendEmailTo: 'master@dedicado.digital',
+  platformApiUrl: 'https://platform-api.dedicado.digital',
+  emailRecipient: 'suporte@dedicado.digital',
 }

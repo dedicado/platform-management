@@ -1,33 +1,32 @@
 import { environment } from '@/environments/environment'
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
+import { Observable } from 'rxjs'
 import { User } from '../interfaces/user.interface'
+import { PersistanceService } from './persistance.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
-  endpoint = environment.platformApiUrl + '/users'
+  constructor(
+    private readonly httpClient: HttpClient,
+    private readonly persistanceService: PersistanceService,
+  ) {}
+  private payload = this.persistanceService.getToken('AUTH_TOKEN')
 
-  constructor(private readonly http: HttpClient) {}
+  endpoint: string = environment.platformApiUrl + '/users'
 
-  create(data: User) {
-    return this.http.post<User>(`${this.endpoint}`, data)
+  findMany(): Observable<User[]> {
+    return this.httpClient.get<User[]>(this.endpoint)
   }
 
-  findAll() {
-    return this.http.get<User[]>(`${this.endpoint}`)
+  findMe(): Observable<User> {
+    const id = this.payload?.id
+    return this.httpClient.get<User>(this.endpoint + `/${id}`)
   }
 
-  findOne(id: string) {
-    return this.http.get<User>(`${this.endpoint}/${id}`)
-  }
-
-  update(id: string, data: User) {
-    return this.http.patch<User>(`${this.endpoint}/${id}`, data)
-  }
-
-  remove(id: string) {
-    return this.http.delete<string>(`${this.endpoint}/${id}`)
+  findOne(id: string): Observable<User> {
+    return this.httpClient.get<User>(this.endpoint + `/${id}`)
   }
 }

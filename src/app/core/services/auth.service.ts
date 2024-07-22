@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core'
+import { Injectable, OnInit } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { environment } from '@/environments/environment'
-import { Observable, tap } from 'rxjs'
-import { AuthCallback, AuthCode, AuthLogin } from '../interfaces/auth.interface'
+import { map, Observable, tap } from 'rxjs'
 import { PersistanceService } from './persistance.service'
+import { AuthLogin, AuthPayload } from '../interfaces/auth.interface'
+import { Router } from '@angular/router'
 
 @Injectable({
   providedIn: 'root',
@@ -14,17 +15,35 @@ export class AuthService {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly persistanceService: PersistanceService,
+    private readonly router: Router,
   ) {}
 
-  validation(data: AuthCode): Observable<AuthCode> {
-    return this.httpClient.post<AuthCode>(this.endpoint + '/code', data)
+  isAuthenticated = this.getToken()
+
+  private getToken() {
+    const payload = this.persistanceService.getToken('AUTH_TOKEN')
+    if (!payload) return false
+    return true
   }
 
-  authentication(data: AuthLogin): Observable<AuthCallback> {
-    return this.httpClient.post<AuthCallback>(this.endpoint + '/login', data)
+  login(authLogin: AuthLogin) {
+    return this.httpClient
+      .post<AuthPayload>(this.endpoint, authLogin)
+      .subscribe((payload) => {
+        this.persistanceService.setToken('AUTH_TOKEN', payload)
+        this.isAuthenticated = true
+        this.router.navigate([''])
+        return payload
+      })
   }
 
-  logout(): void {
+  logout(): Observable<{}> {
     return this.persistanceService.destroyToken('AUTH_TOKEN')
+  }
+
+  validate(phone: string) {
+    return this.httpClient
+      .post<string>(this.endpoint + '/' + phone, {})
+      .subscribe().unsubscribe
   }
 }

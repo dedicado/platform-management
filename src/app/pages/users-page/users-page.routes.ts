@@ -3,9 +3,8 @@ import { Routes } from '@angular/router'
 export const USERS_PAGE_ROUTES: Routes = [
   {
     path: '',
+    title: 'Usuários da Plataforma',
     loadComponent: () =>
-      import('@/app/pages/users-page/users-page.component').then(
-        (load) => load.UsersPageComponent,
-      ),
+      import('./users-page.component').then((load) => load.UsersPageComponent),
   },
 ]

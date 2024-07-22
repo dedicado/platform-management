@@ -1,15 +1,14 @@
 import { AuthLogin } from '@/app/core/interfaces/auth.interface'
-import { AuthState } from '@/app/core/interfaces/state.interface'
-import { authActions } from '@/app/core/store/actions/auth-actions'
+import { AuthService } from '@/app/core/services/auth.service'
 import { CommonModule } from '@angular/common'
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import {
   FormBuilder,
   FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms'
-import { Store } from '@ngrx/store'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-auth-form',
@@ -18,46 +17,47 @@ import { Store } from '@ngrx/store'
   templateUrl: './auth-form.component.html',
   styleUrl: './auth-form.component.css',
 })
-export class AuthFormComponent {
+export class AuthFormComponent implements OnInit {
   phone!: string
+  isAuthenticated!: boolean
 
   constructor(
-    private formBuilder: FormBuilder,
-    private store: Store<AuthState>,
+    private readonly authService: AuthService,
+    private readonly formBuilder: FormBuilder,
+    private readonly router: Router,
   ) {}
 
-  validationForm = this.formBuilder.nonNullable.group({
+  ngOnInit(): void {
+    this.isAuthenticated = this.authService.isAuthenticated
+    if (this.isAuthenticated) this.router.navigate([''])
+  }
+
+  validateForm = this.formBuilder.nonNullable.group({
     phone: ['', Validators.required],
   })
 
-  authenticationForm = this.formBuilder.nonNullable.group({
+  loginForm = this.formBuilder.nonNullable.group({
     code: ['', Validators.required],
   })
 
-  validationOnSubmit(): void {
-    if (this.validationForm.valid) {
-      this.phone = this.validationForm.getRawValue().phone
-      this.store.dispatch(
-        authActions.validation({ inputs: this.validationForm.getRawValue() }),
-      )
+  validateOnSubmit() {
+    if (this.validateForm.valid) {
+      this.phone = this.validateForm.getRawValue().phone
+      this.authService.validate(this.phone)
     } else {
-      this.validationForm.markAllAsTouched()
+      this.validateForm.markAllAsTouched()
     }
   }
 
-  authenticationOnSubmit() {
-    if (this.authenticationForm.valid) {
-      const inputs: AuthLogin = {
+  loginOnSubmit() {
+    if (this.loginForm.valid) {
+      const authLogin: AuthLogin = {
         phone: this.phone,
-        code: this.authenticationForm.getRawValue().code,
+        code: this.loginForm.getRawValue().code,
       }
-      this.store.dispatch(
-        authActions.authentication({
-          inputs: inputs,
-        }),
-      )
+      this.authService.login(authLogin)
     } else {
-      this.authenticationForm.markAllAsTouched()
+      this.loginForm.markAllAsTouched()
     }
   }
 }

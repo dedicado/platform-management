@@ -1,0 +1,11 @@
+<p>control-page works!</p>
+<div *ngIf="profile$ | async as profile">
+  <span>{{profile.name}}</span>
+
+  <ul *ngFor="let membership of profile.membership">
+    <li>
+      <p>Função: {{membership.role}}</p>
+      <a>Organização: {{membership.organization.name}}</a>
+    </li>
+  </ul>
+</div>
