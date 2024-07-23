@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "platform-management": {
+    "platform": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:class": {
@@ -41,9 +41,7 @@
             "outputPath": "dist/platform",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
@@ -96,10 +94,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "platform-management:build:production"
+              "buildTarget": "platform:build:production"
             },
             "development": {
-              "buildTarget": "platform-management:build:development"
+              "buildTarget": "platform:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -110,10 +108,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
               {

@@ -1,11 +1,12 @@
 @if(!!phone){
 <form novalidate [formGroup]="loginForm" (ngSubmit)="loginOnSubmit()">
   <div class="box">
-    <label for="code">Código de Autenticação</label>
+    <label for="code">Código de Autenticação para {{phone}}</label>
     <input id="code" type="text" formControlName="code" />
+    <a (click)="resetPhone()">Usar outro número</a>
     <span></span>
   </div>
-  <p>Informe o código de 6 dígitos recebido por SMS.</p>
+  <small>Informe o código de 6 dígitos recebido por SMS.</small>
   <button type="submit">Autenticar</button>
 </form>
 }@else{
@@ -15,7 +16,7 @@
     <input id="phone" type="tel" formControlName="phone" placeholder="55 48 98765 4321" />
     <span></span>
   </div>
-  <p>Você receberá um SMS com um código de 6 dígitos para autenticar-se.</p>
+  <small>Você receberá um SMS com um código de 6 dígitos para autenticar-se.</small>
   <button type="submit">Validar</button>
 </form>
 }

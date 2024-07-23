@@ -60,4 +60,9 @@ export class AuthFormComponent implements OnInit {
       this.loginForm.markAllAsTouched()
     }
   }
+
+  resetPhone() {
+    this.phone = ''
+    this.validateForm.reset()
+  }
 }

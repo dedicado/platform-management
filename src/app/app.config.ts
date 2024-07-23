@@ -11,7 +11,7 @@ import {
   withComponentInputBinding,
 } from '@angular/router'
 
-import { routes } from './app.routes'
+import { appRoutes } from './routes/app.routes'
 import { provideClientHydration, Title } from '@angular/platform-browser'
 import {
   provideHttpClient,
@@ -48,7 +48,7 @@ export class TemplatePageTitleStrategy extends TitleStrategy {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes, withComponentInputBinding()),
+    provideRouter(appRoutes, withComponentInputBinding()),
     provideClientHydration(),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     {

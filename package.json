@@ -10,7 +10,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:platform-management": "node dist/platform-management/server/server.mjs"
+    "serve:ssr:platform": "node dist/platform/server/server.mjs"
   },
   "dependencies": {
     "@angular/animations": "^18.0.0",

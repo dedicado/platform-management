@@ -4,7 +4,7 @@ import { organizationsSelectors } from '@/app/core/store/organizations/organizat
 import { CommonModule } from '@angular/common'
 import { Component, OnInit } from '@angular/core'
 import { Meta, Title } from '@angular/platform-browser'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { Store } from '@ngrx/store'
 
 @Component({
@@ -16,11 +16,11 @@ import { Store } from '@ngrx/store'
 })
 export class OrganizationPageComponent implements OnInit {
   document!: string
-  organizationName!: string | undefined
 
   constructor(
     private readonly activateRouter: ActivatedRoute,
     private readonly meta: Meta,
+    private readonly router: Router,
     private readonly store: Store<OrganizationsState>,
     private readonly title: Title,
   ) {}
@@ -32,12 +32,6 @@ export class OrganizationPageComponent implements OnInit {
     ) as string
     this.store.dispatch(
       organizationsActions.findByDocument({ document: this.document }),
-    )
-    this.store
-      .select(organizationsSelectors.findOne)
-      .subscribe((data) => (this.organizationName = data?.name))
-    this.title.setTitle(
-      `Organização ${this.organizationName ?? 'Não Identificada'}`,
     )
     this.meta.addTags([
       {

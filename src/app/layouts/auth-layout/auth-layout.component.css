@@ -1,0 +1,35 @@
+main {
+  @apply w-full h-screen flex justify-center items-center
+}
+
+.container {
+  @apply w-full h-full flex flex-col sm:flex-row justify-center items-center gap-4
+}
+
+header {
+  @apply relative w-full flex justify-center sm:justify-end items-center
+}
+
+figure {
+  @apply relative w-full max-w-sm flex justify-center items-center
+}
+
+img {
+  @apply relative w-[179px] h-[260px]
+}
+
+section {
+  @apply relative w-full flex justify-center sm:justify-start items-center
+}
+
+.box {
+  @apply relative w-full max-w-sm flex flex-col justify-center items-center
+}
+
+h6 {
+  @apply text-sky-600
+}
+
+p {
+  @apply text-slate-400/80
+}
