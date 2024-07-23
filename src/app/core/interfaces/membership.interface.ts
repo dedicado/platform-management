@@ -19,3 +19,10 @@ export interface MembershipsState {
   one?: Membership | undefined
   success: boolean
 }
+
+export interface CreateMembership
+  extends Partial<
+    Omit<Membership, 'id, updatedAt, updatedAt, deletedAt, softDeleted, active'>
+  > {}
+
+export interface UpdateMembership extends Partial<CreateMembership> {}

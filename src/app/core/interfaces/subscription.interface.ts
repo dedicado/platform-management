@@ -4,7 +4,7 @@ import { Organization } from './organization.interface'
 export interface Subscription extends MainInterface {
   credit: number
   code?: string
-  readonly organization: Organization
+  organization: Organization
   organizationId: string
   paymentCustomerId?: string
   paymentGateway?: string
@@ -21,3 +21,13 @@ export interface SubscriptionsState {
   one?: Subscription | undefined
   success: boolean
 }
+
+export interface CreateSubscription
+  extends Partial<
+    Omit<
+      Subscription,
+      'id, updatedAt, updatedAt, deletedAt, softDeleted, active'
+    >
+  > {}
+
+export interface UpdateSubscription extends Partial<CreateSubscription> {}

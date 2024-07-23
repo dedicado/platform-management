@@ -1,49 +1,123 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { SubscriptionsService } from '../../services/subscriptions.service'
-import { inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import { subscriptionsActions } from './subscriptions-actions.store'
 import { map, switchMap } from 'rxjs'
 
-const findMany = createEffect(
-  (
-    actions$ = inject(Actions),
-    subscriptionsService = inject(SubscriptionsService),
-  ) => {
-    return actions$.pipe(
-      ofType(subscriptionsActions.findMany),
-      switchMap(() =>
-        subscriptionsService
-          .findMany()
-          .pipe(
-            map((payload) =>
-              subscriptionsActions.findManySucceeded({ payload }),
-            ),
-          ),
-      ),
-    )
-  },
-  { functional: true },
-)
+@Injectable({
+  providedIn: 'root',
+})
+export class SubscriptionsEffectsStore {
+  constructor(
+    private readonly actions$: Actions,
+    private readonly subscriptionsService: SubscriptionsService,
+  ) {}
 
-const findOne = createEffect(
-  (
-    actions$ = inject(Actions),
-    subscriptionsService = inject(SubscriptionsService),
-  ) => {
-    return actions$.pipe(
-      ofType(subscriptionsActions.findOne),
-      switchMap((action) =>
-        subscriptionsService
-          .findOne(action.id)
-          .pipe(
-            map((payload) =>
-              subscriptionsActions.findOneSucceeded({ payload }),
+  findByCode = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(subscriptionsActions.findByCode),
+        switchMap((action) =>
+          this.subscriptionsService
+            .findByCode(action.code)
+            .pipe(
+              map((payload) =>
+                subscriptionsActions.findByCodeSucceeded({ payload }),
+              ),
             ),
-          ),
-      ),
-    )
-  },
-  { functional: true },
-)
+        ),
+      )
+    },
+    { functional: true },
+  )
 
-export const subscriptionsEffects = { findMany, findOne }
+  findByOrganization = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(subscriptionsActions.findByOrganization),
+        switchMap((action) =>
+          this.subscriptionsService
+            .findByOrganization(action.document)
+            .pipe(
+              map((payload) =>
+                subscriptionsActions.findByOrganizationSucceeded({ payload }),
+              ),
+            ),
+        ),
+      )
+    },
+    { functional: true },
+  )
+
+  findMany = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(subscriptionsActions.findMany),
+        switchMap(() =>
+          this.subscriptionsService
+            .findMany()
+            .pipe(
+              map((payload) =>
+                subscriptionsActions.findManySucceeded({ payload }),
+              ),
+            ),
+        ),
+      )
+    },
+    { functional: true },
+  )
+
+  findOne = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(subscriptionsActions.findOne),
+        switchMap((action) =>
+          this.subscriptionsService
+            .findOne(action.id)
+            .pipe(
+              map((payload) =>
+                subscriptionsActions.findOneSucceeded({ payload }),
+              ),
+            ),
+        ),
+      )
+    },
+    { functional: true },
+  )
+
+  remove = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(subscriptionsActions.remove),
+        switchMap((action) =>
+          this.subscriptionsService
+            .remove(action.id, action.removeData)
+            .pipe(
+              map((message) =>
+                subscriptionsActions.removeSucceeded({ message }),
+              ),
+            ),
+        ),
+      )
+    },
+    { functional: true },
+  )
+
+  update = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(subscriptionsActions.update),
+        switchMap((action) =>
+          this.subscriptionsService
+            .update(action.id, action.updateSubscription)
+            .pipe(
+              map((message) =>
+                subscriptionsActions.updateSucceeded({ message }),
+              ),
+            ),
+        ),
+      )
+    },
+    { functional: true },
+  )
+}

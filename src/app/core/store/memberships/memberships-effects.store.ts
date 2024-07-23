@@ -1,45 +1,117 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { MembershipsService } from '../../services/memberships.service'
-import { inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import { map, switchMap } from 'rxjs'
 import { membershipsActions } from './memberships-actions.store'
 
-const findMany = createEffect(
-  (
-    actions$ = inject(Actions),
-    membershipsService = inject(MembershipsService),
-  ) => {
-    return actions$.pipe(
-      ofType(membershipsActions.findMany),
-      switchMap(() =>
-        membershipsService
-          .findMany()
-          .pipe(
-            map((payload) => membershipsActions.findManySucceeded({ payload })),
-          ),
-      ),
-    )
-  },
-  { functional: true },
-)
+@Injectable({
+  providedIn: 'root',
+})
+export class MembershipsEffectsStore {
+  constructor(
+    private readonly actions$: Actions,
+    private readonly membershipsService: MembershipsService,
+  ) {}
 
-const findOne = createEffect(
-  (
-    actions$ = inject(Actions),
-    membershipsService = inject(MembershipsService),
-  ) => {
-    return actions$.pipe(
-      ofType(membershipsActions.findOne),
-      switchMap((action) =>
-        membershipsService
-          .findOne(action.id)
-          .pipe(
-            map((payload) => membershipsActions.findOneSucceeded({ payload })),
-          ),
-      ),
-    )
-  },
-  { functional: true },
-)
+  create = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(membershipsActions.create),
+        switchMap((action) =>
+          this.membershipsService
+            .create(action.createMembership)
+            .pipe(
+              map((message) => membershipsActions.createSucceeded({ message })),
+            ),
+        ),
+      )
+    },
+    { functional: true },
+  )
 
-export const membershipsEffects = { findMany, findOne }
+  findByUser = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(membershipsActions.findByUser),
+        switchMap((action) =>
+          this.membershipsService
+            .findByUser(action.userId)
+            .pipe(
+              map((payload) =>
+                membershipsActions.findByUserSucceeded({ payload }),
+              ),
+            ),
+        ),
+      )
+    },
+    { functional: true },
+  )
+
+  findMany = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(membershipsActions.findMany),
+        switchMap(() =>
+          this.membershipsService
+            .findMany()
+            .pipe(
+              map((payload) =>
+                membershipsActions.findManySucceeded({ payload }),
+              ),
+            ),
+        ),
+      )
+    },
+    { functional: true },
+  )
+
+  findOne = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(membershipsActions.findOne),
+        switchMap((action) =>
+          this.membershipsService
+            .findOne(action.id)
+            .pipe(
+              map((payload) =>
+                membershipsActions.findOneSucceeded({ payload }),
+              ),
+            ),
+        ),
+      )
+    },
+    { functional: true },
+  )
+
+  remove = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(membershipsActions.remove),
+        switchMap((action) =>
+          this.membershipsService
+            .remove(action.id, action.removeData)
+            .pipe(
+              map((message) => membershipsActions.removeSucceeded({ message })),
+            ),
+        ),
+      )
+    },
+    { functional: true },
+  )
+
+  update = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(membershipsActions.update),
+        switchMap((action) =>
+          this.membershipsService
+            .update(action.id, action.updateMembership)
+            .pipe(
+              map((message) => membershipsActions.updateSucceeded({ message })),
+            ),
+        ),
+      )
+    },
+    { functional: true },
+  )
+}

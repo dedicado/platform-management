@@ -23,7 +23,11 @@ import { provideStore } from '@ngrx/store'
 import { provideStoreDevtools } from '@ngrx/store-devtools'
 import { provideEffects } from '@ngrx/effects'
 import { authInterceptor } from './core/interceptors/auth.interceptor'
-import { platformEffects, platformStore } from './core/store/platform.store'
+import { platformStore } from './core/store/platform.store'
+import { UsersEffectsStore } from './core/store/users/users-effects.store'
+import { SubscriptionsEffectsStore } from './core/store/subscriptions/subscriptions-effects.store'
+import { OrganizationsEffectsStore } from './core/store/organizations/organizations-effects.store'
+import { MembershipsEffectsStore } from './core/store/memberships/memberships-effects.store'
 
 @Injectable()
 export class TemplatePageTitleStrategy extends TitleStrategy {
@@ -60,6 +64,11 @@ export const appConfig: ApplicationConfig = {
       trace: false,
       traceLimit: 75,
     }),
-    provideEffects(platformEffects),
+    provideEffects([
+      MembershipsEffectsStore,
+      OrganizationsEffectsStore,
+      SubscriptionsEffectsStore,
+      UsersEffectsStore,
+    ]),
   ],
 }

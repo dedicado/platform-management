@@ -8,6 +8,31 @@ const initialState: MembershipsState = {
 
 export const membershipsReducers = createReducer(
   initialState,
+  on(membershipsActions.create, (state, action) => {
+    return {
+      ...state,
+    }
+  }),
+  on(membershipsActions.createSucceeded, (state, action) => {
+    return {
+      ...state,
+      message: action.message,
+      success: true,
+    }
+  }),
+  on(membershipsActions.findByUser, (state, action) => {
+    return {
+      ...state,
+    }
+  }),
+  on(membershipsActions.findByUserSucceeded, (state, action) => {
+    return {
+      ...state,
+      count: action.payload.length,
+      many: action.payload,
+      success: true,
+    }
+  }),
   on(membershipsActions.findMany, (state, action) => {
     return {
       ...state,
@@ -21,7 +46,6 @@ export const membershipsReducers = createReducer(
       success: true,
     }
   }),
-
   on(membershipsActions.findOne, (state, action) => {
     return {
       ...state,
@@ -31,6 +55,30 @@ export const membershipsReducers = createReducer(
     return {
       ...state,
       one: action.payload,
+      success: true,
+    }
+  }),
+  on(membershipsActions.remove, (state, action) => {
+    return {
+      ...state,
+    }
+  }),
+  on(membershipsActions.removeSucceeded, (state, action) => {
+    return {
+      ...state,
+      message: action.message,
+      success: true,
+    }
+  }),
+  on(membershipsActions.update, (state, action) => {
+    return {
+      ...state,
+    }
+  }),
+  on(membershipsActions.updateSucceeded, (state, action) => {
+    return {
+      ...state,
+      message: action.message,
       success: true,
     }
   }),
