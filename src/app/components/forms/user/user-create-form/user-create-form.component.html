@@ -1,0 +1,24 @@
+<mat-dialog-content>
+  <h6>Adicionar Usuário</h6>
+  <form novalidate [formGroup]="createForm" (ngSubmit)="createOnSubmit()">
+    <div class="box">
+      <label for="name">Nome</label>
+      <input id="name" type="text" placeholder="Nome Completo" formControlName="name" />
+      <span></span>
+    </div>
+    <div class="box">
+      <label for="phone">Celular</label>
+      <input id="phone" type="text" placeholder="55 48 98765 4321" formControlName="phone" />
+      <span></span>
+    </div>
+    <div class="box">
+      <label for="email">E-mail</label>
+      <input id="email" type="email" placeholder="usuario@email.com" formControlName="email" />
+      <span></span>
+    </div>
+    <div class="box">
+      <button>Adicionar</button>
+      <button mat-dialog-close class="btn-close">Cancelar</button>
+    </div>
+  </form>
+</mat-dialog-content>

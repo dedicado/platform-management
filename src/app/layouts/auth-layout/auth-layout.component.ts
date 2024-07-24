@@ -1,5 +1,5 @@
 import { NgOptimizedImage } from '@angular/common'
-import { AuthFormComponent } from './../../components/forms/auth-form/auth-form.component'
+import { AuthFormComponent } from '../../components/forms/auth/auth-form/auth-form.component'
 import { Component } from '@angular/core'
 import { RouterOutlet } from '@angular/router'
 import { FooterComponent } from '@/app/components/footer/footer.component'

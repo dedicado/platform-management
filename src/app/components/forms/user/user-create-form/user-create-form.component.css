@@ -1,0 +1,35 @@
+mat-dialog-content {
+  @apply bg-slate-200
+}
+
+form {
+  @apply relative w-full flex flex-col gap-2
+}
+
+.box {
+  @apply w-full flex flex-col gap-2
+}
+
+label {
+  @apply text-xs -mb-2
+}
+
+input {
+  @apply w-full border-none rounded-md
+}
+
+span {
+  @apply text-xs text-red-600 italic
+}
+
+h6 {
+  @apply text-sky-600 text-center
+}
+
+button {
+  @apply relative w-full p-2 text-white text-xs uppercase bg-sky-600 hover:bg-opacity-80 hover:shadow-md rounded-md
+}
+
+.btn-close {
+  @apply relative w-full p-2 text-white text-xs uppercase bg-slate-600 hover:bg-opacity-80 hover:shadow-md rounded-md
+}
