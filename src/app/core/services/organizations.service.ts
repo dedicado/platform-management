@@ -15,7 +15,7 @@ import { RemoveData } from '../interfaces/core.interface'
 export class OrganizationsService {
   constructor(private readonly httpClient: HttpClient) {}
 
-  endpoint: string = environment.platformApiUrl + '/organizations'
+  private endpoint: string = environment.platformApiUrl + '/organizations'
 
   create(createOrganization: CreateOrganization): Observable<string> {
     return this.httpClient.post<string>(this.endpoint, createOrganization)

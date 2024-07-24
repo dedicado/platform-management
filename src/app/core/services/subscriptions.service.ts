@@ -14,7 +14,7 @@ import { RemoveData } from '../interfaces/core.interface'
 export class SubscriptionsService {
   constructor(private readonly httpClient: HttpClient) {}
 
-  endpoint: string = environment.platformApiUrl + '/subscriptions'
+  private endpoint: string = environment.platformApiUrl + '/subscriptions'
 
   findByCode(code: string): Observable<Subscription> {
     return this.httpClient.get<Subscription>(this.endpoint + `/code/${code}`)

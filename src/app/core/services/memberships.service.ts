@@ -15,7 +15,7 @@ import { RemoveData } from '../interfaces/core.interface'
 export class MembershipsService {
   constructor(private readonly httpClient: HttpClient) {}
 
-  endpoint: string = environment.platformApiUrl + '/memberships'
+  private endpoint: string = environment.platformApiUrl + '/memberships'
 
   create(createMembership: CreateMembership): Observable<string> {
     return this.httpClient.post<string>(this.endpoint, createMembership)

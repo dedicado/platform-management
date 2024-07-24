@@ -14,9 +14,10 @@ export class UsersService {
     private readonly httpClient: HttpClient,
     private readonly persistanceService: PersistanceService,
   ) {}
-  private payload = this.persistanceService.getToken('AUTH_TOKEN')
 
-  endpoint: string = environment.platformApiUrl + '/users'
+  private endpoint: string = environment.platformApiUrl + '/users'
+  private authToken: string = environment.authToken
+  private payload = this.persistanceService.getToken(this.authToken)
 
   create(createUser: CreateUser): Observable<string> {
     return this.httpClient.post<string>(this.endpoint, createUser)
