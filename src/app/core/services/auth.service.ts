@@ -11,6 +11,7 @@ import { Router } from '@angular/router'
 })
 export class AuthService {
   private endpoint: string = environment.platformApiUrl + '/auth'
+  private authToken: string = environment.authToken
 
   constructor(
     private readonly httpClient: HttpClient,
@@ -21,7 +22,7 @@ export class AuthService {
   isAuthenticated = this.getToken()
 
   private getToken() {
-    const payload = this.persistanceService.getToken('AUTH_TOKEN')
+    const payload = this.persistanceService.getToken(this.authToken)
     if (!payload) return false
     return true
   }
@@ -30,15 +31,16 @@ export class AuthService {
     return this.httpClient
       .post<AuthPayload>(this.endpoint, authLogin)
       .subscribe((payload) => {
-        this.persistanceService.setToken('AUTH_TOKEN', payload)
+        this.persistanceService.setToken(this.authToken, payload)
         this.isAuthenticated = true
         this.router.navigate([''])
         return payload
       })
   }
 
-  logout(): Observable<{}> {
-    return this.persistanceService.destroyToken('AUTH_TOKEN')
+  logout() {
+    this.persistanceService.destroyToken(this.authToken)
+    this.router.navigate(['auth'])
   }
 
   validate(phone: string) {

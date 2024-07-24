@@ -1,9 +1,11 @@
 import { HttpInterceptorFn } from '@angular/common/http'
 import { inject } from '@angular/core'
 import { PersistanceService } from '../services/persistance.service'
+import { environment } from '@/environments/environment'
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const payload = inject(PersistanceService).getToken('AUTH_TOKEN')
+  const authToken = environment.authToken
+  const payload = inject(PersistanceService).getToken(authToken)
 
   if (payload) {
     req.clone({
