@@ -5,6 +5,8 @@ import { ErrorLayoutComponent } from '../layouts/error-layout/error-layout.compo
 import { errorRoutes } from './error.routes'
 import { authGuard } from '../core/guards/auth.guard'
 import { AuthLayoutComponent } from '../layouts/auth-layout/auth-layout.component'
+import { MasterLayoutComponent } from '../layouts/master-layout/master-layout.component'
+import { masterRoutes } from './master.routes'
 
 export const appRoutes: Routes = [
   {
@@ -24,6 +26,12 @@ export const appRoutes: Routes = [
     path: 'erro',
     component: ErrorLayoutComponent,
     children: errorRoutes,
+  },
+  {
+    path: 'master',
+    component: MasterLayoutComponent,
+    canActivate: [authGuard],
+    children: masterRoutes,
   },
   {
     path: '',

@@ -1,0 +1,31 @@
+footer {
+  @apply w-full h-full bg-gradient-to-b from-slate-200 to-sky-200/60 py-12 flex justify-center items-center
+}
+
+.container {
+  @apply w-full max-w-6xl p-2 flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-2
+}
+
+.box-left {
+  @apply w-full flex flex-col justify-center sm:justify-start
+}
+
+a {
+  @apply text-xl text-center md:text-left text-sky-800 hover:text-sky-800/60 font-semibold lowercase cursor-pointer
+}
+
+small {
+  @apply text-xs text-center md:text-left font-thin lowercase
+}
+
+.box-right {
+  @apply w-full flex flex-col justify-center sm:justify-end gap-2
+}
+
+ul {
+  @apply w-full flex justify-center sm:justify-end items-center gap-4
+}
+
+li {
+  @apply text-xs
+}

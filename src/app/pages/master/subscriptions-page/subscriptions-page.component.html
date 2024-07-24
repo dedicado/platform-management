@@ -1,8 +1,23 @@
-<p>subscriptions-page works!</p>
-<div>
-  <ul *ngFor="let subscription of subscriptions$ | async">
-    <li>
-      <a>Código: {{subscription.code}}</a>
-    </li>
-  </ul>
-</div>
+<section>
+  <div class="table-head">
+    <h6></h6>
+    <button></button>
+  </div>
+  <table mat-table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="code">
+      <th mat-header-cell *matHeaderCellDef> Código </th>
+      <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="organization">
+      <th mat-header-cell *matHeaderCellDef> Organização </th>
+      <td mat-cell *matCellDef="let element"> {{element.organization.name}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</section>
+<section>
+</section>

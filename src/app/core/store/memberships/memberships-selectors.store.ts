@@ -8,7 +8,7 @@ const count = createSelector(featureSelector, (state) => {
 })
 
 const findMany = createSelector(featureSelector, (state) => {
-  return state.many
+  return state.many!
 })
 
 const findOne = createSelector(featureSelector, (state) => {

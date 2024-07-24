@@ -3,8 +3,8 @@ import { Routes } from '@angular/router'
 export const errorRoutes: Routes = [
   {
     path: '',
-    redirectTo: '404',
     pathMatch: 'full',
+    redirectTo: '404',
   },
   {
     path: '401',
