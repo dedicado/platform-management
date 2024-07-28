@@ -32,5 +32,6 @@ export class UsersPageComponent implements OnInit {
 
   openUserCreateDialog() {
     this.matDialog.open(UserCreateFormComponent)
+    this.store.dispatch(usersActions.findMany())
   }
 }

@@ -1,7 +1,8 @@
 import { environment } from '@/environments/environment'
 import { HttpClient } from '@angular/common/http'
-import { Injectable } from '@angular/core'
+import { DestroyRef, Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { CreateUser, UpdateUser, User } from '../interfaces/user.interface'
 import { PersistanceService } from './persistance.service'
 import { RemoveData } from '../interfaces/core.interface'
@@ -11,6 +12,7 @@ import { RemoveData } from '../interfaces/core.interface'
 })
 export class UsersService {
   constructor(
+    private readonly destroyRef: DestroyRef,
     private readonly httpClient: HttpClient,
     private readonly persistanceService: PersistanceService,
   ) {}
@@ -20,7 +22,9 @@ export class UsersService {
   private payload = this.persistanceService.getToken(this.authToken)
 
   create(createUser: CreateUser): Observable<string> {
-    return this.httpClient.post<string>(this.endpoint, createUser)
+    return this.httpClient
+      .post<string>(this.endpoint, createUser)
+      .pipe(takeUntilDestroyed(this.destroyRef))
   }
 
   findMany(): Observable<User[]> {
@@ -39,12 +43,16 @@ export class UsersService {
   remove(id: string, removeData: RemoveData): Observable<string> {
     const { definitely } = removeData
     if (definitely) {
-      return this.httpClient.delete<string>(this.endpoint + `/${id}`)
+      return this.httpClient
+        .delete<string>(this.endpoint + `/${id}`)
+        .pipe(takeUntilDestroyed(this.destroyRef))
     } else {
-      return this.httpClient.patch<string>(this.endpoint + `/${id}`, {
-        active: false,
-        softDeleted: true,
-      })
+      return this.httpClient
+        .patch<string>(this.endpoint + `/${id}`, {
+          active: false,
+          softDeleted: true,
+        })
+        .pipe(takeUntilDestroyed(this.destroyRef))
     }
   }
 

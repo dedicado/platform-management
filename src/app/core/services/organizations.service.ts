@@ -1,6 +1,6 @@
 import { environment } from '@/environments/environment'
 import { HttpClient } from '@angular/common/http'
-import { Injectable } from '@angular/core'
+import { DestroyRef, Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import {
   CreateOrganization,
@@ -8,12 +8,16 @@ import {
   UpdateOrganization,
 } from '../interfaces/organization.interface'
 import { RemoveData } from '../interfaces/core.interface'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrganizationsService {
-  constructor(private readonly httpClient: HttpClient) {}
+  constructor(
+    private readonly destroyRef: DestroyRef,
+    private readonly httpClient: HttpClient,
+  ) {}
 
   private endpoint: string = environment.platformApiUrl + '/organizations'
 
@@ -25,10 +29,9 @@ export class OrganizationsService {
     phone: string,
     createOrganization: CreateOrganization,
   ): Observable<string> {
-    return this.httpClient.post<string>(
-      this.endpoint + `/user/${phone}`,
-      createOrganization,
-    )
+    return this.httpClient
+      .post<string>(this.endpoint + `/user/${phone}`, createOrganization)
+      .pipe(takeUntilDestroyed(this.destroyRef))
   }
 
   findByDocument(document: string): Observable<Organization> {
@@ -48,12 +51,16 @@ export class OrganizationsService {
   remove(id: string, removeData: RemoveData): Observable<string> {
     const { definitely } = removeData
     if (definitely) {
-      return this.httpClient.delete<string>(this.endpoint + `/${id}`)
+      return this.httpClient
+        .delete<string>(this.endpoint + `/${id}`)
+        .pipe(takeUntilDestroyed(this.destroyRef))
     } else {
-      return this.httpClient.patch<string>(this.endpoint + `/${id}`, {
-        active: false,
-        softDeleted: true,
-      })
+      return this.httpClient
+        .patch<string>(this.endpoint + `/${id}`, {
+          active: false,
+          softDeleted: true,
+        })
+        .pipe(takeUntilDestroyed(this.destroyRef))
     }
   }
 
@@ -61,9 +68,8 @@ export class OrganizationsService {
     id: string,
     updateOrganization: UpdateOrganization,
   ): Observable<string> {
-    return this.httpClient.patch<string>(
-      this.endpoint + `/${id}`,
-      updateOrganization,
-    )
+    return this.httpClient
+      .patch<string>(this.endpoint + `/${id}`, updateOrganization)
+      .pipe(takeUntilDestroyed(this.destroyRef))
   }
 }

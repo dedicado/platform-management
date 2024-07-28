@@ -1,10 +1,10 @@
-import { Injectable, OnInit } from '@angular/core'
+import { DestroyRef, Injectable, OnInit } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { environment } from '@/environments/environment'
-import { map, Observable, tap } from 'rxjs'
 import { PersistanceService } from './persistance.service'
 import { AuthLogin, AuthPayload } from '../interfaces/auth.interface'
 import { Router } from '@angular/router'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +14,7 @@ export class AuthService {
   private authToken: string = environment.authToken
 
   constructor(
+    private readonly destroyRef: DestroyRef,
     private readonly httpClient: HttpClient,
     private readonly persistanceService: PersistanceService,
     private readonly router: Router,
@@ -40,6 +41,7 @@ export class AuthService {
 
   logout() {
     this.persistanceService.destroyToken(this.authToken)
+    takeUntilDestroyed(this.destroyRef)
     this.router.navigate(['auth'])
   }
 

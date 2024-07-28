@@ -1,18 +1,22 @@
 import { environment } from '@/environments/environment'
 import { HttpClient } from '@angular/common/http'
-import { Injectable } from '@angular/core'
+import { DestroyRef, Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import {
   Subscription,
   UpdateSubscription,
 } from '../interfaces/subscription.interface'
 import { RemoveData } from '../interfaces/core.interface'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 
 @Injectable({
   providedIn: 'root',
 })
 export class SubscriptionsService {
-  constructor(private readonly httpClient: HttpClient) {}
+  constructor(
+    private readonly destroyRef: DestroyRef,
+    private readonly httpClient: HttpClient,
+  ) {}
 
   private endpoint: string = environment.platformApiUrl + '/subscriptions'
 
@@ -37,12 +41,16 @@ export class SubscriptionsService {
   remove(id: string, removeData: RemoveData): Observable<string> {
     const { definitely } = removeData
     if (definitely) {
-      return this.httpClient.delete<string>(this.endpoint + `/${id}`)
+      return this.httpClient
+        .delete<string>(this.endpoint + `/${id}`)
+        .pipe(takeUntilDestroyed(this.destroyRef))
     } else {
-      return this.httpClient.patch<string>(this.endpoint + `/${id}`, {
-        active: false,
-        softDeleted: true,
-      })
+      return this.httpClient
+        .patch<string>(this.endpoint + `/${id}`, {
+          active: false,
+          softDeleted: true,
+        })
+        .pipe(takeUntilDestroyed(this.destroyRef))
     }
   }
 
@@ -50,9 +58,8 @@ export class SubscriptionsService {
     id: string,
     updateSubscription: UpdateSubscription,
   ): Observable<string> {
-    return this.httpClient.patch<string>(
-      this.endpoint + `/${id}`,
-      updateSubscription,
-    )
+    return this.httpClient
+      .patch<string>(this.endpoint + `/${id}`, updateSubscription)
+      .pipe(takeUntilDestroyed(this.destroyRef))
   }
 }
